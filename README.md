@@ -1,5 +1,5 @@
 # Background 색 의미
-- ${\textsf{\color{green}Green}}$
+- ${\textsf{\color{green}변경사항}}$
 - <span style='background-color:blue'> 주석
 
 # 상단 네비게이션 바(공통)
