@@ -1,7 +1,8 @@
- package team.c.backend;
+package team.c.backend;
 
- public class Cad {
+public class Cad {
 
-    int a = 1+1;
-    
+   int a = 1+1;
+   int b = 2;
+   
 }
