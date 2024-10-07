@@ -1,5 +1,5 @@
 # Background 색 의미
-- <p>{\color{#5ad7b7} 변경사항</p>
+- <p>${\color{#5ad7b7}$ 변경사항</p>
 - <span style='background-color:blue'> 주석
 
 # 상단 네비게이션 바(공통)
