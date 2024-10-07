@@ -1,5 +1,5 @@
 # Background 색 의미
-- <span style="color: green"> Some green text </span>
+- ${\textsf{\color{green}Green}}$
 - <span style='background-color:blue'> 주석
 
 # 상단 네비게이션 바(공통)
