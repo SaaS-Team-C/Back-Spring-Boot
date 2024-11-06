@@ -34,6 +34,7 @@ public class HostController {
 
     private final HostService hostService;
     
+    // 호스트 정보 상세보기 api
     @GetMapping(value={"/info"})
     public ResponseEntity<? super GetHostResponseDto> getHost(
         @AuthenticationPrincipal  String hostId){
@@ -41,6 +42,7 @@ public class HostController {
             return responseBody;
     }
 
+    // 호스트 패스워드 변경 api
     @PatchMapping(value={"/update-password/{hostId}"})
     public ResponseEntity<ResponseDto> patchPassword(
         @RequestBody @Valid PatchHostPasswordRequestDto requestBody,
@@ -49,7 +51,7 @@ public class HostController {
         ResponseEntity<ResponseDto> responseBody = hostService.patchHostPassword(requestBody, hostId);
         return responseBody;
     }
-
+    // 호스트 전화번호 변경 api
     @PatchMapping(value={"/update-tel-number/{hostTelNumber}"})
     public ResponseEntity<ResponseDto> patchTelNumber(
         @RequestBody @Valid PatchHostTelNumberRequestDto requestBody,
@@ -60,6 +62,7 @@ public class HostController {
         return repsonseBody;
     }
 
+    // 호스트 숙소별 예약 리스트 가져오기 api
     @GetMapping(value={"/reservation/{hostId}"})
     public ResponseEntity<? super GetReservationResponseDto> getReservaitonList(
         @PathVariable("hostId") @AuthenticationPrincipal String hostId
@@ -68,6 +71,7 @@ public class HostController {
         return responseBody;
     }
 
+    // 호스트 아이디 찾기 api
     @PostMapping(value={"/id-find"})
     public ResponseEntity<ResponseDto> hostIdFind(
         @RequestBody @Valid HostIdFindRequestDto requestBody){
@@ -75,6 +79,7 @@ public class HostController {
             return responseBody;
     }
 
+    // 호스트 아이디 찾기에 사용된 전화번호 인증번호 확인 api
     @PostMapping(value={"/tel-auth-check"})
         public ResponseEntity<? super HostIdFindSuccessResponseDto> telAuthCheck(
             @RequestBody @Valid TelAuthCheckRequestDto requestBody

@@ -18,6 +18,8 @@ public class FileServiceImplement implements FileService {
     private String accommodationMainFilePath;
     @Value("${file.path.accommodation.sub}")
     private String accommodationSubFilePath;
+    @Value("${file.path.room.main}")
+    private String roomMainFilePath;
     @Value("${file.path.room.sub}")
     private String roomSubFilePath;
     @Value("${file.path.business}")
@@ -66,6 +68,28 @@ public class FileServiceImplement implements FileService {
         String url = fileUrl + saveFileName;
         return url;
     }
+
+    @Override
+    public String roomMainImageFileUpload(MultipartFile file){
+
+        if(file.isEmpty()) return null;
+
+        String originalFileName = file.getOriginalFilename();
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String uuid = UUID.randomUUID().toString();
+        String saveFileName = uuid + extension;
+        String savePath = roomMainFilePath + saveFileName;
+
+        try {
+            file.transferTo(new File(savePath));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        String url = fileUrl + saveFileName;
+        return url;
+    }
+
     @Override
     public String roomSubFileUpload(MultipartFile file) {
 
@@ -140,6 +164,19 @@ public class FileServiceImplement implements FileService {
     }
 
     @Override
+    public Resource getRoomMainFile(String fileName) {
+        Resource resource = null;
+        
+        try {
+            resource = new UrlResource("file:" + roomMainFilePath + fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return resource;
+    }
+
+    @Override
     public Resource getRoomSubFile(String fileName) {
         Resource resource = null;
         
@@ -164,6 +201,8 @@ public class FileServiceImplement implements FileService {
         }
         return resource;
     }
+    
+    
 }
 
 

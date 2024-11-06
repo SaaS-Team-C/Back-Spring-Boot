@@ -29,6 +29,7 @@ public class RoomController {
 
     private final RoomService roomService;
 
+    // 객실 등록 api
     @PostMapping(value={"/register/{accommodationName}"})
     public ResponseEntity<ResponseDto> postRoom(
         @RequestBody @Valid PostRoomRequestDto requestBody,
@@ -36,7 +37,7 @@ public class RoomController {
             ResponseEntity<ResponseDto> responseBody = roomService.postRoom(requestBody, accommodationName);
             return responseBody;
         }
-        
+    // 객실 정보 수정 api 
     @PatchMapping(value={"/update/{accommodationName}/{roomId}"})
     public ResponseEntity<ResponseDto> patchRoom(
         @RequestBody @Valid PatchRoomRequestDto requestBody,
@@ -47,6 +48,7 @@ public class RoomController {
         return responseBody;
     }
     
+    // 객실 서브이미지 등록 api 
     @PostMapping(value={"/image/{accommodationName}/{roomId}"})
     public ResponseEntity<ResponseDto> postRoomImage(
         @RequestBody @Valid PostRoomImageRequestDto requestBody,
@@ -57,6 +59,7 @@ public class RoomController {
         return responseBody;
     }
 
+    // 객실
     @PatchMapping(value = {"/image/update/{accommodationName}/{roomId}/{roomImage}"})
     public ResponseEntity<ResponseDto> postRoomImage(
         @RequestBody @Valid PatchRoomImageRequestDto requestBody,

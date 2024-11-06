@@ -35,14 +35,14 @@ public class AccommodationController {
     private final AccommodationService accommodationService;
     private final UseInfomationService useInfomationService;
 
-    
+    // 숙소 등록
     @PostMapping(value={"/register"})
     public ResponseEntity<ResponseDto> postAccommodation(
         @RequestBody @Valid PostAccommodationReqeustDto reqeustBody){
             ResponseEntity<ResponseDto> responseBody = accommodationService.postAccommodation(reqeustBody);
             return responseBody;
     }
-
+    // 숙소 서브 이미지 등록
     @PostMapping(value={"/image"})
     public ResponseEntity<ResponseDto> postAccommodationImage(
         @RequestBody @Valid PostAccommodationImageRequestDto requestBody
@@ -50,14 +50,14 @@ public class AccommodationController {
         ResponseEntity<ResponseDto> responseBody = accommodationService.postAccommodationImage(requestBody);
         return responseBody;
     }
-
+    // 숙소 이용정보 등록
     @PostMapping(value = {"/information"})
     public ResponseEntity<ResponseDto> postUseInformation(
         @RequestBody @Valid PostUseInformationRequestDto requestBody){
             ResponseEntity<ResponseDto> responseBody = useInfomationService.postUseInformation(requestBody);
             return responseBody;
         }
-    
+    // 숙소 상세보기(숙소에 해당하는 객실 및 이용정보)
     @GetMapping(value={"/{accommodationName}"})
     public ResponseEntity<? super GetAccommodationResponseDto> getAccommodation(
         @PathVariable("accommodationName") String accommodationName
@@ -66,6 +66,7 @@ public class AccommodationController {
         return responseBody;
     }
 
+    // 숙소 정보 수정 
     @PatchMapping(value={"/update/{accommodationName}"})
     public ResponseEntity<ResponseDto> patchAccommodation(
         @PathVariable("accommodationName") String accommodationName,
@@ -75,7 +76,7 @@ public class AccommodationController {
         ResponseEntity<ResponseDto> responseBody = accommodationService.patchAccommodation(requestBody,accommodationName, hostId);
         return responseBody;
     }
-
+    // 숙소 이용정보 수정
     @PatchMapping(value = {"/information/update/{accommodationName}/{autoKey}"})
     public ResponseEntity<ResponseDto> patchUseInformation(
         @RequestBody @Valid PatchUseInformationRequestDto requestBody,
@@ -85,7 +86,7 @@ public class AccommodationController {
             ResponseEntity<ResponseDto> responseBody = useInfomationService.patchUseInformation(requestBody, accommodationName, autoKey);
             return responseBody;
         }
-    
+    // 숙소 서브 이미지 수정
     @PatchMapping(value = {"/image/update/{accommodationName}/{accommodationImage}"})
     public ResponseEntity<ResponseDto> patchAccommodationImage(
         @RequestBody @Valid PatchAccommodationImageRequsetDto requestBody,
@@ -95,7 +96,7 @@ public class AccommodationController {
         ResponseEntity<ResponseDto> responseBody = accommodationService.patchAccommodationImage(requestBody, accommodationName, accommodationImage);
         return responseBody;
     }
-
+    // 숙소 이미지들 상세보기
     @GetMapping(value={"/image/{accommodationName}"})
     public ResponseEntity<? super GetAccommodationImagesResponseDto> getAccommodationImages(
         @PathVariable("accommodationName") String accommodationName
@@ -104,12 +105,13 @@ public class AccommodationController {
         return responseBody;
     }
 
+    // 숙소 리스트(게스트가 확인할 수 있는) 조회
     @GetMapping(value={"/list"})
     public ResponseEntity<? super GetAccommodationListResponseDto> getAccommodationList(){
         ResponseEntity<? super GetAccommodationListResponseDto> responseBody = accommodationService.getAccommodationList();
         return responseBody;
     }
-
+    // 숙소 삭제
     @DeleteMapping(value={"/delete/{accommodationName}"})
     public ResponseEntity<ResponseDto> deleteAccommodation(
         @PathVariable("accommodationName") String accommodationName,
@@ -118,6 +120,8 @@ public class AccommodationController {
         ResponseEntity<ResponseDto> responseBody = accommodationService.deleteAccommodation(accommodationName);
         return responseBody;
     }
+
+    // 숙소 이용정보 삭제
     @DeleteMapping(value={"/information/delete/{autoKey}"})
     public ResponseEntity<ResponseDto> deleteUseInformation(
         @PathVariable("autoKey") Integer autoKey,

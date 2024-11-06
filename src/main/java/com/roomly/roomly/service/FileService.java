@@ -7,11 +7,13 @@ public interface FileService {
 
     String accommodationMainFileUpload(MultipartFile file);
     String accommodationSubFileUpload(MultipartFile file);
+    String roomMainImageFileUpload(MultipartFile file);
     String roomSubFileUpload(MultipartFile file);
     String businessFileUpload(MultipartFile file);
 
     Resource getAccommodationMainFile(String fileName);
     Resource getAccommodationSubFile(String fileName);
+    Resource getRoomMainFile(String fileName);
     Resource getRoomSubFile(String fileName);
     Resource getBusinessFile(String fileName); 
 
