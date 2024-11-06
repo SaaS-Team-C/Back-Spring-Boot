@@ -9,7 +9,6 @@ import com.roomly.roomly.common.object.Reservation;
 import com.roomly.roomly.dto.response.ResponseCode;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.ResponseMessage;
-import com.roomly.roomly.repository.resultSet.GetReservationResultSet;
 
 import lombok.Getter;
 

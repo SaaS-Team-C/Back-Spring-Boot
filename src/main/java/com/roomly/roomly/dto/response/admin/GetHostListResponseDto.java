@@ -5,7 +5,6 @@ import com.roomly.roomly.dto.response.ResponseCode;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.ResponseMessage;
 import com.roomly.roomly.entity.HostEntity;
-import com.roomly.roomly.repository.resultSet.HostResultSet;
 
 import java.util.List;
 

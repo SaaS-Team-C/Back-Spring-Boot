@@ -3,7 +3,6 @@ package com.roomly.roomly.entity;
 import com.roomly.roomly.dto.request.room.PatchRoomRequestDto;
 import com.roomly.roomly.dto.request.room.PostRoomRequestDto;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

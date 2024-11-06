@@ -1,7 +1,6 @@
 package com.roomly.roomly.common.object;
 
 import com.roomly.roomly.entity.HostEntity;
-import com.roomly.roomly.repository.resultSet.HostResultSet;
 
 import lombok.Getter;
 
