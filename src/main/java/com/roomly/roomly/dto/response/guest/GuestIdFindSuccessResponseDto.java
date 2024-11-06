@@ -6,9 +6,7 @@ import org.springframework.http.ResponseEntity;
 import com.roomly.roomly.dto.response.ResponseCode;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.ResponseMessage;
-import com.roomly.roomly.dto.response.host.HostIdFindSuccessResponseDto;
 import com.roomly.roomly.entity.GuestEntity;
-import com.roomly.roomly.entity.HostEntity;
 
 import lombok.Getter;
 

@@ -17,13 +17,11 @@ import com.roomly.roomly.dto.response.accommodation.GetAccommodationListResponse
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationResponseDto;
 import com.roomly.roomly.entity.AccImageEntity;
 import com.roomly.roomly.entity.AccommodationEntity;
-import com.roomly.roomly.entity.ReservationEntity;
 import com.roomly.roomly.entity.RoomImageEntity;
 import com.roomly.roomly.entity.UseInformationEntity;
 import com.roomly.roomly.repository.AccImageRepository;
 import com.roomly.roomly.repository.AccommodationRepository;
 import com.roomly.roomly.repository.HostRepository;
-import com.roomly.roomly.repository.ReservationRepository;
 import com.roomly.roomly.repository.RoomImageRepository;
 import com.roomly.roomly.repository.RoomRepository;
 import com.roomly.roomly.repository.UseInformationRepository;
@@ -44,7 +42,6 @@ public class AccommodationServiceImplement implements AccommodationService {
     private final RoomImageRepository roomImageRepository;
     private final UseInformationRepository useInformationRepository;
     private final AccImageRepository accImageRepository;
-    private final ReservationRepository reservationRepository;
     
     @Override
     public ResponseEntity<ResponseDto> postAccommodation(PostAccommodationReqeustDto dto) {

@@ -2,7 +2,6 @@ package com.roomly.roomly.entity;
 
 import com.roomly.roomly.dto.request.guest.PatchGuestAuthRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostTelNumberRequestDto;
-import com.roomly.roomly.dto.request.hostauth.HostTelAuthCheckRequestDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

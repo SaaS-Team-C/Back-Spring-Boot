@@ -1,8 +1,5 @@
 package com.roomly.roomly.dto.request.host;
 
-import com.roomly.roomly.entity.HostEntity;
-import com.roomly.roomly.entity.TelAuthNumberEntity;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
