@@ -1,7 +1,6 @@
 package com.roomly.roomly.common.object;
 
 import com.roomly.roomly.entity.GuestEntity;
-import com.roomly.roomly.entity.UseInformationEntity;
 import java.util.List;
 import java.util.ArrayList;
 

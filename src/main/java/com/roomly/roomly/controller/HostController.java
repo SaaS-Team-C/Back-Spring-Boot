@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.roomly.roomly.dto.response.reservation.GetReservationResponseDto;
-import com.roomly.roomly.dto.request.guest.GuestIdFindRequsetDto;
 import com.roomly.roomly.dto.request.host.HostIdFindRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostPasswordRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostTelNumberRequestDto;
@@ -19,7 +18,6 @@ import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.host.GetHostResponseDto;
 import com.roomly.roomly.dto.response.host.HostIdFindSuccessResponseDto;
-import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
 
 import com.roomly.roomly.service.HostService;
 
@@ -82,10 +80,5 @@ public class HostController {
             ResponseEntity<? super HostIdFindSuccessResponseDto> responseBody = hostService.telAuthCheck(requestBody);
             return responseBody;
         }
-
-        
-    
-
-    
     
 }

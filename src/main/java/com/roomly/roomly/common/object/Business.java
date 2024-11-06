@@ -1,8 +1,5 @@
 package com.roomly.roomly.common.object;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.roomly.roomly.dto.request.business.BusinessNumberCheckRequestDto;
 import com.roomly.roomly.entity.HostEntity;
 

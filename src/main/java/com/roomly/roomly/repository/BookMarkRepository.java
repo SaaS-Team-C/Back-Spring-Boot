@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.roomly.roomly.entity.BookmarkEntity;
 import com.roomly.roomly.entity.pk.BookmarkPk;
 import com.roomly.roomly.repository.resultSet.GetBookMarkResultSet;
-import com.roomly.roomly.entity.pk.BookmarkPk;
 
 @Repository
 public interface BookMarkRepository extends JpaRepository<BookmarkEntity, BookmarkPk>{

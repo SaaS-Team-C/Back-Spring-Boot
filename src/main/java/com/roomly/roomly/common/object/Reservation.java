@@ -1,13 +1,5 @@
 package com.roomly.roomly.common.object;
-import com.roomly.roomly.entity.AccommodationEntity;
-import com.roomly.roomly.entity.GuestEntity;
-import com.roomly.roomly.entity.ReservationEntity;
-import com.roomly.roomly.entity.RoomEntity;
-import com.roomly.roomly.entity.UseInformationEntity;
 import com.roomly.roomly.repository.resultSet.GetReservationResultSet;
-import java.util.List;
-import java.util.ArrayList;
-
 import lombok.Getter;
 
 @Getter
