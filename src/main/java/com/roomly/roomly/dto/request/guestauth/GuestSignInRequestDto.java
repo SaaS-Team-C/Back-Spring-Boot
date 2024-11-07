@@ -13,5 +13,5 @@ public class GuestSignInRequestDto {
     @NotBlank
     private String guestId;
     @NotBlank
-    private String password; 
+    private String guestPw; 
 }

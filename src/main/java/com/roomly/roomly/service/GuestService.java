@@ -6,7 +6,7 @@ import com.roomly.roomly.dto.request.guest.PatchGuestAuthRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestPwRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
-import com.roomly.roomly.dto.request.guest.GuestIdFindRequsetDto;
+import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestMyPageResponseDto;
 import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
@@ -22,7 +22,7 @@ public interface GuestService {
     // Guest 인증및 이전번호 삭제
     ResponseEntity<ResponseDto> patchGuestAuth(PatchGuestAuthRequestDto dto, String guestId);
     // 게스트 아이디 찾기
-    ResponseEntity<ResponseDto> guestIdFind(GuestIdFindRequsetDto dto);
+    ResponseEntity<ResponseDto> guestIdFind(GuestIdFindRequestDto dto);
     //guest 전화번호 확인
     ResponseEntity<? super GuestIdFindSuccessResponseDto> guestTelAuthCheck(TelAuthCheckRequestDto dto);
 }

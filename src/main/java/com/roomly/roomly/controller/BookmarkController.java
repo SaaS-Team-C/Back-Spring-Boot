@@ -25,7 +25,7 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     // 즐겨찾기 리스트보기 (해당 id에 대한)
-    @GetMapping("/getBookMarkList/{guestId}")
+    @GetMapping("/bookmark-list/{guestId}")
     public ResponseEntity<? super GetGuestBookMarkResponseDto> getBookMarkList(
         @PathVariable("guestId") String guestId
     ) {
@@ -34,7 +34,7 @@ public class BookmarkController {
     }
 
     // 즐겨찾기 추가
-    @PostMapping("/addBookMark/{guestId}")
+    @PostMapping("/add-bookmark/{guestId}")
     public ResponseEntity<ResponseDto> addBookMark(
         @RequestBody @Valid AddBookMarkRequestDto requestBody,
         @PathVariable("guestId") String guestId
@@ -44,7 +44,7 @@ public class BookmarkController {
     }
 
     // 즐겨찾기 삭제
-    @DeleteMapping("/deleteBookMark/{guestId}/{accommodationName}")
+    @DeleteMapping("/delete-bookmark/{guestId}/{accommodationName}")
     public ResponseEntity<ResponseDto> deleteBookMark(
         @PathVariable("guestId") String guestId,
         @PathVariable("accommodationName") String accommodationName

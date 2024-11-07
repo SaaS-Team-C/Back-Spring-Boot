@@ -11,7 +11,7 @@ import lombok.Getter;
 
 @Getter
 public class GetGuestMyPageResponseDto extends ResponseDto{
-    private String name;
+    private String guestName;
     private String guestTelNumber;
     private String guestId;
     private String guestPw;
@@ -21,7 +21,7 @@ public class GetGuestMyPageResponseDto extends ResponseDto{
     
     private GetGuestMyPageResponseDto(GuestEntity guestEntitiys) {
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-        this.name = guestEntitiys.getGuestName();
+        this.guestName = guestEntitiys.getGuestName();
         this.guestTelNumber = guestEntitiys.getGuestTelNumber();
         this.guestId = guestEntitiys.getGuestId();
         this.guestPw = guestEntitiys.getGuestPw();

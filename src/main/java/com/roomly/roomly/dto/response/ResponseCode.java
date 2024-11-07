@@ -25,10 +25,10 @@ public interface ResponseCode {
     String NO_EXIST_GUEST = "NG";
     String NO_EXIST_HOST = "NH";
     String NO_EXIST_USE_INFORMATION = "NU";
-    String NO_EXIST_TELNUMBER = "NT";
+    String NO_EXIST_TELNUMBER = "NET";
     String NO_EXIST_BOOKMARK = "NEB";
     String NO_EXIST_PAYMENT_ID = "NEPI";
-    String NOT_MATCH_VALUE = "NV";
+    String NOT_MATCH_VALUE = "NMV";
     String NO_EXIST_REVIEW_ID = "NRI";
     String NO_EXIST_RESERVATION_ID = "NI";
     
@@ -44,7 +44,7 @@ public interface ResponseCode {
     String ENTRY_FAIL = "EF";
 
     // ERROR_CODE 500
-    String MESSAGE_SEND_FAILE = "TF";
+    String MESSAGE_SEND_FAILE = "MSF";
     String TOKEN_CREATE_FAIL= "TCF";
     String DATABASE_ERROR = "DBE"; 
 

@@ -1,4 +1,4 @@
-<h1 style='background-color: rgba(55, 55, 55, 0.4); text-align: center'>Roomly API 설계(명세)서</h1>
+<h1 style='background-color: rgba(55, 55, 55, 0.4); text-align: center'>Roomly Guest API 설계(명세)서</h1>
 
 해당 API 명세서는 'Roomly ERP - Roomly'의 REST API를 명세하고 있습니다.  
 
@@ -12,7 +12,7 @@ Roomly 서비스의 인증 및 인가와 관련된 REST API 모듈입니다.
 로그인, 회원가입, 사업자 정보 확인 등의 API가 포함되어 있습니다.  
 Auth 모듈은 인증 없이 요청할 수 있습니다.  
   
-- url : /api/roomly/auth/host  
+- url : /api/roomly/auth/guest  
 
 ***
 <h2 style= 'text-align: center'> 호스트 </h2>
@@ -32,20 +32,19 @@ Auth 모듈은 인증 없이 요청할 수 있습니다.
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| hostId | String | 호스트의 아이디 | O |
-| hostPw | String | 호스트의 비밀번호 | O |
+| guestId | String | 사용자의 아이디 | O |
+| guestPw | String | 사용자의 비밀번호 | O |
 
 ###### Example
-
 ```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/host/sign-in" \
- -d "hostId=qwer1234" \
- -d "hostPw=P!ssw0rd"
+curl -v -X POST "http://localhost:4000//api/roomly/auth/host/sign-in" \
+ - "guestId=qwer1234"
+ - "guestPw=P!ssw0rd"
 ```
 
 ##### Response
 
-###### Header
+###### Headers
 
 | name | description | required |
 |---|:---:|:---:|
@@ -128,7 +127,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트는 사용할 아이디를 입력하여 요청하고 중복되지 않는 아이디라면 성공 응답을 받습니다. 만약 아이디가 중복된다면 아이디 중복에 해당하는 응답을 받게됩니다. 네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.  
 
 - method : **POST**  
-- end point : **/id-check**  
+- end point : **/id-check** 
 
 ##### Request
 
@@ -136,13 +135,13 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| hostId | String | 중복확인 할 사용자의 아이디 | O |
+| GuestId | String | 중복확인 할 사용자의 아이디 | O |
 
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4000/api/roomly/host/auth/id-check" \
- -d "userId=qwer1234"
+curl -v -X POST "http://localhost:4000/api/roomly/auth/guest/id-check" \
+ -d "guestId=qwer1234"
 ```
 
 ##### Response
@@ -223,13 +222,13 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| hostTelNumber | String | 인증 번호를 전송할 사용자의 전화번호 (11자리 숫자) | O |
+| guestTelNumber | String | 인증 번호를 전송할 사용자의 전화번호 (11자리 숫자) | O |
 
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/host/tel-auth" \
- -d "hostTelNumber=01011112222"
+curl -v -X POST "http://localhost:4000/api/roomly/auth/guest/tel-auth" \
+ -d "telNumber=01011112222"
 ```
 
 ##### Response
@@ -327,7 +326,7 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/host/tel-auth-check" \
+curl -v -X POST "http://localhost:4000/api/roomly/auth/guest/tel-auth-check" \
  -d "telNumber=01011112222" \
  -d "authNumber=1234"
 ```
@@ -395,14 +394,14 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 사업자 번호 중복확인
+#### - 회원가입  
   
 ##### 설명
 
-클라이언트는 사용자(호스트) 사업자 번호를 요청한다. 일치한다면 성공에 대한 응답을 받습니다. 만약 중복한 번호가 존재한다면 중복된 사업자 번호에 대한 응답을 받습니다. 네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.  
+클라이언트는 사용자(게스트)의 이름, 아이디, 비밀번호, 전화번호, 인증번호, 가입경로를 입력하여 요청하고 회원가입이 성공적으로 이루어지면 성공에 대한 응답을 받습니다. 만약 존재하는 아이디일 경우 중복된 아이디에 대한 응답을 받고, 만약 존재하는 전화번호일 경우 중복된 전화번호에 대한 응답을 받고, 전화번호와 인증번호가 일치하지 않으면 전화번호 인증 실패에 대한 응답을 받습니다. 네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.  
 
 - method : **POST**  
-- end point : **/business-number-check**  
+- end point : **/sign-up  
 
 ##### Request
 
@@ -410,291 +409,24 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| b_no | String | 사업자 등록 번호 | O |
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/host/business-number-check" \
- -d "b_no = 0000000000" \
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 결과 코드 | O |
-| message | String | 결과 코드에 대한 설명 | O |
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "SU",
-  "message": "Success."
-}
-```
-
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
-**응답 실패 (중복된 사업자번호)**
-```bash
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DBN",
-  "message": "Duplicated business number."
-}
-```
-
-**응답 실패 (데이터베이스 에러)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DBE",
-  "message": "Database error."
-}
-```
-***
-
-#### - 사업자 번호 전송
-  
-##### 설명
-
-클라이언트는 사용자(호스트) 사업자 정보 및 번호 요청하고 해당하는 공공데이터센터로 데이터를 전송한다. 일치한다면 성공에 대한 응답을 받습니다. 만약 일치하지 않는 다면 사업자 인증 실패에 대한 응답을 받습니다. 네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.  
-
-- method : **POST**  
-- end point : **/validate-business**  
-
-##### Request
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| b_no | String | 사업자 등록 번호 | O |
-| start_dt | String | 개업일자(YYYYMMDD) | O |
-| p_nm | String | 대표자 성명 | O |
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4000/api/validate-business" \
- -d "b_no = 0000000000" \
- -d "start_dt = 20240101" \
- -d "p_nm = 홍길동" \
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 결과 코드 | O |
-| message | String | 결과 코드에 대한 설명 | O |
-| b_no | String | 사업자등록번호 | O |
-| valid | String | 진위확인 결과 코드 | O |
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "SU",
-  "message": "Success."
-}
-```
-
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
-**응답 실패 (사업자번호 인증 실패)**
-```bash
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "NB",
-  "message": "No exist business number."
-}
-```
-
-**응답 실패 (데이터베이스 에러)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DBE",
-  "message": "Database error."
-}
-```
-***
-
-#### - 사업자인증 이미지 중복확인
-  
-##### 설명
-
-클라이언트는 사용자(호스트) 사업자 정보 인증 이미지를 요청한다. 일치한다면 성공에 대한 응답을 받습니다. 만약 중복된 파일이 존재한다면 중복된 파일에 대한 응답을 받습니다. 네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.  
-
-- method : **POST**  
-- end point : **/business-image**  
-
-##### Request
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| businessImage | String | 사업자정보 인증 이미지 | O |
-
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/host/business-image" \
- -d "businessImage = test.png" \
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 결과 코드 | O |
-| message | String | 결과 코드에 대한 설명 | O |
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "SU",
-  "message": "Success."
-}
-```
-
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
-**응답 실패 (중복된 사업자정보 인증 이미지)**
-```bash
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DIM",
-  "message": "Duplicated image. "
-}
-```
-
-**응답 실패 (데이터베이스 에러)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DBE",
-  "message": "Database error."
-}
-```
-***
-
-#### - 회원가입(호스트)  
-  
-##### 설명
-
-클라이언트는 사용자(호스트)의 이름, 아이디, 비밀번호, 전화번호, 인증번호, 사업자 정보, 사업자 정보 인증 이미지를 입력하여 요청하고 회원가입이 성공적으로 이루어지면 성공에 대한 응답을 받습니다. 만약 존재하는 아이디일 경우 중복된 아이디에 대한 응답을 받고, 만약 존재하는 전화번호일 경우 중복된 전화번호에 대한 응답을 받고, 전화번호와 인증번호가 일치하지 않으면 전화번호 인증 실패에 대한 응답을 받고, 이미 등록된 사업자 번호일 경우 중복된 사업자 번호에 대한 응답을 받고, 존재하지 않는 사업자 번호일 경우 존재하지 않는 사업자번호에 대한 응답을 받고, 만약 존재하는 사업자 정보 인증 이미지일 경우 중복된 이미지에 대한 응답을 받습니다. 네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.  
-
-- method : **POST**  
-- end point : **/sign-up**  
-
-##### Request
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| hostId | String | 호스트의 아이디 | O |
-| hostPw | String | 호스트의 비밀번호 (8~13자의 영문 + 숫자) | O |
-| histName | String | 호스트의 이름 | O |
-| hostTelNumber | String | 사용자의 전화번호 (11자의 숫자) | O |
+| guestName | String | 게스트의 이름 | O |
+| guestId | String | 사용자의 아이디 | O |
+| guestPw | String | 사용자의 비밀번호 (8~13자의 영문 + 숫자) | O |
+| telNumber | String | 사용자의 전화번호 (11자의 숫자) | O |
 | authNumber | String | 전화번호 인증번호 | O |
-| hostBusinessNumber | String | 사업자 등록 번호 | O |
-| businessName | String | 대표자 성명 | O |
-| businessStartDay | String | 개업일자(YYYYMMDD) | O |
-| businessImage | String | 사업자정보인증이미지 | O |
+| joinPath | String | 회원가입 경로 (기본: 'HOME', 구글: 'GOOGLE', 네이버: 'NAVER') | O |
+| snsId | String | SNS 가입시 sns oauth2 ID | X |
 
 ###### Example
 
 ```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/sign-up" \
- -d "hostName=홍길동"\
- -d "hostId=qwer1234"\
- -d "hostPw=qwer1234"\
- -d "hostTelNumber=01011112222"\
- -d "hostBusinessNumber = 0000000000" \
- -d "businessName = 홍길동" \
- -d "businessStartDay = 20240101" \
- -d "businessImage = test.png" \
-
+curl -v -X POST "http://localhost:4000/api/roomly/auth/guest/sign-up" \
+ -d "guestName"= "홍길동"\
+ -d "guestId"= "qwer1234"\
+ -d "guestPw"= "qwer1234"\
+ -d "telNumber" = "01011112222"\
+ -d "authNumber"= "1234"\
+ -d "joinPath"= "HOME"
 ```
 
 ##### Response
@@ -743,7 +475,7 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "DI",
-  "message": "Duplicated user id."
+  "message": "Duplicated id."
 }
 ```
 
@@ -754,7 +486,7 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "DT",
-  "message": "Duplicated user tel number."
+  "message": "Duplicated tel number."
 }
 ```
 
@@ -768,273 +500,6 @@ Content-Type: application/json;charset=UTF-8
   "message": "Tel number authentication failed."
 }
 ```
-**응답 실패 (사업자번호 인증 실패)**
-```bash
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "NB",
-  "message": "No exist business number."
-}
-```
-
-**응답 실패 (중복된 사업자정보 인증 이미지)**
-```bash
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DIM",
-  "message": "Duplicated image. "
-}
-```
-
-**응답 실패 (데이터베이스 에러)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DBE",
-  "message": "Database error."
-}
-```
-
-***
-
-<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>Accommodation 모듈</h2>
-
-Roomly 서비스의 숙소와 관련된 REST API 모듈입니다.  
-호스트계정을 관리자가 승인하에 숙소 등록 및 수정 삭제 등의 API가 포함되어 있습니다.
-Accommodation 모듈은 모두 인증이 필요합니다.
-  
-- url : /api/roomly/accommodation  
-
-***
-
-#### - 숙소 승인 요청 및 등록
-  
-##### 설명
-클라이언트는 요청 헤더에 Bearer 인증 토큰을 포함하고 숙소 등록에 필요한 이미지, 숙소 이름, 숙소 종류, 숙소 설명, 카테고리 를 입력하여 요청하고 
-성공적으로 요청했을 시 성공에 대한 응답을 받습니다. 
-만약  중복된 이미지일 경우 중복된 이미지에 대한 응답을 받고, 
-만약 중복된 숙소이름일 경우 중복된 숙소이름에 대한 응답을 받고, 
-만약 숙소 종류가 없을 경우에는 숙소 종류가 존재하지 않는것에 대한 응답을 받고, 
-만약 숙소 설명이 존재하지 않는 경우 숙소 설명이 존재하지 않는 것에 대한 응답을 받고,
-만약 카테고리가 존재하지 않는 경우 카테고리가 없는 것에 대한 응답을 받습니다.
-네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.
-
-- method : **POST**  
-- end point : **/register**
-
-##### Request
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| accommodationName | String | 숙박 이름 | O |
-| accommodationMainImage | String | 대표 이미지 | O |
-| accommodationAddress | String | 대표 이미지 | O |
-| accommodationType | String | 숙소 유형 | O |
-| accommodationIntroduce | String | 숙소 소개 | O |
-| categoryArea | String | 지역 카테고리 | O |
-| categoryPet | boolean | 펫 카테고리 | X |
-| categoryNonSmokingArea | boolean | 흡연 카테고리 | X |
-| categoryIndoorSpa | boolean |  스파 카테고리 | X |
-| categoryDinnerParty | boolean | 석식 카테고리 | X |
-| categoryWifi | boolean | 와이파이 카테고리 | X |
-| categoryCarPark | boolean | 주차장 카테고리 | X |
-| categoryPool | boolean | 수영장 카테고리 | X |
-| hostId | String | 호스트의 아이디 | O |
-
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/sign-up" \
- -d "accommodationName= C조 호텔"\
- -d "accommodationMainImage=https://asdhfjaksdf.png"\
- -d "accommodationAddress=부산시 부산진구 ~"\
- -d "accommodationIntroduce=어서오세요~"\
- -d "accommodationType= 호텔"\
- -d "categoryArea = 부산" \
- -d "categoryPet = true" \
- -d "categoryNonSmokingArea = true" \
- -d "categoryIndoorSpa = true" \
- -d "categoryDinnerParty = true" \
- -d "categoryWifi = true" \
- -d "categoryCarPark = true" \
- -d "categoryPool = true" \
- -d "hostId = qwer1234" \
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 결과 코드 | O |
-| message | String | 결과 코드에 대한 설명 | O |
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "SU",
-  "message": "Success."
-}
-```
-
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
-**응답 실패 (중복된 숙소 이름)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DAN",
-  "message": "Duplicated accommodation name."
-}
-```
-
-**응답 실패 (승인되지 않은 계정)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "NP",
-  "message": "No permission."
-}
-```
-
-**응답 실패 (데이터베이스 에러)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DBE",
-  "message": "Database error."
-}
-```
-
-***
-
-#### - 숙소 서브 이미지 등록
-  
-##### 설명
-클라이언트는 요청 헤더에 Bearer 인증 토큰을 포함하고
-숙소 등록에 필요한 서브 이미지에 대한 요청을 하고,
-성공적으로 요청했을 시 성공에 대한 응답을 받습니다. 
-만약  중복된 이미지일 경우 중복된 이미지에 대한 응답을 받고, 
-만약 중복된 숙소 이미지일 경우 중복된 숙소이미지에 대한 응답을 받고, 
-만약 숙소 이름이 없을 경우에는 숙소가 존재하지 않는것에 대한 응답을 받습니다.
-네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.
-
-- method : **POST**  
-- end point : **/image**
-
-##### Request
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| accommodationName | String | 숙박 이름 | O |
-| accommodationImage | String | 숙소 서브 이미지 | O |
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/sign-up" \
- -d "accommodationName= C조 호텔"\
- -d "accommodationImage=https://asdhfjaksdf.png"\
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 결과 코드 | O |
-| message | String | 결과 코드에 대한 설명 | O |
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "SU",
-  "message": "Success."
-}
-```
-
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
-**응답 실패 (존재하지 않는 숙소)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "NA",
-  "message": "No exist accommodation. "
-}
-```
-
-**응답 실패 (승인되지 않은 계정)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "NP",
-  "message": "No permission."
-}
-```
 
 **응답 실패 (데이터베이스 에러)**
 ```bash
@@ -1047,135 +512,89 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 ***
-#### - 숙소 이용정보 등록
+
+#### - SNS 회원가입 및 로그인  
   
 ##### 설명
-클라이언트는 요청 헤더에 Bearer 인증 토큰을 포함하고 
-숙소 등록에 필요한 서브 이미지에 대한 요청을 하고,
-성공적으로 요청했을 시 성공에 대한 응답을 받습니다. 
-만약  중복된 이미지일 경우 중복된 이미지에 대한 응답을 받고, 
-만약 중복된 숙소 이미지일 경우 중복된 숙소이미지에 대한 응답을 받고, 
-만약 숙소 이름이 없을 경우에는 숙소가 존재하지 않는것에 대한 응답을 받습니다.
-네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.
 
-- method : **POST**  
-- end point : **/information**
-
-##### Request
-
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| accommodationName | String | 숙박 이름 | O |
-| title | String | 숙소이용 정보 제목 | O |
-| context | String | 내용 | O |
-
-###### Example
-
-```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/sign-up" \
- -d "accommodationName= C조 호텔"\
- -d "title=OTT"\
- -d "context=넷플릭스, 디즈니+ 이용가능"\
-```
-
-##### Response
-
-###### Header
-
-| name | description | required |
-|---|:---:|:---:|
-| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
-
-###### Response Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| code | String | 결과 코드 | O |
-| message | String | 결과 코드에 대한 설명 | O |
-
-###### Example
-
-**응답 성공**
-```bash
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "SU",
-  "message": "Success."
-}
-```
-
-**응답 실패 (데이터 유효성 검사 실패)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "VF",
-  "message": "Validation failed."
-}
-```
-
-**응답 실패 (존재하지 않는 숙소)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "NA",
-  "message": "No exist accommodation. "
-}
-```
-
-**응답 실패 (승인되지 않은 계정)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "NP",
-  "message": "No permission."
-}
-```
-
-**응답 실패 (데이터베이스 에러)**
-```bash
-HTTP/1.1 500 Internal Server Error
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "DBE",
-  "message": "Database error."
-}
-```
-
-***
-
-#### - 숙소 정보(숙소, 숙소 서브이미지, 숙소 이용정보, 객실, 객실서브 이미지) 가져오기
-  
-##### 설명
-클라이언트는 요청 헤더에 Bearer 인증 토큰을 포함하고 URL에 숙소 이름을 포함하여 요청하고 조회가 성공적으로 이루어지면 성공에 대한 응답을 받습니다.
-네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.
+클라이언트는 OAuth 인증서버를 입력하여 요청하고 해당하는 Redirect 응답을 받습니다. 회원가입이 되어있는 사용자의 경우 쿼리 매개변수로 접근 토큰과 토큰 만료 기간을 반환하며 회원가입이 되어있지 않은 사용자의 경우 쿼리 매개변수로 sns 아이디와 해당하는 sns 서비스의 이름을 반환합니다. 
 
 - method : **GET**  
-- end point : **/register**
+- end point : **/sns-sign-in/{registerId}**  
 
 ##### Request
 
-###### Header
+###### Path Variable
 
-| name | description | required |
-|---|:---:|:---:|
-| Authorization | Bearer 토큰 인증 헤더 | O |
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| registerId | String | 사용 SNS (카카오: 'kakao', 네이버: 'naver') | O |
 
 ###### Example
 
 ```bash
-curl -v -X get "http://localhost:4000/api/roomly/accommodation/{accommodationName}" 
+curl -X POST "http://localhost:4000/api/roomly/auth/sns-sign-in/{kakao}" 
 ```
+
+##### Response
+
+###### Example
+
+**응답 성공 (회원 O)**
+```bash
+HTTP/1.1 302 Found 
+Location: http://localhost:3000/sns-success?accessToken=${accessToken}&expiration=36000
+```
+
+**응답 성공 (회원 X)**
+```bash
+HTTP/1.1 302 Found 
+Location: http://localhost:3000/auth?snsId=${snsId}&joinPath=${joinPath}
+```
+
+***
+
+<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>Guest 모듈</h2>
+
+Roomly 서비스의 게스트와 관련된 REST API 모듈입니다.  
+게스트 마이페이지를 통해 내정보 확인 및 수정, 예약 현황 보기, 즐겨찾기등록 및 삭제 등의 API가 포함되어 있습니다.  
+마이페이지로 가기 위해 비밀번호 확인인증을 받습니다. 
+  
+- url : /api/roomly/guest
+
+***
+
+#### 내정보 확인
+  
+##### 설명
+로그인후 마이페이지를 가기 위해 비밀번호 인증을 통해 갈 수 있으며 비밀번호 인증이 되면 MyPage에서 나의 개인 정보를 볼수 있습니다. 회원가입 했을때 기입했던 비밀번호를 제외한 모든 정보를 볼 수 있습니다.
+
+- method : **GET**  
+- end point : **/MyPage/{guestId}**
+
+##### Request
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| name | String | 이름 | O |
+| guestTelNumber | String | 전화번호 | O |
+| guestId | String | 아이디 | O |
+| joinPath | String | 가입경로 | O |
+| snsId | boolean | Sns 아이디 | O |
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4000/api/roomly/guest/MyPage/{guestId}" \
+ -d "name" = "안성준"\
+ -d "guestTelNumber"= "01000000000"\
+ -d "guestId"= "qwer1234"\
+ -d "joinPath"= "Google"\
+ -d "snsId" = "qwer1234.." \
+```
+
 ##### Response
 
 ###### Header
@@ -1190,21 +609,6 @@ curl -v -X get "http://localhost:4000/api/roomly/accommodation/{accommodationNam
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 코드에 대한 설명 | O |
-| accommodationName | String | 숙박 이름 | O |
-| accommodationMainImage | String | 대표 이미지 | O |
-| accSubImages | String[] | 대표 이미지 | O |
-| accommodationAddress | String | 대표 이미지 | O |
-| accommodationType | String | 숙소 유형 | O |
-| accommodationIntroduce | String | 숙소 소개 | O |
-| categoryArea | String | 지역 카테고리 | O |
-| categoryPet | boolean | 펫 카테고리 | X |
-| categoryNonSmokingArea | boolean | 흡연 카테고리 | X |
-| categoryIndoorSpa | boolean |  스파 카테고리 | X |
-| categoryDinnerParty | boolean | 석식 카테고리 | X |
-| categoryWifi | boolean | 와이파이 카테고리 | X |
-| categoryCarPark | boolean | 주차장 카테고리 | X |
-| categoryPool | boolean | 수영장 카테고리 | X |
-| hostId | String | 호스트의 아이디 | O |
 
 ###### Example
 
@@ -1230,25 +634,14 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 실패 (중복된 숙소 이름)**
+**응답 : 실패 (중복된 아이디)**
 ```bash
 HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
 {
-  "code": "DAN",
-  "message": "Duplicated accommodation name."
-}
-```
-
-**응답 실패 (승인되지 않은 계정)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-{
-  "code": "NP",
-  "message": "No permission."
+  "code": "NI",
+  "message": "No Exist user id."
 }
 ```
 
@@ -1262,31 +655,30 @@ Content-Type: application/json;charset=UTF-8
   "message": "Database error."
 }
 ```
-
-***
-
-#### - 숙소 정보 수정
+#### 내정보(비밀번호) 수정
   
 ##### 설명
-클라이언트는 요청 헤더에 Bearer 인증 토큰을 포함하고 URL에 숙소 이름을 포함하고 요청하고 조회가 성공적으로 이루어지면 성공에 대한 응답을 받습니다.
-네트워크 에러, 서버 에러, 데이터베이스 에러가 발생할 수 있습니다.
+게스트 회원가입을 통해 입력된 정보중 비밀번호와 전화번호를 수정할수 있습니다. 비밀번호는 기존의 인코딩된 비밀번호와 새로 입력받는 비밀번호를 비교하여 동일한 비밀번호를 입력한 것에 대한 유효성 검사를 하며 새로 입력받은 비밀번호를 인코딩하여 데이터베이스에 저장합니다. 비밀번호는 알파벳 소문자와 대문자 숫자 를 포함하여 생성할수 있도록 하였습니다.
+회원정보가 수정되면 로그아웃이 되며 메인 페이지로 이동됩니다.
 
 - method : **PATCH**  
-- end point : **//update/{accommodationName}**
+- end point : **/pw/{guestId}**
 
 ##### Request
 
-###### Header
+###### Request Body
 
-| name | description | required |
-|---|:---:|:---:|
-| Authorization | Bearer 토큰 인증 헤더 | O |
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| guestPw | String | 비밀번호 | O |
 
 ###### Example
 
 ```bash
-curl -v -X get "http://localhost:4000/api/roomly/accommodation/{accommodationName}" 
+curl -v -X POST "http://localhost:4000/api/roomly/guest/pw/{guestId}" \
+ -d "guestPw" = "qwer1234"\
 ```
+
 ##### Response
 
 ###### Header
@@ -1301,21 +693,6 @@ curl -v -X get "http://localhost:4000/api/roomly/accommodation/{accommodationNam
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 코드에 대한 설명 | O |
-| accommodationName | String | 숙박 이름 | O |
-| accommodationMainImage | String | 대표 이미지 | O |
-| accSubImages | String[] | 대표 이미지 | O |
-| accommodationAddress | String | 대표 이미지 | O |
-| accommodationType | String | 숙소 유형 | O |
-| accommodationIntroduce | String | 숙소 소개 | O |
-| categoryArea | String | 지역 카테고리 | O |
-| categoryPet | boolean | 펫 카테고리 | X |
-| categoryNonSmokingArea | boolean | 흡연 카테고리 | X |
-| categoryIndoorSpa | boolean |  스파 카테고리 | X |
-| categoryDinnerParty | boolean | 석식 카테고리 | X |
-| categoryWifi | boolean | 와이파이 카테고리 | X |
-| categoryCarPark | boolean | 주차장 카테고리 | X |
-| categoryPool | boolean | 수영장 카테고리 | X |
-| hostId | String | 호스트의 아이디 | O |
 
 ###### Example
 
@@ -1341,25 +718,418 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
-**응답 실패 (중복된 숙소 이름)**
+**응답 : 실패 (중복된 아이디)**
 ```bash
 HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
 {
-  "code": "DAN",
-  "message": "Duplicated accommodation name."
+  "code": "NI",
+  "message": "No Exist user id."
 }
 ```
 
-**응답 실패 (승인되지 않은 계정)**
+**응답 : 실패 (중복된 비밀번호)**
 ```bash
 HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
 {
-  "code": "NP",
-  "message": "No permission."
+  "code": "DP",
+  "message": "Duplicated Password."
+}
+```
+
+**응답 실패 (데이터베이스 에러)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "DBE",
+  "message": "Database error."
+}
+```
+#### 내정보(전화번호) 수정
+  
+##### 설명
+마이페이지에서 전화번호를 수정할수 있으며 전화번호를 입력하여 중복확인 절차를 걸처 중복되지 않은 전화번호에 대해서 인증번호를 발송할수 있게 해 주었습니다. 전화번호 패턴으로는 0~9까지의 숫자, 11자로만 입력받을수 있도록 했습니다.
+
+- method : **PATCH**  
+- end point : **/telNumber/{guestId}**
+
+##### Request
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| guestPw | String | 비밀번호 | O |
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4000/api/roomly/guest/telNumber/{guestId}" \
+ -d "telNumber" = "01000000000"\
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 코드에 대한 설명 | O |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "VF",
+  "message": "Validation failed."
+}
+```
+
+**응답 : 실패 (중복된 전화번호)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DT",
+  "message": "Duplicated Telnumber."
+}
+```
+
+**응답 : 실패 (인증번호 전송실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "MSF",
+  "message": "Auth number send failed."
+}
+```
+
+**응답 실패 (데이터베이스 에러)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "DBE",
+  "message": "Database error."
+}
+```
+#### 인증번호 수정 및 기존 전화번호 삭제
+  
+##### 설명
+전화번호 수정 버튼을 통해 해당 번호로 인증번호가 발송되며, 게스트가 회원정보 수정 버튼클 클릭하면 수정 전 전화번호를 DB에서 삭제할수 있도록 하였습니다.
+
+- method : **PATCH**  
+- end point : **/auth/{guestId}**
+
+##### Request
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| guestTelNumber | String | 전화번호 | O |
+| guestAuthNumber | String | 인증번호 | O |
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4000/api/roomly/guest/auth/{guestId}" \
+ -d "guestTelNumber" = "01000000000"\
+ -d "guestAuthNumber" = "0000"\
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 코드에 대한 설명 | O |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "VF",
+  "message": "Validation failed."
+}
+```
+
+**응답 : 실패 (확인되지 않은 인증번호)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+{telAuthFail
+  "code": "TAF",
+  "message": "Tel number authentication fail."
+}
+```
+
+**응답 : 실패 (인증번호 전송실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "MSF",
+  "message": "Auth number send failed."
+}
+```
+
+**응답 실패 (데이터베이스 에러)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "DBE",
+  "message": "Database error."
+}
+```
+***
+#### 아이디 찾기
+  
+##### 설명
+로그인에 대한 정보를 잃어버렸을 경우 이름과 전화번호인증을 통해 아이디 찾기를 할수 있습니다. 유효성 검사를 통과한 후 해당 아이디를 보여주는것으로 나타냈습니다.
+
+- method : **POST**  
+- end point : **/id-find**
+
+##### Request
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| guestName | String | 이름 | O |
+| gusetTelNumber | String | 전화번호 | O |
+
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4000/api/roomly/guest/id-find" \
+ -d "guestName" = "홍길동"\
+ -d "gusetTelNumber" = "01000000000"\
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 코드에 대한 설명 | O |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "VF",
+  "message": "Validation failed."
+}
+```
+
+**응답 : 실패 (일치하지 않은 정보)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "NMV",
+  "message": "Not match value."
+}
+```
+
+**응답 : 실패 (인증번호 전송실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "MSF",
+  "message": "Auth number send failed."
+}
+```
+
+**응답 실패 (데이터베이스 에러)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "DBE",
+  "message": "Database error."
+}
+```
+***
+
+<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>즐겨찾기 모듈</h2>
+
+Roomly 서비스의 게스트와 관련된 REST API 모듈입니다.  
+게스트 마이페이지를 통해 내정보 확인 및 수정, 예약 현황 보기, 즐겨찾기등록 및 삭제 등의 API가 포함되어 있습니다.  
+마이페이지로 가기 위해 비밀번호 확인인증을 받습니다. 
+  
+- url : /api/roomly/guest
+
+***
+
+#### 즐겨찾기
+
+##### 설명
+
+
+- method : **POST**  
+- end point : **/tel-auth-check**
+
+##### Request
+
+###### Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| telNumber | String | 전화번호 | O |
+| authNumber | String | 인증번호 | O |
+    
+###### Example
+
+```bash
+curl -v -X POST "http://localhost:4000/api/roomly/guest/tel-auth-check" \
+ -d "telNumber" = "01000000000"\
+ -d "authNumber" = "0000"\
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환되는 Response Body의 Content type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 결과 코드 | O |
+| message | String | 결과 코드에 대한 설명 | O |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "SU",
+  "message": "Success."
+}
+```
+
+**응답 실패 (데이터 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "VF",
+  "message": "Validation failed."
+}
+```
+
+**응답 : 실패 (전화번호 및 인증번호 유효성 검사 실패)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "TAF",
+  "message": "Tel number authentication fail."
+}
+```
+
+**응답 : 실패 (전화번호 유효성 검사)**
+```bash
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+{
+  "code": "NET",
+  "message": "No exist Telnumber."
 }
 ```
 

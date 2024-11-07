@@ -13,5 +13,5 @@ public class PatchGuestTelNumberRequestDto {
     
     @NotBlank
     @Pattern(regexp="^[0-9]{11}$") 
-    private String telNumber;
+    private String guestTelNumber;
 }
