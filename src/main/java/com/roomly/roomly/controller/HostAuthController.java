@@ -28,7 +28,7 @@ public class HostAuthController {
     private final AuthService authService;
     
     // 호스트 아이디 확인 api
-    @PostMapping(value={"/id-check"})
+    @PostMapping("/id-check")
     public ResponseEntity<ResponseDto> hostIdCheck(
         @RequestBody @Valid HostIdCheckRequestDto requestBody
     ){
@@ -37,7 +37,7 @@ public class HostAuthController {
     }
 
     // 호스트 전화번호 중복확인 및 인증번호 전송 api
-    @PostMapping(value={"/tel-number"})
+    @PostMapping("/tel-auth")
     public ResponseEntity<ResponseDto> hostTelNumber(
         @RequestBody @Valid HostTelNumberRequestDto requestBody
     ){
@@ -46,7 +46,7 @@ public class HostAuthController {
     }
 
     // 호스트 전화번호 인증번호 인증 api
-    @PostMapping(value={"/tel-auth-check"})
+    @PostMapping("/tel-auth-check")
     public ResponseEntity<ResponseDto> hostTelAuthCheck(
         @RequestBody @Valid HostTelAuthCheckRequestDto requestBody
     ){
@@ -55,7 +55,7 @@ public class HostAuthController {
     }
 
     // 호스트 사업자 번호 중복확인 api
-    @PostMapping(value={"/business-number-check"})
+    @PostMapping("/business-number-check")
     public ResponseEntity<ResponseDto> hostBusinessNumber(
         @RequestBody @Valid HostBusinessNumberRequestDto requestBody
     ){
@@ -63,8 +63,8 @@ public class HostAuthController {
         return responseBody;
     }
 
-    // 호스트 사업자 이미지 등록 api
-    @PostMapping(value={"/business-image"})
+    // 호스트 사업자 이미지 중복확인 api
+    @PostMapping("/business-image")
     public ResponseEntity<ResponseDto> hostBusinessImage(
         @RequestBody @Valid HostBusinessImageRequestDto requestBody
     ){
@@ -73,7 +73,7 @@ public class HostAuthController {
     }
 
     // 호스트 회원가입 api
-    @PostMapping(value={"/sign-up"}) 
+    @PostMapping("/sign-up") 
     public ResponseEntity<ResponseDto> hostSignUp(
         @RequestBody @Valid HostSignUpRequestDto requestBody
     ){
@@ -82,7 +82,7 @@ public class HostAuthController {
     }
 
     // 호스트 로그인 api
-    @PostMapping(value={"/sign-in"})
+    @PostMapping("/sign-in")
     public ResponseEntity<? super HostSignInResponseDto> hostSignIn(
         @RequestBody @Valid HostSignInRequestDto requestBody
     ){

@@ -19,5 +19,4 @@ public class BusinessNumberCheckRequestDto {
 
     private String p_nm;
 
-    private String b_type;
 }
