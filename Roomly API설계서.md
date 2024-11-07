@@ -20,25 +20,40 @@ Auth 모듈은 인증 없이 요청할 수 있습니다.
   
 ##### 설명
 
-클라이언트는 사용자 아이디와 평문의 비밀번호를 입력하여 요청하고 아이디와 비밀번호가 일치한다면 인증에 사용될 token과 해당 token의 만료 기간을 응답 데이터로 전달 받습니다. 만약 아이디 혹은 비밀번호가 하나라도 틀린다면 로그인 정보 불일치에 해당하는 응답을 받게됩니다. 네트워크 에러, 서버 에러, 데이터베이스 에러, 토큰 생성 에러가 발생할 수 있습니다.  
+클라이언트는 사용자 아이디와 평문의 비밀번호를 입력하여 요청하고 아이디와 비밀번호가 일치한다면 인증에 사용될 token과 해당 token의 만료 기간을 응답 데이터로 전달 받습니다. 만약 아이디 혹은 비밀번호가 하나라도 틀린다면 로그인 정보 불일치에 해당하는 응답을 받게됩니다. 네트워크 에러, 서버 에러, 데이터베이스 에러, 토큰 생성 에러가 발생할 수 있습니다.
+
+클라이언트는 '게스트' 와 '호스트'로 나뉜다.  
 
 - method : **POST**  
 - end point : **/sign-in**  
 
 ##### Request
 
-###### Request Body
+###### Guest Request Body
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| userId | String | 사용자의 아이디 | O |
-| password | String | 사용자의 비밀번호 | O |
+| guestId | String | 사용자의 아이디 | O |
+| guestPw | String | 사용자의 비밀번호 | O |
+###### Host Request Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| guestId | String | 사용자의 아이디 | O |
+| hostPw | String | 사용자의 비밀번호 | O |
 
 ###### Example
 
+###### Host
 ```bash
-curl -v -X POST "http://localhost:4000/api/roomly/auth/sign-in" \
- -d "userId=qwer1234" \
+curl -v -X POST "http://localhost:4000//api/roomly/auth/host/sign-in" \
+ -d "userId=qwer1234"
+ -d "password=P!ssw0rd"
+```
+###### Guest
+```bash
+curl -v -X POST "http://localhost:4000//api/roomly/auth/host/sign-in" \
+ -d "userId=qwer1234"
  -d "password=P!ssw0rd"
 ```
 
