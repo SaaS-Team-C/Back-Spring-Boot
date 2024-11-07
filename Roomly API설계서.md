@@ -6,15 +6,16 @@
 
 ***
   
-<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>Auth 모듈</h2>
+<h2 style='background-color: rgba(55, 55, 55, 0.2); text-align: center'>Auth(호스트) 모듈</h2>
 
 Roomly 서비스의 인증 및 인가와 관련된 REST API 모듈입니다.  
-로그인, 회원가입, 소셜 로그인 등의 API가 포함되어 있습니다.  
+로그인, 회원가입, 사업자 정보 확인 등의 API가 포함되어 있습니다.  
 Auth 모듈은 인증 없이 요청할 수 있습니다.  
   
 - url : /api/roomly/auth/guest  
 
 ***
+<h2 style= 'text-align: center'> 호스트 </h2>
 
 #### 로그인  
   
@@ -276,7 +277,7 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "DT",
-  "message": "Duplicated user tel number."
+  "message": "Duplicated tel number."
 }
 ```
 
@@ -376,7 +377,7 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "code": "TAF",
-  "message": "Tel number authentication failed."
+  "message": "Tel number authentication fail."
 }
 ```
 

@@ -17,6 +17,7 @@ import com.roomly.roomly.dto.response.accommodation.GetAccommodationListResponse
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationResponseDto;
 import com.roomly.roomly.entity.AccImageEntity;
 import com.roomly.roomly.entity.AccommodationEntity;
+import com.roomly.roomly.entity.HostEntity;
 import com.roomly.roomly.entity.RoomImageEntity;
 import com.roomly.roomly.entity.UseInformationEntity;
 import com.roomly.roomly.repository.AccImageRepository;
@@ -48,8 +49,9 @@ public class AccommodationServiceImplement implements AccommodationService {
     public ResponseEntity<ResponseDto> postAccommodation(PostAccommodationReqeustDto dto) {
         try {
             String hostId = dto.getHostId();
-            boolean isExistedHostId = hostRepository.existsByHostId(hostId);
-            if (!isExistedHostId) return ResponseDto.noPermission();
+            HostEntity hostEntity = hostRepository.findByHostId(hostId);
+            boolean entry = hostEntity.getEntryStatus();
+            if (!entry) return ResponseDto.noPermission();
         
             String accommodationName = dto.getAccommodationName();
             boolean isExisted = accommodationRepository.existsByAccommodationName(accommodationName);

@@ -41,6 +41,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	// mokito 기능을 사용할수 있는 의존성 주입
+	testImplementation 'org.mockito:mockito-core:5.0.0'
+
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// 추가한 의존성

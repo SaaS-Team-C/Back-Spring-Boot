@@ -33,7 +33,7 @@ public class HostController {
     private final HostService hostService;
     
     // 호스트 정보 상세보기 api
-    @GetMapping(value={"/info"})
+    @GetMapping("/info")
     public ResponseEntity<? super GetHostResponseDto> getHost(
         @AuthenticationPrincipal  String hostId){
         ResponseEntity<? super GetHostResponseDto> responseBody = hostService.getHost(hostId);
@@ -41,7 +41,7 @@ public class HostController {
     }
 
     // 호스트 패스워드 변경 api
-    @PatchMapping(value={"/update-password/{hostId}"})
+    @PatchMapping("/update-password/{hostId}")
     public ResponseEntity<ResponseDto> patchPassword(
         @RequestBody @Valid PatchHostPasswordRequestDto requestBody,
         @PathVariable("hostId") @AuthenticationPrincipal String hostId
@@ -50,7 +50,7 @@ public class HostController {
         return responseBody;
     }
     // 호스트 전화번호 변경 api
-    @PatchMapping(value={"/update-tel-number/{hostTelNumber}"})
+    @PatchMapping("/update-tel-number/{hostTelNumber}")
     public ResponseEntity<ResponseDto> patchTelNumber(
         @RequestBody @Valid PatchHostTelNumberRequestDto requestBody,
         @PathVariable("hostTelNumber") String hostTelNumber,
@@ -61,7 +61,7 @@ public class HostController {
     }
 
     // 호스트 숙소별 예약 리스트 가져오기 api
-    @GetMapping(value={"/reservation/{hostId}"})
+    @GetMapping("/reservation/{hostId}")
     public ResponseEntity<? super GetReservationResponseDto> getReservaitonList(
         @PathVariable("hostId") @AuthenticationPrincipal String hostId
     ){
@@ -70,7 +70,7 @@ public class HostController {
     }
 
     // 호스트 아이디 찾기 api
-    @PostMapping(value={"/id-find"})
+    @PostMapping("/id-find")
     public ResponseEntity<ResponseDto> hostIdFind(
         @RequestBody @Valid HostIdFindRequestDto requestBody){
             ResponseEntity<ResponseDto> responseBody = hostService.hostIdFind(requestBody);
@@ -78,7 +78,7 @@ public class HostController {
     }
 
     // 호스트 아이디 찾기에 사용된 전화번호 인증번호 확인 api
-    @PostMapping(value={"/tel-auth-check"})
+    @PostMapping("/tel-auth-check")
         public ResponseEntity<? super HostIdFindSuccessResponseDto> telAuthCheck(
             @RequestBody @Valid TelAuthCheckRequestDto requestBody
         ){

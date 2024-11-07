@@ -51,7 +51,6 @@ public class BusinessNumberCheckController {
             business.put("b_no", requestDto.getB_no());
             business.put("start_dt", requestDto.getStart_dt());
             business.put("p_nm", requestDto.getP_nm());
-            business.put("b_type", requestDto.getB_type());
             businesses.add(business);
             body.put("businesses", businesses);
 
