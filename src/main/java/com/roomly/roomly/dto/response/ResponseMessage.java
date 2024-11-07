@@ -21,7 +21,7 @@ public interface ResponseMessage {
     String NO_EXIST_IMAGE = "NO exist image. ";
     String VALIDATION_FALIL = "Validation fail. ";
     String NO_EXIST_RESERVATION = "No exist reservation. ";
-    String NO_EXIST_GUEST = "No exist guest. ";
+    String NO_EXIST_GUEST = "No exist guest Id. ";
     String NO_EXIST_HOST = "No exist host. ";
     String NO_EXIST_USE_INFORMATION = "No exist use informdation. ";
     String ENTRY_FAIL = "Entry fail. ";
@@ -30,11 +30,12 @@ public interface ResponseMessage {
     String NO_EXIST_REVIEW_ID = "No exist review id.";
     String NO_EXIST_BOOKMARK = "No exist BookMark id And accommodation name";
     String NO_EXIST_PAYMENT_ID ="No exist Payment Id";
+    String NO_EXIST_TELNUMBER ="No exist Telnumber";
 
     // Http Status 401(UNAUTHORIZED)
     String NO_PERMISSION = "No permission";
     String AUTHENTICATION_FAIL = "authentication fail. ";
-    String TEL_AUTH_FAILE = "Tel number authentication fail. ";
+    String TEL_AUTH_FAILE = "Tel number authentication fail.";
     String SIGN_IN_FAIL = "Sign in fail. ";
     String DELETE_FAIL = "Delete fail. ";
     String EXISTED_RESERVATION = "Existed reservation. ";
