@@ -287,8 +287,8 @@ public class AuthServiceImplement implements AuthService {
         
         String guestId = dto.getGuestId();
         String guestTelNumber = dto.getGuestTelNumber();
-        String guestAuthNumber = dto.getAuthNumber();
-        String guestPassword = dto.getPassword();
+        String guestAuthNumber = dto.getGuestAuthNumber();
+        String guestPassword = dto.getGuestPw();
         
         try {
             
@@ -302,7 +302,7 @@ public class AuthServiceImplement implements AuthService {
             if(!isMatched) return ResponseDto.telAuthFail();
 
             String encodedPassword = passwordEncoder.encode(guestPassword);
-            dto.setPassword(encodedPassword);
+            dto.setGuestPw(encodedPassword);
 
             GuestEntity guestEntity = new GuestEntity(dto);
             guestRepository.save(guestEntity);
@@ -320,7 +320,7 @@ public class AuthServiceImplement implements AuthService {
     public ResponseEntity<? super GuestSignInResponseDto> guestSignIn(GuestSignInRequestDto dto) {
         
         String guestId = dto.getGuestId();
-        String password = dto.getPassword();
+        String password = dto.getGuestPw();
         String accessToken = null;
 
         try {

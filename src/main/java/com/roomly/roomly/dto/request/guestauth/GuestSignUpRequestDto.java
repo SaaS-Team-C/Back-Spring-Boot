@@ -15,17 +15,17 @@ public class GuestSignUpRequestDto {
     
     @NotBlank
     @Length(max=5)
-    private String name;
+    private String guestName;
     @NotBlank
     @Length(max=20)
     private String guestId;
     @Pattern(regexp="^(?=.*[a-zA-Z])(?=.*[0-9]).{8,13}$") 
-    private String password;
+    private String guestPw;
     @NotBlank
     @Pattern(regexp="^[0-9]{11}$") 
     private String guestTelNumber;
     @NotBlank
-    private String authNumber;
+    private String guestAuthNumber;
     @Pattern(regexp="^(home|kakao|google)$")
     private String joinPath;
     private String snsId;

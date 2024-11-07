@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class GuestIdFindRequsetDto {
+public class GuestIdFindRequestDto {
 
     private String guestName;
-    private String gusetTelNumber;
+    private String guestTelNumber;
 
 }

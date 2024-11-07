@@ -13,7 +13,7 @@ import com.roomly.roomly.dto.request.guest.PatchGuestAuthRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestPwRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
-import com.roomly.roomly.dto.request.guest.GuestIdFindRequsetDto;
+import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestMyPageResponseDto;
 import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
@@ -23,14 +23,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/roomly/guest")
+@RequestMapping("/api/roomly/guest-my-page")
 @RequiredArgsConstructor
 public class GuestController {
     
     private final GuestService guestService;
     
     // 해당 Id에 관한 게스트 정보 보기
-    @GetMapping("/MyPage/{guestId}")
+    @GetMapping("/view-information/{guestId}")
     public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(
         @PathVariable("guestId") String guestId
     ){
@@ -49,7 +49,7 @@ public class GuestController {
     }
 
     // 게스트 전화번호 중복확인 및 인증번호 발송
-    @PatchMapping("/telNumber/{guestId}")
+    @PatchMapping("/guest-tel-number/{guestId}")
     public ResponseEntity<ResponseDto> patchGuestTelNumber(
         @RequestBody @Valid PatchGuestTelNumberRequestDto requestBody,
         @PathVariable("guestId") String guestId
@@ -58,8 +58,8 @@ public class GuestController {
         return response;
     }
 
-    // 게스트 인증번호 확인 및 전화번호 수정
-    @PatchMapping("/Auth/{guestId}")
+    // 게스트 인증번호 확인 및 전화번호 수정,삭제
+    @PatchMapping("/auth-number/{guestId}")
     public ResponseEntity<ResponseDto> patchGuestAuth(
         @RequestBody @Valid PatchGuestAuthRequestDto requestBody,
         @PathVariable("guestId") String guestId
@@ -69,21 +69,19 @@ public class GuestController {
     }
 
     // 게스트 아이디 찾기
-    @PostMapping(value={"/id-find"})
+    @PostMapping("/id-find")
     public ResponseEntity<ResponseDto> guestIdFind(
-        @RequestBody @Valid GuestIdFindRequsetDto requestBody){
+        @RequestBody @Valid GuestIdFindRequestDto requestBody){
             ResponseEntity<ResponseDto> responseBody = guestService.guestIdFind(requestBody);
             return responseBody;
     }
     
-    // 게스트 전화번호 찾기
-    @PostMapping(value={"/tel-auth-check"})
+    // 아이디 찾기에 대한 전화번호 인증확인  
+    @PostMapping("/tel-auth-check")
         public ResponseEntity<? super GuestIdFindSuccessResponseDto> guestTelAuthCheck(
             @RequestBody @Valid TelAuthCheckRequestDto requestBody
         ){
             ResponseEntity<? super GuestIdFindSuccessResponseDto> responseBody = guestService.guestTelAuthCheck(requestBody);
             return responseBody;
         }
-
 }
-

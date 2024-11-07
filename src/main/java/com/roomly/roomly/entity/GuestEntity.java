@@ -1,6 +1,6 @@
 package com.roomly.roomly.entity;
 
-import com.roomly.roomly.dto.request.guest.GuestIdFindRequsetDto;
+import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestAuthRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestPwRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestSignUpRequestDto;
@@ -29,17 +29,17 @@ public class GuestEntity {
     private String joinPath;
     private String snsId;
 
-    public GuestEntity(GuestIdFindRequsetDto dto){
+    public GuestEntity(GuestIdFindRequestDto dto){
         this.guestName = dto.getGuestName();
-        this.guestTelNumber = dto.getGusetTelNumber();
+        this.guestTelNumber = dto.getGuestTelNumber();
         
     }
 
     public GuestEntity(GuestSignUpRequestDto dto) {
         
         this.guestId = dto.getGuestId();
-        this.guestPw = dto.getPassword();
-        this.guestName = dto.getName();
+        this.guestPw = dto.getGuestPw();
+        this.guestName = dto.getGuestName();
         this.guestTelNumber = dto.getGuestTelNumber();
         this.joinPath = dto.getJoinPath();
         this.snsId = dto.getSnsId();

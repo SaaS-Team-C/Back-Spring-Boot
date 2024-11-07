@@ -109,42 +109,37 @@ public class ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
-    // =============================================Review 테이블관련================================================
-    // 없는 예약번호일 경우 (HTTP 400 Request)
     public static ResponseEntity<ResponseDto> noExistReservationId() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_RESERVATION_ID,
                 ResponseMessage.NO_EXIST_RESERVATION_ID);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
-    // 해당 Id에 관해 작성된 리뷰가 없을 경우(HTTP 400 Request)\
     public static ResponseEntity<ResponseDto> noExistReviewId() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_REVIEW_ID, ResponseMessage.NO_EXIST_REVIEW_ID);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
     
-    // ============================================= 즐겨찾기 ===============================================================
-    // 해당 아이디와 숙소가 일치하지 않을 경우
     public static ResponseEntity<ResponseDto> noExistBookMark() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_BOOKMARK, ResponseMessage.NO_EXIST_BOOKMARK);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
+    
+    public static ResponseEntity<ResponseDto> noExistTelNumber() {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_TELNUMBER, ResponseMessage.NO_EXIST_TELNUMBER);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
 
-    // ============================================= 결제 ===============================================================
-    // 결제고유번호가 존재하지 않을 경우
     public static ResponseEntity<ResponseDto> noPaymentId() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_PAYMENT_ID,
                 ResponseMessage.NO_EXIST_PAYMENT_ID);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
-    // ============================================= 공용 ===============================================================
-    // 두 값을 비교하고 매치가 되지 않았을 경우
     public static ResponseEntity<ResponseDto> notMatchValue() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_MATCH_VALUE, ResponseMessage.NOT_MATCH_VALUE);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
-
     
     public static ResponseEntity<ResponseDto> entryFail(){
         ResponseDto responseBody = new ResponseDto(ResponseCode.ENTRY_FAIL, ResponseMessage.ENTRY_FAIL);
