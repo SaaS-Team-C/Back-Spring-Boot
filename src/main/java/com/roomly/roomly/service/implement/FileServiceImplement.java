@@ -28,6 +28,7 @@ public class FileServiceImplement implements FileService {
     @Value("${file.url}")
     private String fileUrl;
 
+    // 숙소 메인 파일 업로드 메서드
     @Override
     public String accommodationMainFileUpload(MultipartFile file) {
 
@@ -48,6 +49,8 @@ public class FileServiceImplement implements FileService {
         String url = fileUrl + saveFileName;
         return url;
     }
+
+    // 숙소 서브 파일 업로드 메서드
     @Override
     public String accommodationSubFileUpload(MultipartFile file) {
 
@@ -69,6 +72,7 @@ public class FileServiceImplement implements FileService {
         return url;
     }
 
+    // 객실 메인 파일 업로드 메서드
     @Override
     public String roomMainImageFileUpload(MultipartFile file){
 
@@ -90,6 +94,7 @@ public class FileServiceImplement implements FileService {
         return url;
     }
 
+    // 객실 서브 파일 업로드 메서드
     @Override
     public String roomSubFileUpload(MultipartFile file) {
 
@@ -111,6 +116,7 @@ public class FileServiceImplement implements FileService {
         return url;
     }
 
+    // 사업자 관련 파일 업로드 메서드
     @Override
     public String businessFileUpload(MultipartFile file) {
 
@@ -133,8 +139,7 @@ public class FileServiceImplement implements FileService {
         return url;
     }
     
-
-
+    // 숙소 메인 파일 가져오기 메서드
     @Override
     public Resource getAccommodationMainFile(String fileName) {
         
@@ -150,6 +155,8 @@ public class FileServiceImplement implements FileService {
         return resource;
     }
 
+
+    // 숙소 서브 파일 가져오기 메서드
     @Override
     public Resource getAccommodationSubFile(String fileName) {
         Resource resource = null;
@@ -163,6 +170,7 @@ public class FileServiceImplement implements FileService {
         return resource;
     }
 
+    // 객실 메인 파일 가져오기 메서드
     @Override
     public Resource getRoomMainFile(String fileName) {
         Resource resource = null;
@@ -176,6 +184,7 @@ public class FileServiceImplement implements FileService {
         return resource;
     }
 
+    // 객실 서브 파일 가져오기 메서드
     @Override
     public Resource getRoomSubFile(String fileName) {
         Resource resource = null;
@@ -189,6 +198,7 @@ public class FileServiceImplement implements FileService {
         return resource;
     }
 
+    // 사업자 파일 가져오기 메서드
     @Override
     public Resource getBusinessFile(String fileName) {
         Resource resource = null;

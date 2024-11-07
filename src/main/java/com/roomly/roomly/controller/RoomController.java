@@ -59,7 +59,7 @@ public class RoomController {
         return responseBody;
     }
 
-    // 객실
+    // 객실 이미지 수정 api
     @PatchMapping(value = {"/image/update/{accommodationName}/{roomId}/{roomImage}"})
     public ResponseEntity<ResponseDto> postRoomImage(
         @RequestBody @Valid PatchRoomImageRequestDto requestBody,
@@ -71,6 +71,7 @@ public class RoomController {
         return responseBody;
     }
     
+    // 객실 상세보기 api
     @GetMapping(value={"/detail/{roomId}"})
     public ResponseEntity<? super GetRoomResponseDto> getRoom(
         @PathVariable("roomId") Integer roomId
@@ -79,6 +80,7 @@ public class RoomController {
         return responseBody;
     }
 
+    // 객실 서브이미지리스트 상세보기 api
     @GetMapping(value={"/Images/{roomId}"})
     public ResponseEntity<? super GetRoomImageResponseDto> getRoomImage(
         @PathVariable("roomId") Integer roomId
@@ -87,6 +89,7 @@ public class RoomController {
         return responseBody;
     }
     
+    // 객실 삭제 api
     @DeleteMapping(value = {"/delete/{roomId}"})
     public ResponseEntity<ResponseDto> deleteRoom(
         @PathVariable("roomId") Integer roomId

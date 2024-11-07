@@ -40,6 +40,7 @@ public class HostServiceImplement implements HostService {
     private final AccommodationRepository accommodationRepository;
     private final SmsProvider smsProvider;
 
+    // 마이페이지 호스트 정보 조회 메서드
     @Override
     public ResponseEntity<? super GetHostResponseDto> getHost(String hostId) {
 
@@ -59,6 +60,7 @@ public class HostServiceImplement implements HostService {
 
     }
 
+    // 호스트 비밀번호 수정 메서드
     @Override
     public ResponseEntity<ResponseDto> patchHostPassword(PatchHostPasswordRequestDto dto, String hostId) {
 
@@ -91,6 +93,7 @@ public class HostServiceImplement implements HostService {
         return ResponseDto.success();
     }
 
+    // 호스트 전화번호 수정 및 재인증 메서드
     @Override
     public ResponseEntity<ResponseDto> patchHostTelNumber(PatchHostTelNumberRequestDto dto, String hostId,
             String hostTelNumber) {
@@ -123,6 +126,7 @@ public class HostServiceImplement implements HostService {
         return ResponseDto.success();
     }
 
+    // 호스트(숙소) 예약리스트 조회 메서드
     @Override
     public ResponseEntity<? super GetReservationResponseDto> getRerservaitonList(String hostId) {
 
@@ -151,6 +155,7 @@ public class HostServiceImplement implements HostService {
         return GetReservationResponseDto.success(resrervationList);
     }
 
+    // 호스트 아이디찾기 및 전화번호 및 인증번호 전송 메서드
     @Override
     public ResponseEntity<ResponseDto> hostIdFind(HostIdFindRequestDto dto) {
 
@@ -187,6 +192,7 @@ public class HostServiceImplement implements HostService {
 
     }
 
+    // 아이디 찾기 전화번호 및 인증번호 재인증 메서드
     @Override
     public ResponseEntity<? super HostIdFindSuccessResponseDto> telAuthCheck(TelAuthCheckRequestDto dto) {
 
