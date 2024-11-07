@@ -32,6 +32,7 @@ public class RoomServiceImplement implements RoomService {
     private final RoomImageRepository roomImageRepository;
     private final ReservationRepository reservationRepository;
 
+    // 객실 등록 메서드
     @Override
     public ResponseEntity<ResponseDto> postRoom(PostRoomRequestDto dto, String accommodationName) {
         
@@ -56,6 +57,7 @@ public class RoomServiceImplement implements RoomService {
         return ResponseDto.success();
     }
 
+    // 객실 수정 메서드
     @Override
     public ResponseEntity<ResponseDto> patchRoom(PatchRoomRequestDto dto, String accommodationName, Integer roomId) {
         
@@ -77,6 +79,7 @@ public class RoomServiceImplement implements RoomService {
         return ResponseDto.success();
     }
 
+    // 객실 서브 이미지 등록 메서드
     @Override
     public ResponseEntity<ResponseDto> postRoomImage(PostRoomImageRequestDto dto, String accommodationName, Integer roomId) {
 
@@ -101,6 +104,7 @@ public class RoomServiceImplement implements RoomService {
         return ResponseDto.success();
     }
 
+    // 객실 서브 이미지 수정 메서드
     @Override
     public ResponseEntity<ResponseDto> patchRoomImage(
         PatchRoomImageRequestDto dto, 
@@ -132,7 +136,8 @@ public class RoomServiceImplement implements RoomService {
         }
         return ResponseDto.success();
     }
-
+    
+    // 객실 정보 가져오기 메서드
     @Override
     public ResponseEntity<? super GetRoomResponseDto> getRoom(Integer roomId) {
         RoomEntity roomEntity = null;
@@ -148,6 +153,7 @@ public class RoomServiceImplement implements RoomService {
         return GetRoomResponseDto.success(roomEntity);
     }
 
+    // 객실 서브 이미지 가져오기 메서드
     @Override
     public ResponseEntity<? super GetRoomImageResponseDto> getRoomImage(Integer roomId) {
         RoomEntity roomEntity;
@@ -170,6 +176,7 @@ public class RoomServiceImplement implements RoomService {
         return GetRoomImageResponseDto.success(roomEntity, roomImageEntities);
     }
 
+    // 객실 삭제 메서드
     @Override
     public ResponseEntity<ResponseDto> deleteRoom(Integer roomId) {
 

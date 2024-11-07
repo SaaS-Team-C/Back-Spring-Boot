@@ -24,21 +24,23 @@ public class AdminController {
     
     private final AdminService adminService;
 
-
+    // 호스트 정보 리스트 조회 api
     @GetMapping(value={"/info/list"})
     public ResponseEntity<? super GetHostListResponseDto> getHostList(){
         ResponseEntity<? super GetHostListResponseDto> responseBody = adminService.getHostList();
         return responseBody;
     }
 
+    // 호스트정보 상세보기(어드민이 회원가입시 확인해야할 할때 사용) api
     @GetMapping(value={"/info/detail/{hostId}"})
-    public ResponseEntity<? super EntryHostRespnoseDto> geEntryhost(
+    public ResponseEntity<? super EntryHostRespnoseDto> getEntryhost(
         @PathVariable("hostId") String hostId
     ){
         ResponseEntity<? super EntryHostRespnoseDto> responseBody = adminService.getHost(hostId);
         return responseBody;
     }
 
+    // 호스트 계정 승인 상태 변경 api
     @PatchMapping(value={"/update/status/{hostId}"})
     public ResponseEntity<ResponseDto> patchEntryStatus(
         @RequestBody PatchEntryStatusRequestDto requestBody,
@@ -48,12 +50,14 @@ public class AdminController {
         return responseBody;
     }
 
+    // 숙소 리스트(숙소 승인 상태에 따라)조회 api
     @GetMapping(value={"/admin/accommodation-list"})
     public ResponseEntity<? super GetAccommodationListResponseDto> getAccommodationList(){
         ResponseEntity<? super GetAccommodationListResponseDto> responseBody = adminService.getAccommodationList();
         return responseBody;
     }
 
+    // 숙소 승인 상태 변경 api
     @PatchMapping(value = {"/admin/accommodation-apply/{accommodationName}"})
     public ResponseEntity<ResponseDto> patchApplyStatus(
         @RequestBody PatchEntryStatusRequestDto requestBody,

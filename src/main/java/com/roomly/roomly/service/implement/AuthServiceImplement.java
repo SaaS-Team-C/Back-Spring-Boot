@@ -45,6 +45,7 @@ public class AuthServiceImplement implements AuthService {
     private  PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final JwtProvider jwtProvider;
 
+    // 호스트 아이디 중복확인 메서드
     @Override
     public ResponseEntity<ResponseDto> hostIdCheck(HostIdCheckRequestDto dto) {
         String hostId = dto.getHostId();
@@ -61,6 +62,7 @@ public class AuthServiceImplement implements AuthService {
         return ResponseDto.success();
     }
 
+    // 호스트 전화번호 중복확인 및 인증번호 발송 메서드
     @Override
     public ResponseEntity<ResponseDto> hostTelNumber(HostTelNumberRequestDto dto) {
         
@@ -93,6 +95,7 @@ public class AuthServiceImplement implements AuthService {
         return ResponseDto.success();
     }
 
+    // 호스트 전화번호 인증번호 확인 메서드
     @Override
     public ResponseEntity<ResponseDto> hostTelAuthCheck(HostTelAuthCheckRequestDto dto) {
         
@@ -111,6 +114,7 @@ public class AuthServiceImplement implements AuthService {
         return ResponseDto.success();
     }
 
+    // 호스트 사업자 번호 중복확인 메서드
     @Override
     public ResponseEntity<ResponseDto> hostBusinessNumber(HostBusinessNumberRequestDto dto) {
         String hostBusinessNumber = dto.getHostBusinessNumber();
@@ -140,8 +144,7 @@ public class AuthServiceImplement implements AuthService {
         return ResponseDto.success();
     }
 
-    
-
+    // 호스트 회원가입 메서드
     @Override
     public ResponseEntity<ResponseDto> hostSignUp(HostSignUpRequestDto dto) {
         
@@ -179,6 +182,7 @@ public class AuthServiceImplement implements AuthService {
         return ResponseDto.success();
     }
 
+    // 호스트 로그인 메서드
     @Override
     public ResponseEntity<? super HostSignInResponseDto> hostSignIn(HostSignInRequestDto dto) {
 

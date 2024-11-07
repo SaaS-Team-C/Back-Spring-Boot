@@ -31,6 +31,7 @@ public class AdminServiceImplement implements AdminService {
     private final HostRepository hostRepository;
     private final AccommodationRepository accommodationRepository;
     
+    // 게스트 리스트 조회 메서드
     @Override
     public ResponseEntity<? super GetGuestListResponseDto> getGuestList() {
         
@@ -48,6 +49,7 @@ public class AdminServiceImplement implements AdminService {
         return GetGuestListResponseDto.success(guestList);
     }
 
+    // 호스트 리스트 조회 메서드
     @Override
     public ResponseEntity<? super GetHostListResponseDto> getHostList() {
         List<HostEntity> hostEntities = new ArrayList<>();
@@ -63,6 +65,7 @@ public class AdminServiceImplement implements AdminService {
         return GetHostListResponseDto.success(hostEntities);
     }
 
+    // 호스트 상세 정보 조회 메서드
     @Override
     public ResponseEntity<? super EntryHostRespnoseDto> getHost(String hostId) {
         
@@ -79,6 +82,7 @@ public class AdminServiceImplement implements AdminService {
         return EntryHostRespnoseDto.success(hostEntity);
     }
 
+    // 호스트 계정 승인상태 변경 메서드
     @Override
     public ResponseEntity<ResponseDto> patchEntryStatus(PatchEntryStatusRequestDto dto, String hostId) {
         
@@ -99,6 +103,7 @@ public class AdminServiceImplement implements AdminService {
         return ResponseDto.success();
     }
 
+    // 숙소 리스트 조회 메서드
     @Override
     public ResponseEntity<? super GetAccommodationListResponseDto> getAccommodationList() {
         List<AccommodationEntity> accommodationEntities = new ArrayList<>();
@@ -115,6 +120,7 @@ public class AdminServiceImplement implements AdminService {
         return GetAccommodationListResponseDto.success(accommodationEntities);
     }
 
+    // 숙소 승인 상태 변경 메서드
     @Override
     public ResponseEntity<ResponseDto> patchApplyStatus(String accommodationName) {
         

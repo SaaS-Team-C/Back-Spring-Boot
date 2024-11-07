@@ -43,6 +43,7 @@ public class AccommodationServiceImplement implements AccommodationService {
     private final UseInformationRepository useInformationRepository;
     private final AccImageRepository accImageRepository;
     
+    // 숙소 등록 메서드
     @Override
     public ResponseEntity<ResponseDto> postAccommodation(PostAccommodationReqeustDto dto) {
         try {
@@ -67,6 +68,7 @@ public class AccommodationServiceImplement implements AccommodationService {
         return ResponseDto.success();
     }
 
+    // 숙소 서브 이미지 등록 메서드
     @Override
     public ResponseEntity<ResponseDto> postAccommodationImage(PostAccommodationImageRequestDto dto) {
         
@@ -91,6 +93,7 @@ public class AccommodationServiceImplement implements AccommodationService {
         return ResponseDto.success();
     } 
 
+    // 숙소 정보(숙소, 숙소 서브이미지, 숙소 이용정보, 객실, 객실서브 이미지) 가져오기 메서드
     @Override
     public ResponseEntity<? super GetAccommodationResponseDto> getAccommodation(String accommodationName) {
 
@@ -99,7 +102,6 @@ public class AccommodationServiceImplement implements AccommodationService {
         List<UseInformationEntity> useInformationEntities = new ArrayList<>();
         List<AccImageEntity> accImageEntities = new ArrayList<>();
         
-        // List<RoomImageEntity> roomImageEntities = new ArrayList<>();
         AccommodationEntity accommodationEntity;
         
         try {
@@ -130,6 +132,7 @@ public class AccommodationServiceImplement implements AccommodationService {
         return GetAccommodationResponseDto.success(accommodationEntity, accommodationName, roomList, useInformationEntities,accImageEntities);
     }
 
+    // 숙소 정보 수정 메서드
     @Override
     public ResponseEntity<ResponseDto> patchAccommodation(PatchAccommodationRequestDto dto, String accommodationName, String hostId) {
         
@@ -161,6 +164,7 @@ public class AccommodationServiceImplement implements AccommodationService {
         return ResponseDto.success();
     }
 
+    // 숙소 서브 이미지 수정 메서드
     @Override
     public ResponseEntity<ResponseDto> patchAccommodationImage(
         PatchAccommodationImageRequsetDto dto,
@@ -189,6 +193,7 @@ public class AccommodationServiceImplement implements AccommodationService {
         return ResponseDto.success();
     }
 
+    // 숙소 서브 이미지들 조회 메서드
     @Override
     public ResponseEntity<? super GetAccommodationImagesResponseDto> getAccommodationImages(String accommodationName) {
 
@@ -209,17 +214,14 @@ public class AccommodationServiceImplement implements AccommodationService {
         return GetAccommodationImagesResponseDto.success(accommodationEntity, accImageEntities);
     }
 
+    // 숙소 리스트(메인 검색 페이지에서 사용될) 조회 메서드
     @Override
     public ResponseEntity<? super GetAccommodationListResponseDto> getAccommodationList() {
         
         List<GetAccommodationListResultSet> resultSets = new ArrayList<>();
 
         try {
-
-            
             resultSets = accommodationRepository.getList();
-            
-
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -227,10 +229,9 @@ public class AccommodationServiceImplement implements AccommodationService {
         }
         return GetAccommodationListResponseDto.success(resultSets);
 
-        
-
     }
 
+    // 숙소 삭제 메서드
     @Override
     public ResponseEntity<ResponseDto> deleteAccommodation(String accommodationName) {
         try {

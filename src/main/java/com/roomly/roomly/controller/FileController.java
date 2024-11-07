@@ -22,70 +22,86 @@ public class FileController {
 
     private final FileService fileService;
 
+    // 숙소 메인 이미지 파일 업로드 api
     @PostMapping("/upload/accommodationMain")
     public String accommodationMainFileUpload(
-        @RequestParam("file") MultipartFile file
-    ){
+            @RequestParam("file") MultipartFile file) {
         String url = fileService.accommodationMainFileUpload(file);
         return url;
     }
 
+    // 숙소 서브 이미지 파일 업로드 api
     @PostMapping("/upload/accommodationSub")
     public String accommodationSubFileUpload(
-        @RequestParam("file") MultipartFile file
-    ){
+            @RequestParam("file") MultipartFile file) {
         String url = fileService.accommodationSubFileUpload(file);
         return url;
     }
 
+    // 객실 메인 이미지 파일 업로드 api
+    @PostMapping("/upload/roomMain")
+    public String roomMainFileUpload(
+            @RequestParam("file") MultipartFile file) {
+        String url = fileService.roomMainImageFileUpload(file);
+        return url;
+    }
+
+    // 객실 서브 이미지 파일 업로드 api
     @PostMapping("/upload/roomSub")
     public String roomSubFileUpload(
-        @RequestParam("file") MultipartFile file
-    ){
+            @RequestParam("file") MultipartFile file) {
         String url = fileService.roomSubFileUpload(file);
         return url;
     }
 
+    // 사업자 인증 서류 파일 업로드 api
     @PostMapping("/upload/business")
     public String businessFileUpload(
-        @RequestParam("file") MultipartFile file
-    ){
+            @RequestParam("file") MultipartFile file) {
         String url = fileService.businessFileUpload(file);
         return url;
     }
 
-    @GetMapping(value="/accommodationMain/{fileName}", produces={MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
+    // 숙소 메인 이미지 가져오기 api
+    @GetMapping(value = "/accommodationMain/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE,
+            MediaType.IMAGE_JPEG_VALUE })
     public Resource getAccommodationMainImage(
-        @PathVariable("fileName") String fileName
-    ){
+            @PathVariable("fileName") String fileName) {
         Resource resource = fileService.getAccommodationMainFile(fileName);
         return resource;
     }
 
-    @GetMapping(value="/accommodationSub/{fileName}", produces={MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
+    // 숙소 서브 이미지 가져오기 api 
+    @GetMapping(value = "/accommodationSub/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE,
+            MediaType.IMAGE_JPEG_VALUE })
     public Resource getAccommodationSubImage(
-        @PathVariable("fileName") String fileName
-    ){
+            @PathVariable("fileName") String fileName) {
         Resource resource = fileService.getAccommodationSubFile(fileName);
         return resource;
     }
 
-    @GetMapping(value="/roomSub/{fileName}", produces={MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
+    // 객실 메인 이미지 가져오기 api
+    @GetMapping(value = "/roomMain/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE })
+    public Resource getRoomMainImage(
+            @PathVariable("fileName") String fileName) {
+        Resource resource = fileService.getRoomMainFile(fileName);
+        return resource;
+    }
+
+    // 객실 메인 이미지 가져오기 api
+    @GetMapping(value = "/roomSub/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE })
     public Resource getRoomSubImage(
-        @PathVariable("fileName") String fileName
-    ){
+            @PathVariable("fileName") String fileName) {
         Resource resource = fileService.getRoomSubFile(fileName);
         return resource;
     }
 
-    
-    @GetMapping(value="/business/{fileName}", produces={MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})
+    // 사업자 정보 파일 가져오기 api
+    @GetMapping(value = "/business/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE })
     public Resource getBusinessImage(
-        @PathVariable("fileName") String fileName
-    ){
+            @PathVariable("fileName") String fileName) {
         Resource resource = fileService.getBusinessFile(fileName);
         return resource;
     }
 
-    
 }
