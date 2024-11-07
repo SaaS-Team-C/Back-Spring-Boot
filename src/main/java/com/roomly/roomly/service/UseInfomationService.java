@@ -8,7 +8,10 @@ import com.roomly.roomly.dto.response.ResponseDto;
 
 public interface UseInfomationService {
     
+    // 숙소 이용정보 등록
     ResponseEntity<ResponseDto> postUseInformation(PostUseInformationRequestDto dto);
+    // 숙소 이용정보 수정
     ResponseEntity<ResponseDto> patchUseInformation(PatchUseInformationRequestDto dto, String accommodationName, Integer autoKey);
+    // 숙소 이용정보 삭제
     ResponseEntity<ResponseDto> deleteUseInformation(Integer autoKey);
 }

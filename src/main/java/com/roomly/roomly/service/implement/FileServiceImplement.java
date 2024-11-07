@@ -18,6 +18,8 @@ public class FileServiceImplement implements FileService {
     private String accommodationMainFilePath;
     @Value("${file.path.accommodation.sub}")
     private String accommodationSubFilePath;
+    @Value("${file.path.room.main}")
+    private String roomMainFilePath;
     @Value("${file.path.room.sub}")
     private String roomSubFilePath;
     @Value("${file.path.business}")
@@ -26,6 +28,7 @@ public class FileServiceImplement implements FileService {
     @Value("${file.url}")
     private String fileUrl;
 
+    // 숙소 메인 파일 업로드 메서드
     @Override
     public String accommodationMainFileUpload(MultipartFile file) {
 
@@ -46,6 +49,8 @@ public class FileServiceImplement implements FileService {
         String url = fileUrl + saveFileName;
         return url;
     }
+
+    // 숙소 서브 파일 업로드 메서드
     @Override
     public String accommodationSubFileUpload(MultipartFile file) {
 
@@ -66,6 +71,30 @@ public class FileServiceImplement implements FileService {
         String url = fileUrl + saveFileName;
         return url;
     }
+
+    // 객실 메인 파일 업로드 메서드
+    @Override
+    public String roomMainImageFileUpload(MultipartFile file){
+
+        if(file.isEmpty()) return null;
+
+        String originalFileName = file.getOriginalFilename();
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String uuid = UUID.randomUUID().toString();
+        String saveFileName = uuid + extension;
+        String savePath = roomMainFilePath + saveFileName;
+
+        try {
+            file.transferTo(new File(savePath));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        String url = fileUrl + saveFileName;
+        return url;
+    }
+
+    // 객실 서브 파일 업로드 메서드
     @Override
     public String roomSubFileUpload(MultipartFile file) {
 
@@ -87,6 +116,7 @@ public class FileServiceImplement implements FileService {
         return url;
     }
 
+    // 사업자 관련 파일 업로드 메서드
     @Override
     public String businessFileUpload(MultipartFile file) {
 
@@ -109,8 +139,7 @@ public class FileServiceImplement implements FileService {
         return url;
     }
     
-
-
+    // 숙소 메인 파일 가져오기 메서드
     @Override
     public Resource getAccommodationMainFile(String fileName) {
         
@@ -126,6 +155,8 @@ public class FileServiceImplement implements FileService {
         return resource;
     }
 
+
+    // 숙소 서브 파일 가져오기 메서드
     @Override
     public Resource getAccommodationSubFile(String fileName) {
         Resource resource = null;
@@ -139,6 +170,21 @@ public class FileServiceImplement implements FileService {
         return resource;
     }
 
+    // 객실 메인 파일 가져오기 메서드
+    @Override
+    public Resource getRoomMainFile(String fileName) {
+        Resource resource = null;
+        
+        try {
+            resource = new UrlResource("file:" + roomMainFilePath + fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return resource;
+    }
+
+    // 객실 서브 파일 가져오기 메서드
     @Override
     public Resource getRoomSubFile(String fileName) {
         Resource resource = null;
@@ -152,6 +198,7 @@ public class FileServiceImplement implements FileService {
         return resource;
     }
 
+    // 사업자 파일 가져오기 메서드
     @Override
     public Resource getBusinessFile(String fileName) {
         Resource resource = null;
@@ -164,6 +211,8 @@ public class FileServiceImplement implements FileService {
         }
         return resource;
     }
+    
+    
 }
 
 
