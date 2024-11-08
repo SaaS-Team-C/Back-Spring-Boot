@@ -14,6 +14,7 @@ import com.roomly.roomly.dto.request.guest.PatchGuestPwRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
+import com.roomly.roomly.dto.request.guest.GuestInformationRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestMyPageResponseDto;
 import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
@@ -30,11 +31,21 @@ public class GuestController {
     private final GuestService guestService;
     
     // 해당 Id에 관한 게스트 정보 보기
-    @GetMapping("/view-information/{guestId}")
+    // @GetMapping("/view-information/{guestId}")
+    // public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(
+    //     @PathVariable("guestId") String guestId
+    // ){
+    //     ResponseEntity<? super GetGuestMyPageResponseDto> response = guestService.getGuestMyPage(guestId);
+    //     return response;
+    // }
+
+    // 해당 Id에 관한 게스트 정보보기2
+    @PostMapping("/guest-information/{guestId}")
     public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(
-        @PathVariable("guestId") String guestId
-    ){
-        ResponseEntity<? super GetGuestMyPageResponseDto> response = guestService.getGuestMyPage(guestId);
+        @PathVariable("guestId") String guestId,
+        @RequestBody @Valid GuestInformationRequestDto requestBody
+    ) {
+        ResponseEntity<? super GetGuestMyPageResponseDto> response = guestService.getGuestMyPage(guestId,requestBody);
         return response;
     }
 

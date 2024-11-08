@@ -25,7 +25,7 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     // 즐겨찾기 리스트보기 (해당 id에 대한)
-    @GetMapping("/bookmark-list/{guestId}")
+    @GetMapping("/list-bookmark/{guestId}")
     public ResponseEntity<? super GetGuestBookMarkResponseDto> getBookMarkList(
         @PathVariable("guestId") String guestId
     ) {
