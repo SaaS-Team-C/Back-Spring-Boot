@@ -26,7 +26,7 @@ public class HostSignUpRequestDto {
     @Pattern(regexp="^[0-9]{11}$")
     private String hostTelNumber;
     @NotBlank
-    private String authNumber;
+    private String hostAuthNumber;
     @NotBlank
     private String hostBusinessNumber;
     @NotBlank

@@ -12,9 +12,11 @@ import lombok.Getter;
 public class Room {
     private Integer roomId;
     private String roomName;
+    private String roomMainImage;
     private Integer roomPrice;
     private String roomCheckIn;
     private String roomCheckOut;
+    private String roomInfo;
     private List<String> roomImages;
 
     public Room (GetRoomResultSet resultSet, List<RoomImageEntity> roomImageEntities){
@@ -26,9 +28,11 @@ public class Room {
         
         this.roomId = resultSet.getRoomId();
         this.roomName = resultSet.getRoomName();
+        this.roomMainImage = resultSet.getRoomMainImage();
         this.roomPrice = resultSet.getRoomPrice();
         this.roomCheckIn = resultSet.getRoomCheckIn();
         this.roomCheckOut = resultSet.getRoomCheckOut();
+        this.roomInfo = resultSet.getRoomInfo();
         this.roomImages = roomImages;
     }
     

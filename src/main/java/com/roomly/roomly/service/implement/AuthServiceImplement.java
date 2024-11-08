@@ -81,7 +81,7 @@ public class AuthServiceImplement implements AuthService {
         String authNumber = AuthNumberCreater.number4();
 
         boolean isSendSuccess = smsProvider.sendMessage(hostTelNumber, authNumber);
-        if(!isSendSuccess) return ResponseDto.messageSendFail();
+        if(isSendSuccess) return ResponseDto.messageSendFail();
 
         try {
             TelAuthNumberEntity telAuthNumberEntity = new TelAuthNumberEntity(hostTelNumber, authNumber);
@@ -129,7 +129,7 @@ public class AuthServiceImplement implements AuthService {
         }
         return ResponseDto.success();
     }
-
+    // 사업자 파일 중복확인 메서드
     @Override
     public ResponseEntity<ResponseDto> hostBusinessImage(HostBusinessImageRequestDto dto) {
         try {
@@ -151,8 +151,9 @@ public class AuthServiceImplement implements AuthService {
         String hostId = dto.getHostId();
         String hostPw = dto.getHostPw();
         String hostTelNumber = dto.getHostTelNumber();
-        String hostAuthNumber = dto.getAuthNumber();
+        String hostAuthNumber = dto.getHostAuthNumber();
         String hostBusinessNumber = dto.getHostBusinessNumber();
+        String businessImage = dto.getBusinessImage();
 
         try {
 
@@ -167,6 +168,9 @@ public class AuthServiceImplement implements AuthService {
 
             boolean isMatchedHostBusinessNumber = hostRepository.existsByHostBusinessNumber(hostBusinessNumber);
             if (isMatchedHostBusinessNumber) return ResponseDto.duplicatedBusinessNumber();
+
+            boolean isExist = hostRepository.existsByBusinessImage(businessImage);
+            if (isExist) return ResponseDto.duplicatedImage();
 
             String encodedPassword = passwordEncoder.encode(hostPw);
             dto.setHostPw(encodedPassword);

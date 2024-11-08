@@ -58,6 +58,7 @@ public class AccommodationEntity {
         this.hostId = dto.getHostId();
         this.hostTelNumber = dto.getHostTelNumber();
         this.entryTime = dto.getEntryTime();
+
     }
 
     public void patch (PatchAccommodationRequestDto dto){

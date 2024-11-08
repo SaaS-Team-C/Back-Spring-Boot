@@ -22,10 +22,12 @@ public interface RoomRepository extends JpaRepository<RoomEntity, Integer> {
     "SELECT "+
         "R.room_id as room_id,"+
         "R.room_name as room_name," +
+        "R.room_main_image as room_main_image,"+
         "R.room_price as room_price," +
         "R.room_check_in as room_check_in," +
         "R.room_check_out as room_check_out," +
         "R.room_total_guest as room_total_guest," +
+        "R.room_info as room_info, "+
         "A.accommodation_name as accommodation_name "+
     "FROM accommodation A LEFT JOIN room R "+
     "ON R.accommodation_name = A.accommodation_name "+
