@@ -27,7 +27,7 @@ public class BookmarkServiceImplement implements BookmarkService {
     private final GuestRepository guestRepository;
     private final AccommodationRepository accommodationRepository;
     
-    // 즐겨찾기 리스트 메서드
+    // 즐겨찾기 list
     @Override
     public ResponseEntity<? super GetGuestBookMarkResponseDto> getBookMarkList(String guestId) {
         
@@ -45,6 +45,7 @@ public class BookmarkServiceImplement implements BookmarkService {
         return GetGuestBookMarkResponseDto.success(bookMarkResultSets);
     }
 
+    // 즐겨찾기 add
     @Override
     public ResponseEntity<ResponseDto> addBookMark(AddBookMarkRequestDto dto, String guestId) {
         
@@ -55,7 +56,7 @@ public class BookmarkServiceImplement implements BookmarkService {
             
             // 매개변수로 받아온 Id 유효성 검사
             boolean isExistedId = guestRepository.existsByGuestId(guestId);
-            if (!isExistedId) return ResponseDto.noExistGuest();
+            if (!isExistedId) return ResponseDto.noExistUserId();
             
             // 매개변수로 받은 Id와 requestBody의 아이디값도 일치해야함
             id = dto.getGuestId();
@@ -65,14 +66,6 @@ public class BookmarkServiceImplement implements BookmarkService {
             String accommodation = dto.getAccommodationName();
             boolean isExisted = accommodationRepository.existsByAccommodationName(accommodation);
             if (!isExisted) return ResponseDto.noExistAccommodation();
-
-            // 여기서 궁금한 점
-            /*
-            두 문자열 객체를 비교하는 것이기에 일치할 수 가 없구나... 인정 이해함
-                id = dto.getGuestId();
-                if(id != guestId) return ResponseDto.notMatchValue();
-                하면 왜 매개변수로 받은 guestId 와 AddBookMarkRequestDto dto안의 값이 일치해도 일치하지 않는다고 뜰까?
-             */
 
             bookmarkEntity = new BookmarkEntity(dto);
             bookMarkRepository.save(bookmarkEntity);

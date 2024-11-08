@@ -12,6 +12,7 @@ import com.roomly.roomly.dto.request.guest.PatchGuestPwRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
+import com.roomly.roomly.dto.request.guest.GuestInformationRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestMyPageResponseDto;
 import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
@@ -35,22 +36,28 @@ public class GuestServiceImplement implements GuestService {
 
     @Override
     // 게스트Id에 관한 MyPageList 메서드
-    public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(String guestId) {
+    // public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(String guestId) {
+    public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(String guestId, GuestInformationRequestDto dto) {
 
-        GuestEntity id = null;
+        GuestEntity guestEntity = null;
+        String guestPw = dto.getGuestPw();
 
         try {
 
-            id = guestRepository.findByGuestId(guestId);
-            if (id == null)
-                return ResponseDto.noExistUserId();
-
+            guestEntity = guestRepository.findByGuestId(guestId);
+            if (guestEntity == null) return ResponseDto.noExistUserId();
+            
+            String basicPw = guestEntity.getGuestPw();
+            
+            boolean isMatched = passwordEncoder.matches(guestPw,basicPw);
+            if(!isMatched) return ResponseDto.notMatchPassword();
+            
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();
         }
-
-        return GetGuestMyPageResponseDto.success(id);
+        
+        return GetGuestMyPageResponseDto.success(guestEntity);
     }
 
     // 비밀번호 수정 메서드
@@ -89,8 +96,11 @@ public class GuestServiceImplement implements GuestService {
             PatchGuestTelNumberRequestDto dto, String guestId) {
 
         String guestTelNumber = dto.getGuestTelNumber();
-
+        
         try {
+
+            boolean id = guestRepository.existsByGuestId(guestId);
+            if(!id) return ResponseDto.noExistUserId();
 
             boolean isExistedTelNumber = guestRepository.existsByGuestTelNumber(guestTelNumber);
             if (isExistedTelNumber)
@@ -129,17 +139,17 @@ public class GuestServiceImplement implements GuestService {
         String authNumber = dto.getGuestAuthNumber();
 
         try {
-            boolean existsByGuestId = guestRepository.existsByGuestId(guestId);
-            if (!existsByGuestId)
-                return ResponseDto.noExistUserId();
-
-            boolean isMatchedAuth = telAuthNumberRepository.existsByTelNumberAndAuthNumber(telNumber, authNumber);
-            if (!isMatchedAuth)
-                return ResponseDto.telAuthFail();
+            // boolean existsByGuestId = guestRepository.existsByGuestId(guestId);
+            // if (!existsByGuestId)
+            //     return ResponseDto.noExistUserId();
 
             GuestEntity guestEntity = guestRepository.findByGuestId(guestId);
             if (guestEntity == null)
                 return ResponseDto.noExistUserId();
+            
+                boolean isMatchedAuth = telAuthNumberRepository.existsByTelNumberAndAuthNumber(telNumber, authNumber);
+            if (!isMatchedAuth)
+                return ResponseDto.telAuthFail();
 
             String oldTelNumber = guestEntity.getGuestTelNumber();
 

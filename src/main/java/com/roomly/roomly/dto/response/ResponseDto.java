@@ -141,6 +141,11 @@ public class ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
     
+    public static ResponseEntity<ResponseDto> notMatchPassword() {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_MATCH_PASSWORD, ResponseMessage.NOT_MATCH_PASSWORD);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
+    
     public static ResponseEntity<ResponseDto> entryFail(){
         ResponseDto responseBody = new ResponseDto(ResponseCode.ENTRY_FAIL, ResponseMessage.ENTRY_FAIL);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);

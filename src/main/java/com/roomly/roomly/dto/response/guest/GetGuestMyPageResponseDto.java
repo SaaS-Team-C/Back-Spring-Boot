@@ -11,6 +11,7 @@ import lombok.Getter;
 
 @Getter
 public class GetGuestMyPageResponseDto extends ResponseDto{
+    
     private String guestName;
     private String guestTelNumber;
     private String guestId;

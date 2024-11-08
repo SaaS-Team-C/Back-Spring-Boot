@@ -31,7 +31,7 @@ public interface ResponseCode {
     String NOT_MATCH_VALUE = "NMV";
     String NO_EXIST_REVIEW_ID = "NRI";
     String NO_EXIST_RESERVATION_ID = "NI";
-    
+    String NOT_MATCH_PASSWORD = "NMP";    
 
     // ERROR_CODE 401
     String TEL_AUTH_FAILE = "TAF"; 
