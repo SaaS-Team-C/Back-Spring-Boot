@@ -21,13 +21,13 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     "SELECT " +
     " A.accommodation_name,"+
     " A.accommodation_main_image,"+
-    " V.reservation_number,"+
-    " V.reservation_day,"+
+    " V.reservation_id,"+
     " V.reservation_total_people,"+
+    " V.total_night,"+
+    " V.total_price, "+
     " G.guest_name,"+
     " G.guest_tel_number,"+
-    " R.room_name,"+
-    " R.room_price "+
+    " R.room_name "+
     " FROM reservation V LEFT JOIN room R "+
     " ON V.room_id = R.room_id "+
     " LEFT JOIN accommodation A "+

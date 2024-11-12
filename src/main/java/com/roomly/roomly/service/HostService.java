@@ -19,8 +19,7 @@ public interface HostService {
     // 호스트 비밀번호 변경(로그인)
     ResponseEntity<ResponseDto> patchHostPassword(PatchHostPasswordRequestDto dto, String hostId);
     // 호스트 전화번호 변경 및 전화번호 재인증
-    ResponseEntity<ResponseDto> patchHostTelNumber(PatchHostTelNumberRequestDto dto, String hostId,
-            String hostTelNumber);
+    ResponseEntity<ResponseDto> patchHostTelNumber(PatchHostTelNumberRequestDto dto, String hostId);
     // 호스트 숙소별 예약 리스트
     ResponseEntity<? super GetReservationResponseDto> getRerservaitonList(String hostId);
     // 호스트 아이디 찾기 

@@ -18,6 +18,7 @@ public interface RoomImageRepository extends JpaRepository<RoomImageEntity, Room
     List<RoomImageEntity> findByRoomId(Integer roomId);
     RoomImageEntity findByRoomImage(String roomImage);
     boolean existsByRoomImage(String roomImage);
+    boolean existsByRoomIdAndRoomImage(Integer roomId, String roomImage);
 
     @Modifying
     @Transactional

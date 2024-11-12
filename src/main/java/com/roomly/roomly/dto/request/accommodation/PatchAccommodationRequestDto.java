@@ -1,5 +1,6 @@
 package com.roomly.roomly.dto.request.accommodation;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,9 +10,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PatchAccommodationRequestDto {
 
-
+    @NotBlank
     private String accommodationMainImage;
+    @NotBlank
     private String accommodationIntroduce;
+    @NotBlank
     private String categoryArea;
     private boolean categoryPet;
     private boolean categoryNonSmokingArea;

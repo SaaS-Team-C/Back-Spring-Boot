@@ -43,7 +43,7 @@ public class HostServiceImplement implements HostService {
 
     // 마이페이지 호스트 정보 조회 메서드
     @Override
-    public ResponseEntity<? super GetHostResponseDto> getHost(String hostId) {
+    public ResponseEntity<? super GetHostResponseDto> getHost(HostMyPageRequestDto dto, String hostId) {
 
         HostEntity hostEntity;
 
@@ -52,6 +52,11 @@ public class HostServiceImplement implements HostService {
             hostEntity = hostRepository.findByHostId(hostId);
             if (hostEntity == null)
                 return ResponseDto.noExistUserId();
+            String checkPw = hostEntity.getHostPw();
+            String hostPw = dto.getHostPw();
+            
+            boolean isMatched = passwordEncoder.matches(hostPw, checkPw);
+            if(!isMatched) return ResponseDto.noPermission();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,8 +96,7 @@ public class HostServiceImplement implements HostService {
 
     // 호스트 전화번호 수정 및 재인증 메서드
     @Override
-    public ResponseEntity<ResponseDto> patchHostTelNumber(PatchHostTelNumberRequestDto dto, String hostId,
-            String hostTelNumber) {
+    public ResponseEntity<ResponseDto> patchHostTelNumber(PatchHostTelNumberRequestDto dto, String hostId) {
 
         // 바꿀 전화번호
         String changeTelNumber = dto.getTelNumber();
@@ -102,6 +106,7 @@ public class HostServiceImplement implements HostService {
             HostEntity hostEntity = hostRepository.findByHostId(hostId);
             if (hostEntity == null)
                 return ResponseDto.noExistUserId();
+            String hostTelNumber = hostEntity.getHostTelNumber();
 
             TelAuthNumberEntity telAuthNumberEntity = telAuthNumberRepository
                     .findByTelNumberAndAuthNumber(changeTelNumber, authNumber);
@@ -111,14 +116,12 @@ public class HostServiceImplement implements HostService {
             hostEntity.setHostTelNumber(changeTelNumber);
             hostRepository.save(hostEntity);
 
+            telAuthNumberRepository.deleteByTelNumber(hostTelNumber);
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();
         }
-        TelAuthNumberEntity telAuthNumberEntity = telAuthNumberRepository.findByTelNumber(hostTelNumber);
-        if (telAuthNumberEntity == null)
-            return ResponseDto.telAuthFail();
-        telAuthNumberRepository.deleteByTelNumber(hostTelNumber);
         return ResponseDto.success();
     }
 

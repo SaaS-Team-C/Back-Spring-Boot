@@ -1,5 +1,6 @@
 package com.roomly.roomly.entity;
 
+
 import com.roomly.roomly.dto.request.room.PatchRoomRequestDto;
 import com.roomly.roomly.dto.request.room.PostRoomRequestDto;
 
@@ -34,16 +35,17 @@ public class RoomEntity {
     private String roomInfo;
     private String roomMainImage;
 
-    public RoomEntity(PostRoomRequestDto dto, String accommodationName){
-
-        this.roomName = dto.getRoomName();
-        this.roomPrice = dto.getRoomPrice();
-        this.roomCheckIn = dto.getRoomCheckIn();
-        this.roomCheckOut = dto.getRoomCheckOut();
-        this.roomTotalGuest = dto.getRoomTotalGuest();
-        this.accommodationName = accommodationName;
-        this.roomMainImage = dto.getRoomMainImage();
-        this.roomInfo = dto.getRoomInfo();
+    public RoomEntity(PostRoomRequestDto roomRequestDto, String accommodationName) {
+        
+            this.roomName = roomRequestDto.getRoomName();
+            this.roomPrice = roomRequestDto.getRoomPrice();
+            this.roomCheckIn = roomRequestDto.getRoomCheckIn();
+            this.roomCheckOut = roomRequestDto.getRoomCheckOut();
+            this.roomTotalGuest = roomRequestDto.getRoomTotalGuest();
+            this.accommodationName = accommodationName;
+            this.roomMainImage = roomRequestDto.getRoomMainImage();
+            this.roomInfo = roomRequestDto.getRoomInfo();
+            
     }
 
     public void patch(PatchRoomRequestDto dto){

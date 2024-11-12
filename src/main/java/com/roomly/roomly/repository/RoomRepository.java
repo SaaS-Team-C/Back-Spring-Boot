@@ -17,7 +17,9 @@ import jakarta.transaction.Transactional;
 public interface RoomRepository extends JpaRepository<RoomEntity, Integer> {
     
     boolean existsByAccommodationNameAndRoomName(String accommodationName, String roomName);
+    boolean existsByRoomName(String roomName);
     boolean existsByRoomId(Integer roomId);
+    boolean existsByRoomMainImage(String roomMainImage);
     @Query(value=
     "SELECT "+
         "R.room_id as room_id,"+

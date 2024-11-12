@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
+
+import java.util.Date;
 import java.time.LocalDateTime;
 @Getter
 @Setter
@@ -37,11 +39,11 @@ public class AccommodationEntity {
     private boolean categoryPool;
     private Integer accommodationGradeSum;
     private String hostId;
-    private String hostTelNumber;
     private Boolean applyStatus;
-    private LocalDateTime entryTime;
+    private Date entryTime;
 
     public AccommodationEntity(PostAccommodationReqeustDto dto) {
+        Date now = new Date();
         this.accommodationName = dto.getAccommodationName();
         this.accommodationMainImage = dto.getAccommodationMainImage();
         this.accommodationAddress = dto.getAccommodationAddress();
@@ -56,8 +58,8 @@ public class AccommodationEntity {
         this.categoryCarPark = dto.isCategoryCarPark();
         this.categoryPool = dto.isCategoryPool();
         this.hostId = dto.getHostId();
-        this.hostTelNumber = dto.getHostTelNumber();
-        this.entryTime = dto.getEntryTime();
+        this.applyStatus = dto.getApplyStatus() == null || dto.getApplyStatus() == 0 ? false : true;
+        this.entryTime = now;
 
     }
 

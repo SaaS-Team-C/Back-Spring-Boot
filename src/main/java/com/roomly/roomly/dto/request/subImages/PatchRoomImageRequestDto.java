@@ -1,5 +1,7 @@
 package com.roomly.roomly.dto.request.subImages;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
