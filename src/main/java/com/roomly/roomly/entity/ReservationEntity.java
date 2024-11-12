@@ -35,8 +35,8 @@ public class ReservationEntity {
     public ReservationEntity(PaymentSuccessRequestDto dto){
         this.guestId = dto.getGuestId();
         this.roomId = dto.getRoomId();
-        this.checkInDay = dto.getCheckInDay();
-        this.checkOutDay = dto.getCheckOutDay();
+        this.checkInDay = dto.getCheckInDate();
+        this.checkOutDay = dto.getCheckOutDate();
         this.reservationTotalPeople = dto.getReservationTotalPeople();
         this.createdAt = dto.getCreatedAt();
         this.totalNight = dto.getTotalNight();

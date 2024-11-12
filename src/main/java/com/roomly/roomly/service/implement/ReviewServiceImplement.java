@@ -48,10 +48,6 @@ public class ReviewServiceImplement implements ReviewService{
             boolean isReservationdId = reservationIdTest.equals(reservationId);
             if(!isReservationdId) return ResponseDto.notMatchValue(); 
 
-            String guestsIdTest = dto.getGuestId();
-            boolean isGuestId = guestsIdTest.equals(guestId);
-            if (!isGuestId) return ResponseDto.notMatchValue();
-
             boolean iseixst = reservationRepository.existsByReservationIdAndGuestId(reservationId, guestId);
             if (!iseixst) return ResponseDto.notMatchValue();
 
@@ -73,13 +69,13 @@ public class ReviewServiceImplement implements ReviewService{
 
 
         try {
-            // 해당 아이디가 review 테이블에 있는지 유효성 검사
-            boolean id = reviewRepository.existsByGuestId(guestId);
-            if (!id) return ResponseDto.noExistUserId();
+            // 아이디 유효성 검사
+            boolean isExistsGuestId = reservationRepository.existsByGuestId(guestId);
+            if (!isExistsGuestId) return ResponseDto.noExistUserId();
             
             // 해당 아이디에 대해 작성한 리뷰가 있는지 검사
             resultSet = guestRepository.getReviewList(guestId);
-            if (resultSet == null) return ResponseDto.noExistReviewId();
+            if (resultSet.size() == 0) return ResponseDto.noExistReviewGuestId();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,7 +97,7 @@ public class ReviewServiceImplement implements ReviewService{
             
             // 해당 숙소에 대해 작성한 리뷰가 있는지 검사
             resultSet = accommodationRepository.getAccommodationReviewList(accommodationName);
-            if (resultSet == null) return ResponseDto.noExistReviewId();
+            if (resultSet.size() == 0) return ResponseDto.noExistAccommodationNameReview();
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -14,8 +14,6 @@ public class GuestReviewListRequestDto {
     
     private Long reservationId;
     @NotBlank
-    private String guestId;
-    @NotBlank
     private String reviewContent;
     @Min(1)
     @Max(5)

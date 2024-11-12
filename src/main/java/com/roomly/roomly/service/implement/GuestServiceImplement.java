@@ -13,6 +13,7 @@ import com.roomly.roomly.dto.request.guest.PatchGuestTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestInformationRequestDto;
+import com.roomly.roomly.dto.request.guest.GuestPwFindRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestMyPageResponseDto;
 import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
@@ -34,9 +35,8 @@ public class GuestServiceImplement implements GuestService {
     private final GuestRepository guestRepository;
     private final TelAuthNumberRepository telAuthNumberRepository;
 
-    @Override
     // 게스트Id에 관한 MyPageList 메서드
-    // public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(String guestId) {
+    @Override
     public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(String guestId, GuestInformationRequestDto dto) {
 
         GuestEntity guestEntity = null;
@@ -60,25 +60,26 @@ public class GuestServiceImplement implements GuestService {
         return GetGuestMyPageResponseDto.success(guestEntity);
     }
 
-    // 비밀번호 수정 메서드
+    // 비밀번호 수정 메서드(로그인)
     @Override
     public ResponseEntity<ResponseDto> patchGuestPw(
             PatchGuestPwRequestDto dto, String guestId) {
 
-        String chnagePassword = dto.getGuestPw();
+        String currentGuestPw = dto.getCurrentGuestPw();
+        String changeGuestPw = dto.getChangeGuestPw();
+
         try {
 
             GuestEntity guestEntity = guestRepository.findByGuestId(guestId);
             if (guestEntity == null)
                 return ResponseDto.noExistUserId();
-
+    
             String basicPw = guestEntity.getGuestPw();
-            boolean isMatched = passwordEncoder.matches(chnagePassword, basicPw);
-            if (isMatched)
-                return ResponseDto.duplicatedPassword();
+            boolean isMatched = passwordEncoder.matches(currentGuestPw, basicPw);
+            if (!isMatched) return ResponseDto.notMatchValue();
 
-            String encodedPassword = passwordEncoder.encode(chnagePassword);
-            dto.setGuestPw(encodedPassword);
+            String encodedPassword = passwordEncoder.encode(changeGuestPw);
+            dto.setChangeGuestPw(encodedPassword);
             guestEntity.patchPw(dto);
             guestRepository.save(guestEntity);
 
@@ -90,9 +91,9 @@ public class GuestServiceImplement implements GuestService {
         return ResponseDto.success();
     }
 
-    // 전화번호 수정
+    // 전화번호 중복확인 및 인증번호 발송
     @Override
-    public ResponseEntity<ResponseDto> patchGuestTelNumber(
+    public ResponseEntity<ResponseDto> guestPatchTelNumber(
             PatchGuestTelNumberRequestDto dto, String guestId) {
 
         String guestTelNumber = dto.getGuestTelNumber();
@@ -130,6 +131,7 @@ public class GuestServiceImplement implements GuestService {
         return ResponseDto.success();
     }
 
+    // 전화번호 수정 및 기존번호 삭제 메서드
     @Override
     @Transactional
     public ResponseEntity<ResponseDto> patchGuestAuth(
@@ -139,9 +141,6 @@ public class GuestServiceImplement implements GuestService {
         String authNumber = dto.getGuestAuthNumber();
 
         try {
-            // boolean existsByGuestId = guestRepository.existsByGuestId(guestId);
-            // if (!existsByGuestId)
-            //     return ResponseDto.noExistUserId();
 
             GuestEntity guestEntity = guestRepository.findByGuestId(guestId);
             if (guestEntity == null)
@@ -167,7 +166,7 @@ public class GuestServiceImplement implements GuestService {
     }
 
     @Override
-    // 아이디 찾기
+    // 아이디 찾기위한 이름과 전화번호 입력받기
     public ResponseEntity<ResponseDto> guestIdFind(GuestIdFindRequestDto dto) {
         String guestName = dto.getGuestName();
         String guestTelNumber = dto.getGuestTelNumber();
@@ -225,6 +224,33 @@ public class GuestServiceImplement implements GuestService {
             return ResponseDto.databaseError();
         }
         return GuestIdFindSuccessResponseDto.success(guestEntity);
+    }
+
+    @Override
+    // 비밀변호 변경(로그아웃)
+    public ResponseEntity<ResponseDto> guestPwFind(GuestPwFindRequestDto dto) {
+        
+        String guestId = dto.getGuestId();
+        String guestPw = dto.getGuestPw();
+
+        try {
+            // id 유효성 검사
+            GuestEntity guestEntity = guestRepository.findByGuestId(guestId);
+            if(guestEntity == null) return ResponseDto.noExistUserId();
+
+
+            // 해당 아이디에 비밀번호 값 변경
+            String encodedPassword = passwordEncoder.encode(guestPw);
+            guestEntity.setGuestPw(encodedPassword);
+            guestRepository.save(guestEntity);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();   
+        }
+
+        return ResponseDto.success();
+
     }
 
 }

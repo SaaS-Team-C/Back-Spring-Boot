@@ -9,14 +9,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PatchHostPasswordRequestDto {
+public class HostPwFindRequestDto {
     
     @NotBlank
-    @Pattern(regexp="^(?=.*[a-zA-Z])(?=.*[0-9]).{8,13}$")
-    private String currentHostPw;
-    
+    private String hostId;
     @NotBlank
     @Pattern(regexp="^(?=.*[a-zA-Z])(?=.*[0-9]).{8,13}$")
-    private String changeHostPw;
-
+    private String hostPw;
 }

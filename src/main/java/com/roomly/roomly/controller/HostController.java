@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.roomly.roomly.dto.response.reservation.GetReservationResponseDto;
 import com.roomly.roomly.dto.request.host.HostIdFindRequestDto;
 import com.roomly.roomly.dto.request.host.HostMyPageRequestDto;
+import com.roomly.roomly.dto.request.host.HostPwFindRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostPasswordRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
@@ -87,4 +88,12 @@ public class HostController {
             return responseBody;
         }
     
+    // 호스트 비밀번호 변경(로그아웃)
+    @PatchMapping("/pw-find")
+    public ResponseEntity<ResponseDto> hostPwFind(
+        @RequestBody @Valid HostPwFindRequestDto requestBody
+    ) {
+        ResponseEntity<ResponseDto> responseBody = hostService.hostPwFind(requestBody);
+        return responseBody;
+    }
 }

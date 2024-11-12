@@ -86,14 +86,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         AbstractAuthenticationToken hostAutenticationToken = 
             new UsernamePasswordAuthenticationToken(hostId, null,AuthorityUtils.NO_AUTHORITIES);
 
-            // 접근 주체(게스트)에 대한 인증 토큰 생성
+        // 접근 주체(게스트)에 대한 인증 토큰 생성
         AbstractAuthenticationToken guestAutenticationToken = 
         new UsernamePasswordAuthenticationToken(guestId, null,AuthorityUtils.NO_AUTHORITIES);
 
         // 생성한 인증 토큰이 어떤 요청에 대한 내용인 상세 정보 추가
         hostAutenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         guestAutenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
 
         // 빈 Security Context 생성
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();

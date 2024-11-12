@@ -46,7 +46,7 @@ public class GuestEntity {
     }
 
     public void patchPw(PatchGuestPwRequestDto dto) {
-        this.guestPw = dto.getGuestPw();
+        this.guestPw = dto.getChangeGuestPw();
     }
     
     public void patchTelNumber(PatchGuestAuthRequestDto dto) {

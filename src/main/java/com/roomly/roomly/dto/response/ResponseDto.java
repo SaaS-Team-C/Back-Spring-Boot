@@ -69,6 +69,11 @@ public class ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
+    public static ResponseEntity<ResponseDto> noExistReservation(){
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_RESERVATION, ResponseMessage.NO_EXIST_RESERVATION);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
+
     public static ResponseEntity<ResponseDto> noExistIntroduce(){
         ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_INTRODUCE, ResponseMessage.NO_EXIST_INTRODUCE);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
@@ -89,8 +94,8 @@ public class ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
-    public static ResponseEntity<ResponseDto> noExistReservation(){
-        ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_RESERVATION, ResponseMessage.NO_EXIST_RESERVATION);
+    public static ResponseEntity<ResponseDto> duplicatedReservation(){
+        ResponseDto responseBody = new ResponseDto(ResponseCode.DUPLICATED_RESERVATION, ResponseMessage.DUPLICATED_RESERVATION);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
@@ -115,8 +120,13 @@ public class ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
-    public static ResponseEntity<ResponseDto> noExistReviewId() {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_REVIEW_ID, ResponseMessage.NO_EXIST_REVIEW_ID);
+    public static ResponseEntity<ResponseDto> noExistReviewGuestId() {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_REVIEW_GUEST_ID, ResponseMessage.NO_EXIST_REVIEW_GUEST_ID);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
+
+    public static ResponseEntity<ResponseDto> noExistAccommodationNameReview() {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_REVIEW_ACCOMMODATION_NAME, ResponseMessage.NO_EXIST_REVIEW_ACCOMMODATION_NAME);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
     
@@ -140,7 +150,6 @@ public class ResponseDto {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_MATCH_VALUE, ResponseMessage.NOT_MATCH_VALUE);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
-    
     
     public static ResponseEntity<ResponseDto> entryFail(){
         ResponseDto responseBody = new ResponseDto(ResponseCode.ENTRY_FAIL, ResponseMessage.ENTRY_FAIL);

@@ -25,12 +25,12 @@ public class ReservationController {
     
     private final ReservationService reservationService;
 
-    @PostMapping("/paymentSuccess")
+    @PostMapping("/createReservation")
     // 결제성공후
-    public ResponseEntity<ResponseDto> paymentSuccess(
+    public ResponseEntity<ResponseDto> createReservation(
         @RequestBody @Valid PaymentSuccessRequestDto requestBody
-    ){
-        ResponseEntity<ResponseDto> response = reservationService.paymentSuccess(requestBody);
+    ) {
+        ResponseEntity<ResponseDto> response = reservationService.createReservation(requestBody);
         return response;
     }
 
@@ -45,7 +45,7 @@ public class ReservationController {
     }
 
     // 예약현황리스트
-    @GetMapping("/ReservationStatus/{guestId}")
+    @GetMapping("/reservation-status/{guestId}")
     public ResponseEntity<? super GetReservationStatusResponseDto> reservationStatus(
         @PathVariable("guestId") String guestId
     ){

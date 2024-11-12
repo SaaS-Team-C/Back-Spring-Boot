@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.roomly.roomly.dto.request.hostauth.test;
 import com.roomly.roomly.entity.ReservationEntity;
 import com.roomly.roomly.repository.resultSet.GetReservationResultSet;
 import com.roomly.roomly.repository.resultSet.GetReservationStatusResultSet;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Repository
@@ -73,5 +75,16 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
 
     boolean existsByRoomIdAndCheckInDayAndCheckOutDay(Integer roomId, String checkInDay, String checkOutDay);
 
+    boolean existsByGuestId(String guestId);
     
+    @Query(value = 
+    "SELECT * FROM Reservation R WHERE R.room_id = :roomId AND " +
+    "(R.check_in_Day < :checkOut AND R.check_out_day > :checkIn) ",
+    nativeQuery = true
+    )
+    List<ReservationEntity> findOverlappingReservations(
+        @Param("roomId") Integer roomId,
+        @Param("checkIn") LocalDate checkIn,
+        @Param("checkOut") LocalDate checkOut
+    );
 }

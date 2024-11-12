@@ -26,7 +26,7 @@ public interface BookMarkRepository extends JpaRepository<BookmarkEntity, Bookma
     "WHERE B.guest_id= :guestId ",
     nativeQuery = true
     )
-    List<GetBookMarkResultSet> findByGuestId(
+    List<GetBookMarkResultSet> getBookmarkList(
         @Param("guestId") String guestId
     );
 

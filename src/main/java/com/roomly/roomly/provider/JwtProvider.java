@@ -81,7 +81,7 @@ public class JwtProvider {
     // 검증 메서드
     public String validate(String jwt){
 
-        String hostId = null;
+        String userId = null;
 
         try {
             
@@ -89,11 +89,11 @@ public class JwtProvider {
             Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
             // JWT 검증 및 payload의 subject값 추출
-            hostId = Jwts.parserBuilder()
+            userId = Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(jwt) 
-                    .getBody()    // payloade 꺼내오는 작업
+                    .getBody()// payloade 꺼내오는 작업
                     .getSubject();
 
         } catch (Exception exception) {
@@ -101,7 +101,7 @@ public class JwtProvider {
             return null;
         }
 
-        return hostId;
+        return userId;
 
     }
 }

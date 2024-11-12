@@ -54,15 +54,14 @@ public interface AccommodationRepository extends JpaRepository<AccommodationEnti
 
     @Query(value = 
     "SELECT" +
-    "    G.guest_name as guestName, " +
-    "    RV.review_date as reviewDate, " +
-    "    RV.review_grade as reviewGrade, " +
-    "    RV.review_content as reviewContent " +
-    "FROM review as RV JOIN reservation as RS " +
-    "ON RV.reservation_id = RS.reservation_id " +
-    "JOIN guest as G ON RV.guest_id = G.guest_id " +
-    "JOIN room as R ON RS.room_id = R.room_id "+
-    "WHERE R.accommodation_name = :accommodationName ",
+    "    RE.guest_id as guestId, " +
+    "    R.review_date as reviewDate, " +
+    "    R.review_content as reviewContent, " +
+    "    R.review_grade as reviewGrade " +
+    "FROM review as R join reservation as RE " +
+    "ON R.reservation_id = RE.reservation_id " +
+    "JOIN room as OM ON RE.room_id = OM.room_id " +
+    "WHERE OM.accommodation_name= :accommodationName ",
     nativeQuery = true)
     List<AccommodationReviewListResultSet> getAccommodationReviewList(@Param("accommodationName") String accommodationName);
 

@@ -34,8 +34,11 @@ public class BookmarkServiceImplement implements BookmarkService {
         List<GetBookMarkResultSet> bookMarkResultSets = new ArrayList<>();
 
         try {
-            bookMarkResultSets = bookMarkRepository.findByGuestId(guestId);
-            if (bookMarkResultSets == null) return ResponseDto.noExistUserId();
+            
+            boolean existsByGuestId = bookMarkRepository.existsByGuestId(guestId);
+            if (!existsByGuestId) return ResponseDto.noExistUserId();
+
+            bookMarkResultSets = bookMarkRepository.getBookmarkList(guestId);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,23 +81,15 @@ public class BookmarkServiceImplement implements BookmarkService {
         return ResponseDto.success();
     }
 
+
     @Override
+    // 즐겨찾기 삭제
     public ResponseEntity<ResponseDto> deleteBookMark(String guestId, String accommodationName) {
         
         try {
 
-        
-            // // 북마크 유효성 검사
-            // BookmarkEntity bookmarkEntity = bookMarkRepository.findByBookmarkId(bookmarkId);
-            // if (bookmarkEntity == null ) return ResponseDto.noExistBookMark();
-
-            // // 아이디 유효성 검사
-            // String guest = bookmarkEntity.getGuestId();
-            // boolean isGuest = guest.equals(guestId);
-            // if (!isGuest) return ResponseDto.noPermission();
-
             boolean isGuest = guestRepository.existsByGuestId(guestId);
-            if (!isGuest) return ResponseDto.noExistGuest();
+            if (!isGuest) return ResponseDto.noExistUserId();
             
             boolean isAccommodation = accommodationRepository.existsByAccommodationName(accommodationName);
             if (!isAccommodation) return ResponseDto.noExistAccommodation();
