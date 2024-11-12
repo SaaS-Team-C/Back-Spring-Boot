@@ -17,11 +17,9 @@ import com.roomly.roomly.entity.UseInformationEntity;
 
 import lombok.Getter;
 
-
 @Getter
-public class GetAccommodationResponseDto extends ResponseDto {
-    
-    
+public class GetReservedAccommodationResponseDto extends ResponseDto {
+
     private String accommodationName;
     private String accommodationMainImage;
     private List<String> accSubImages;
@@ -39,7 +37,7 @@ public class GetAccommodationResponseDto extends ResponseDto {
     private boolean categoryCarPark;
     private boolean categoryPool;
 
-    public GetAccommodationResponseDto(
+    public GetReservedAccommodationResponseDto(
         AccommodationEntity accommodationEntity,
         String accommodationName,
         List<Room> roomList,
@@ -71,7 +69,7 @@ public class GetAccommodationResponseDto extends ResponseDto {
             this.categoryPool = accommodationEntity.isCategoryPool();
     }
 
-    public static ResponseEntity<GetAccommodationResponseDto> success(
+    public static ResponseEntity<GetReservedAccommodationResponseDto> success(
         AccommodationEntity accommodationEntity, 
         String accommodationName,
         List<Room> roomList,
@@ -79,10 +77,8 @@ public class GetAccommodationResponseDto extends ResponseDto {
         List<AccImageEntity> accImageEntities
         ){
 
-        GetAccommodationResponseDto responseBody = new GetAccommodationResponseDto(
+            GetReservedAccommodationResponseDto responseBody = new GetReservedAccommodationResponseDto(
                 accommodationEntity, accommodationName, roomList, useInformationEntities, accImageEntities);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
         }
-
-    
 }

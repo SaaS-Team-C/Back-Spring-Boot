@@ -22,8 +22,6 @@ import com.roomly.roomly.dto.response.ResponseCode;
 import com.roomly.roomly.dto.response.ResponseMessage;
 import com.roomly.roomly.filter.JwtAuthenticationFilter;
 import com.roomly.roomly.handler.OAuth2SuccessHandler;
-// import com.roomly.roomly.handler.OAuth2SuccessHandler;
-// import com.roomly.roomly.service.implement.OAuth2UserServiceImplement;
 import com.roomly.roomly.service.implement.OAuth2UserServiceImplement;
 
 import jakarta.servlet.ServletException;
@@ -63,7 +61,8 @@ public class WebSecurityConfig {
                 "/api.odcloud.kr/api/**",
                 "/api/roomly/auth/guest/**", 
                 "/api/roomly/auth/host/**",
-                "/api/roomly/file/**"
+                "/api/roomly/file/**",
+                "/api.roomly/admin/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )

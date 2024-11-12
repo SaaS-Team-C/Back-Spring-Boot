@@ -8,6 +8,7 @@ import com.roomly.roomly.dto.request.subImages.PatchAccommodationImageRequsetDto
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationResponseDto;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationImagesResponseDto;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationListResponseDto;
+import com.roomly.roomly.dto.response.accommodation.GetReservedAccommodationResponseDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 
 public interface AccommodationService {
@@ -20,6 +21,8 @@ public interface AccommodationService {
     ResponseEntity<ResponseDto> patchAccommodationImage(PatchAccommodationImageRequsetDto dto, String accommodationName, String accommodationImage);
     // Accommodation 정보 보기
     ResponseEntity<? super GetAccommodationResponseDto> getAccommodation(String accommodationName);
+    // 예약된 객실 안보이는 숙소 Accommodation정보보기
+    ResponseEntity<? super GetReservedAccommodationResponseDto> getReservedAccommodation(String accommodationName, String CheckInDay, String CheckOutDay);
     // Accommodation Sub Images 보기
     ResponseEntity<? super GetAccommodationImagesResponseDto> getAccommodationImages(String accommodationName);
     // Accommodation 리스트 보기
