@@ -102,7 +102,7 @@ public class ReservationServiceImplement implements ReservationService {
             
             // 예약 가능 여부 확인
             if (!isRoomAvailable(dto.getRoomId(), checkInDate, checkOutDate)) {
-                return ResponseDto.noExistReservation();
+                return ResponseDto.duplicatedReservation();
             }
             
             // 새 예약 생성 및 저장

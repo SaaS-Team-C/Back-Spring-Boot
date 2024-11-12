@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.roomly.roomly.common.object.Guest;
-
 import com.roomly.roomly.dto.request.admin.PatchEntryStatusRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.admin.EntryHostRespnoseDto;
@@ -14,6 +12,7 @@ import com.roomly.roomly.dto.response.admin.GetAccommodationListResponseDto;
 import com.roomly.roomly.dto.response.admin.GetGuestListResponseDto;
 import com.roomly.roomly.dto.response.admin.GetHostListResponseDto;
 import com.roomly.roomly.entity.AccommodationEntity;
+import com.roomly.roomly.entity.GuestEntity;
 import com.roomly.roomly.entity.HostEntity;
 import com.roomly.roomly.repository.AccommodationRepository;
 import com.roomly.roomly.repository.GuestRepository;
@@ -35,18 +34,17 @@ public class AdminServiceImplement implements AdminService {
     @Override
     public ResponseEntity<? super GetGuestListResponseDto> getGuestList() {
         
-        List<Guest> guestList = new ArrayList<>();
+        List<GuestEntity> guestEntities = new ArrayList<>();
 
         try {
-            guestList = guestRepository.getList();
-            if (guestList == null) return ResponseDto.noExistGuest();
-
+            guestEntities = guestRepository.getList();
+            if (guestEntities == null) return ResponseDto.noExistGuest();
 
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();
         }
-        return GetGuestListResponseDto.success(guestList);
+        return GetGuestListResponseDto.success(guestEntities);
     }
 
     // 호스트 리스트 조회 메서드
@@ -56,8 +54,8 @@ public class AdminServiceImplement implements AdminService {
 
         try {
             hostEntities = hostRepository.getList();
-            
-            
+            if(hostEntities == null) return ResponseDto.noExistHost();
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();

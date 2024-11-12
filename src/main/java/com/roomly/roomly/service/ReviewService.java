@@ -10,7 +10,7 @@ import com.roomly.roomly.dto.response.guest.GetGuestReviewResponseDto;
 public interface ReviewService {
     
     // 리뷰 작성하기
-    ResponseEntity<ResponseDto> addReview(GuestReviewListRequestDto dto, Long reservationId, String guesrId);
+    ResponseEntity<ResponseDto> addReview(GuestReviewListRequestDto dto,String guesrId);
     // 해당 guestId의 리뷰보기
     ResponseEntity<? super GetGuestReviewResponseDto> guestReviewList(String guestId);
     // 해당 숙소명의 리뷰 보기

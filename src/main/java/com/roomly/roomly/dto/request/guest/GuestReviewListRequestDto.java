@@ -12,12 +12,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GuestReviewListRequestDto {
     
-    private Long reservationId;
+    private Integer reservationId;
     @NotBlank
     private String reviewContent;
     @Min(1)
     @Max(5)
     private Integer reviewGrade;
-    private String reviewDate;
 
 }

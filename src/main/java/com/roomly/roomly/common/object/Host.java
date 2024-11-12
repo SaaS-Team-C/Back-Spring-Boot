@@ -13,21 +13,20 @@ public class Host {
     private String hostId;
     private String hostName;
     private Boolean entryStatus;
-    
 
-    public Host(HostEntity hostEntity){
+    public Host(HostEntity hostEntity) {
         this.hostId = hostEntity.getHostId();
         this.hostName = hostEntity.getHostName();
         this.entryStatus = hostEntity.getEntryStatus();
     }
 
-    public static List<Host> getHosts(List<HostEntity> hostEntities){
+    public static List<Host> getHosts(List<HostEntity> hostEntities) {
         List<Host> hosts = new ArrayList<>();
-        for (HostEntity hostEntity : hostEntities){
+        for (HostEntity hostEntity : hostEntities) {
             Host host = new Host(hostEntity);
             hosts.add(host);
         }
         return hosts;
     }
-    
+
 }

@@ -11,12 +11,12 @@ import lombok.Getter;
 @Getter
 public class HostSignInResponseDto extends ResponseDto{
     
-    private String accessToken;
+    private String HostAccessToken;
     private Integer expiration;
 
     public HostSignInResponseDto(String accessToken){
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-        this.accessToken = accessToken;
+        this.HostAccessToken = accessToken;
         this.expiration = 10 * 60 * 60;
     }
 
