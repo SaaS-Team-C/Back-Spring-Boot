@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.roomly.roomly.dto.response.reservation.GetReservationResponseDto;
 import com.roomly.roomly.dto.request.host.HostIdFindRequestDto;
+import com.roomly.roomly.dto.request.host.HostMyPageRequestDto;
 import com.roomly.roomly.dto.request.host.HostPwFindRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostPasswordRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostTelNumberRequestDto;

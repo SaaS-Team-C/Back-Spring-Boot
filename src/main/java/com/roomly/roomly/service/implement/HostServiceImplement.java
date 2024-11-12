@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.roomly.roomly.common.object.Reservation;
 import com.roomly.roomly.common.util.AuthNumberCreater;
 import com.roomly.roomly.dto.request.host.HostIdFindRequestDto;
+import com.roomly.roomly.dto.request.host.HostMyPageRequestDto;
 import com.roomly.roomly.dto.request.host.HostPwFindRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostPasswordRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostTelNumberRequestDto;
