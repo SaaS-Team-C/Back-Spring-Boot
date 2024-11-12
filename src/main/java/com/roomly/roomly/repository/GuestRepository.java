@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.roomly.roomly.common.object.Guest;
 import com.roomly.roomly.entity.GuestEntity;
 import com.roomly.roomly.repository.resultSet.GuestReviewListResultSet;
 
@@ -14,12 +13,10 @@ import com.roomly.roomly.repository.resultSet.GuestReviewListResultSet;
 public interface GuestRepository extends JpaRepository<GuestEntity, String> {
 
     @Query(value =
-    "SELECT "+
-    "guest_id, guest_name, guest_tel_number "+
-    "FROM guest ",
+    "SELECT * FROM guest ",
     nativeQuery = true 
     )
-    List<Guest> getList();
+    List<GuestEntity> getList();
 
     boolean existsByGuestNameAndGuestTelNumber(String guestName, String guestTelNumber);
     GuestEntity findByGuestTelNumber(String guestTelNumber);

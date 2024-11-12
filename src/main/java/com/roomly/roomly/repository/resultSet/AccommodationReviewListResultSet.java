@@ -2,7 +2,7 @@ package com.roomly.roomly.repository.resultSet;
 
 public interface AccommodationReviewListResultSet {
     
-    String getGuestName();
+    String getGuestId();
     String getReviewDate();
     String getReviewContent();
     Integer getReviewGrade();

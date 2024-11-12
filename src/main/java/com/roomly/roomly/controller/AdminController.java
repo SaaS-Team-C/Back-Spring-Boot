@@ -12,6 +12,7 @@ import com.roomly.roomly.dto.request.admin.PatchEntryStatusRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.admin.EntryHostRespnoseDto;
 import com.roomly.roomly.dto.response.admin.GetAccommodationListResponseDto;
+import com.roomly.roomly.dto.response.admin.GetGuestListResponseDto;
 import com.roomly.roomly.dto.response.admin.GetHostListResponseDto;
 import com.roomly.roomly.service.AdminService;
 
@@ -24,15 +25,21 @@ public class AdminController {
     
     private final AdminService adminService;
 
+    // 게스트 정보 리스트 조회 api
+    @GetMapping("/guest-info/list")
+    public ResponseEntity<? super GetGuestListResponseDto> getGuestList(){
+        ResponseEntity<? super GetGuestListResponseDto> responseBody = adminService.getGuestList();
+        return responseBody;
+    }
     // 호스트 정보 리스트 조회 api
-    @GetMapping(value={"/info/list"})
+    @GetMapping("/host-info/list")
     public ResponseEntity<? super GetHostListResponseDto> getHostList(){
         ResponseEntity<? super GetHostListResponseDto> responseBody = adminService.getHostList();
         return responseBody;
     }
 
     // 호스트정보 상세보기(어드민이 회원가입시 확인해야할 할때 사용) api
-    @GetMapping(value={"/info/detail/{hostId}"})
+    @GetMapping("/info/detail/{hostId}")
     public ResponseEntity<? super EntryHostRespnoseDto> getEntryhost(
         @PathVariable("hostId") String hostId
     ){
@@ -41,7 +48,7 @@ public class AdminController {
     }
 
     // 호스트 계정 승인 상태 변경 api
-    @PatchMapping(value={"/update/status/{hostId}"})
+    @PatchMapping("/update/status/{hostId}")
     public ResponseEntity<ResponseDto> patchEntryStatus(
         @RequestBody PatchEntryStatusRequestDto requestBody,
         @PathVariable("hostId") String hostId
@@ -51,14 +58,14 @@ public class AdminController {
     }
 
     // 숙소 리스트(숙소 승인 상태에 따라)조회 api
-    @GetMapping(value={"/accommodation-list"})
+    @GetMapping("/admin/accommodation-list")
     public ResponseEntity<? super GetAccommodationListResponseDto> getAccommodationList(){
         ResponseEntity<? super GetAccommodationListResponseDto> responseBody = adminService.getAccommodationList();
         return responseBody;
     }
 
     // 숙소 승인 상태 변경 api
-    @PatchMapping(value = {"/accommodation-apply/{accommodationName}"})
+    @PatchMapping("/admin/accommodation-apply/{accommodationName}")
     public ResponseEntity<ResponseDto> patchApplyStatus(
         @RequestBody PatchEntryStatusRequestDto requestBody,
         @PathVariable("accommodationName") String accommodationName

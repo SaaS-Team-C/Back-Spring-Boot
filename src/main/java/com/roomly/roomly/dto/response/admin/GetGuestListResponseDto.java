@@ -4,6 +4,7 @@ import com.roomly.roomly.common.object.Guest;
 import com.roomly.roomly.dto.response.ResponseCode;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.ResponseMessage;
+import com.roomly.roomly.entity.GuestEntity;
 
 import java.util.List;
 
@@ -18,13 +19,13 @@ public class GetGuestListResponseDto extends ResponseDto {
 
     private List<Guest> guestList;
 
-    public GetGuestListResponseDto(List<Guest> guestList){
+    public GetGuestListResponseDto(List<GuestEntity> guestListEntities){
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-
-        this.guestList = guestList;
+        this.guestList = Guest.getGuests(guestListEntities);
     }
 
-    public static ResponseEntity<GetGuestListResponseDto> success(List<Guest> guestList) {
+    public static ResponseEntity<GetGuestListResponseDto> success(List<GuestEntity> guestList) {
+
         GetGuestListResponseDto responseBody = new GetGuestListResponseDto(guestList);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
