@@ -1,5 +1,8 @@
 package com.roomly.roomly.dto.request.room;
 
+import java.util.List;
+
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -24,6 +27,7 @@ public class PostRoomRequestDto {
     private String roomMainImage;
     @NotBlank
     private String roomInfo;
+    private List<String> roomImages;
 
 
 }

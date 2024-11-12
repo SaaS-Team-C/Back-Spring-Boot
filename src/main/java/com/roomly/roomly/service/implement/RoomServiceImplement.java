@@ -4,10 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
+
 import com.roomly.roomly.dto.request.room.PatchRoomRequestDto;
-import com.roomly.roomly.dto.request.room.PostRoomRequestDto;
 import com.roomly.roomly.dto.request.subImages.PatchRoomImageRequestDto;
-import com.roomly.roomly.dto.request.subImages.PostRoomImageRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.room.GetRoomImageResponseDto;
 import com.roomly.roomly.dto.response.room.GetRoomResponseDto;
@@ -28,114 +27,10 @@ import lombok.RequiredArgsConstructor;
 public class RoomServiceImplement implements RoomService {
 
     private final RoomRepository roomRepository;
-    private final AccommodationRepository accommodationRepository;
     private final RoomImageRepository roomImageRepository;
     private final ReservationRepository reservationRepository;
+    private final AccommodationRepository accommodationRepository;
 
-    // 객실 등록 메서드
-    @Override
-    public ResponseEntity<ResponseDto> postRoom(PostRoomRequestDto dto, String accommodationName) {
-        
-        try {
-            
-            AccommodationEntity accommodationEntity = null;
-
-            accommodationEntity = accommodationRepository.findByAccommodationName(accommodationName);
-            if (accommodationEntity == null) return ResponseDto.noExistAccommodation();
-
-            String roomName = dto.getRoomName();
-            boolean isExistedRoomName = roomRepository.existsByAccommodationNameAndRoomName(accommodationName, roomName);
-            if (isExistedRoomName) return ResponseDto.duplicatedRoom();
-
-            RoomEntity roomEntity = new RoomEntity(dto, accommodationName);
-            roomRepository.save(roomEntity);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return ResponseDto.success();
-    }
-
-    // 객실 수정 메서드
-    @Override
-    public ResponseEntity<ResponseDto> patchRoom(PatchRoomRequestDto dto, String accommodationName, Integer roomId) {
-        
-        try {
-            RoomEntity roomEntity = roomRepository.findByAccommodationNameAndRoomId(accommodationName, roomId);
-            if (roomEntity == null ) return ResponseDto.noExistRoom();
-
-            String changeRoomName = dto.getRoomName();
-            boolean isExistedRoomName = roomRepository.existsByAccommodationNameAndRoomName(accommodationName, changeRoomName);
-            if(isExistedRoomName) return ResponseDto.duplicatedRoom();
-
-            roomEntity.patch(dto);
-            roomRepository.save(roomEntity);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return ResponseDto.success();
-    }
-
-    // 객실 서브 이미지 등록 메서드
-    @Override
-    public ResponseEntity<ResponseDto> postRoomImage(PostRoomImageRequestDto dto, String accommodationName, Integer roomId) {
-
-        try {
-            AccommodationEntity accommodationEntity = accommodationRepository.findByAccommodationName(accommodationName);
-            if (accommodationEntity == null) return ResponseDto.noExistAccommodation();
-
-            RoomEntity roomEntity = roomRepository.findByRoomId(roomId);
-            if (roomEntity == null ) return ResponseDto.noExistRoom();
-
-            String roomImage = dto.getRoomImage();
-            RoomImageEntity roomImageEntity = roomImageRepository.findByRoomImage(roomImage);
-            if(roomImageEntity != null) return ResponseDto.duplicatedImage();
-
-            roomImageEntity = new RoomImageEntity(dto);
-            roomImageRepository.save(roomImageEntity);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return ResponseDto.success();
-    }
-
-    // 객실 서브 이미지 수정 메서드
-    @Override
-    public ResponseEntity<ResponseDto> patchRoomImage(
-        PatchRoomImageRequestDto dto, 
-        String accommodationName,
-        Integer roomId,
-        String roomImage) {
-
-        try {
-            AccommodationEntity accommodationEntity = accommodationRepository.findByAccommodationName(accommodationName);
-            if (accommodationEntity == null) return ResponseDto.noExistAccommodation();
-
-            RoomEntity roomEntity = roomRepository.findByRoomId(roomId);
-            if(roomEntity == null) return ResponseDto.noExistRoom();
-
-            String imageUrl = dto.getRoomImage();
-            boolean isMatch = roomImageRepository.existsByRoomImage(imageUrl);
-            if(isMatch) return ResponseDto.duplicatedImage();
-
-            RoomImageEntity roomImageEntity = roomImageRepository.findByRoomImage(roomImage);
-            if(roomImageEntity == null ) return ResponseDto.noExistImage();
-
-            roomImageRepository.patchRoomImage(imageUrl, roomImage);
-            roomImageRepository.save(roomImageEntity);
-    
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return ResponseDto.success();
-    }
     
     // 객실 정보 가져오기 메서드
     @Override
@@ -175,6 +70,62 @@ public class RoomServiceImplement implements RoomService {
         }
         return GetRoomImageResponseDto.success(roomEntity, roomImageEntities);
     }
+
+    // 객실 수정 메서드
+    @Override
+    public ResponseEntity<ResponseDto> patchRoom(PatchRoomRequestDto dto, String accommodationName, Integer roomId) {
+        
+        try {
+            RoomEntity roomEntity = roomRepository.findByAccommodationNameAndRoomId(accommodationName, roomId);
+            if (roomEntity == null ) return ResponseDto.noExistRoom();
+
+            String changeRoomName = dto.getRoomName();
+            boolean isExistedRoomName = roomRepository.existsByAccommodationNameAndRoomName(accommodationName, changeRoomName);
+            if(isExistedRoomName) return ResponseDto.duplicatedRoom();
+
+            roomEntity.patch(dto);
+            roomRepository.save(roomEntity);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return ResponseDto.success();
+    }
+
+    // 객실 서브 이미지 수정 메서드
+    @Override
+    public ResponseEntity<ResponseDto> patchRoomImage(
+        PatchRoomImageRequestDto dto, 
+        String accommodationName,
+        Integer roomId,
+        String roomImage) {
+
+        try {
+            AccommodationEntity accommodationEntity = accommodationRepository.findByAccommodationName(accommodationName);
+            if (accommodationEntity == null) return ResponseDto.noExistAccommodation();
+
+            RoomEntity roomEntity = roomRepository.findByRoomId(roomId);
+            if(roomEntity == null) return ResponseDto.noExistRoom();
+
+            String imageUrl = dto.getRoomImage();
+            boolean isMatch = roomImageRepository.existsByRoomImage(imageUrl);
+            if(isMatch) return ResponseDto.duplicatedImage();
+
+            RoomImageEntity roomImageEntity = roomImageRepository.findByRoomImage(roomImage);
+            if(roomImageEntity == null ) return ResponseDto.noExistImage();
+
+            roomImageRepository.patchRoomImage(imageUrl, roomImage);
+            roomImageRepository.save(roomImageEntity);
+    
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return ResponseDto.success();
+    }
+
 
     // 객실 삭제 메서드
     @Override

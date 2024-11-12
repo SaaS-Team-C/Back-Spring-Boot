@@ -50,7 +50,7 @@ public class GuestServiceImplement implements GuestService {
             String basicPw = guestEntity.getGuestPw();
             
             boolean isMatched = passwordEncoder.matches(guestPw,basicPw);
-            if(!isMatched) return ResponseDto.notMatchPassword();
+            if(!isMatched) return ResponseDto.noPermission();
             
         } catch (Exception e) {
             e.printStackTrace();

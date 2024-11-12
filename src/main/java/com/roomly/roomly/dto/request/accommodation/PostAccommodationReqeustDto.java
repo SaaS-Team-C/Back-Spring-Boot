@@ -34,7 +34,6 @@ public class PostAccommodationReqeustDto {
 
     @NotBlank
     private String hostId;
-    @NotBlank
-    private String hostTelNumber;
+    private Integer applyStatus;
     private LocalDateTime entryTime;
 }

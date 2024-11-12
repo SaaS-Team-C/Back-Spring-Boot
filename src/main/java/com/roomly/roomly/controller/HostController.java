@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.roomly.roomly.dto.response.reservation.GetReservationResponseDto;
 import com.roomly.roomly.dto.request.host.HostIdFindRequestDto;
+import com.roomly.roomly.dto.request.host.HostMyPageRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostPasswordRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
@@ -33,10 +34,11 @@ public class HostController {
     private final HostService hostService;
     
     // 호스트 정보 상세보기 api
-    @GetMapping("/info")
+    @PostMapping("/info/{hostId}")
     public ResponseEntity<? super GetHostResponseDto> getHost(
-        @AuthenticationPrincipal  String hostId){
-        ResponseEntity<? super GetHostResponseDto> responseBody = hostService.getHost(hostId);
+    @RequestBody @Valid HostMyPageRequestDto requestBody,    
+    @PathVariable("hostId") String hostId){
+        ResponseEntity<? super GetHostResponseDto> responseBody = hostService.getHost(requestBody, hostId);
             return responseBody;
     }
 
@@ -44,19 +46,18 @@ public class HostController {
     @PatchMapping("/update-password/{hostId}")
     public ResponseEntity<ResponseDto> patchPassword(
         @RequestBody @Valid PatchHostPasswordRequestDto requestBody,
-        @PathVariable("hostId") @AuthenticationPrincipal String hostId
+        @PathVariable("hostId") String hostId
     ){
         ResponseEntity<ResponseDto> responseBody = hostService.patchHostPassword(requestBody, hostId);
         return responseBody;
     }
     // 호스트 전화번호 변경 api
-    @PatchMapping("/update-tel-number/{hostTelNumber}")
+    @PatchMapping("/update-tel-number/{hostId}")
     public ResponseEntity<ResponseDto> patchTelNumber(
         @RequestBody @Valid PatchHostTelNumberRequestDto requestBody,
-        @PathVariable("hostTelNumber") String hostTelNumber,
-        @AuthenticationPrincipal String hostId
+        @PathVariable("hostId") String hostId
     ){
-        ResponseEntity<ResponseDto> repsonseBody = hostService.patchHostTelNumber(requestBody, hostId, hostTelNumber);
+        ResponseEntity<ResponseDto> repsonseBody = hostService.patchHostTelNumber(requestBody, hostId);
         return repsonseBody;
     }
 

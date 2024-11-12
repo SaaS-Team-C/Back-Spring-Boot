@@ -1,6 +1,5 @@
 package com.roomly.roomly.entity;
 
-import com.roomly.roomly.dto.request.subImages.PostAccommodationImageRequestDto;
 import com.roomly.roomly.entity.pk.AccImagePk;
 
 import jakarta.persistence.Entity;
@@ -24,11 +23,5 @@ public class AccImageEntity {
     private String accommodationName;
     @Id
     private String accommodationImage;
-
-    public AccImageEntity(PostAccommodationImageRequestDto dto){
-        this.accommodationName = dto.getAccommodationName();
-        this.accommodationImage = dto.getAccommodationImage();
-    }
-
 
 }
