@@ -1,7 +1,6 @@
 package com.roomly.roomly.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +14,7 @@ import com.roomly.roomly.dto.request.guest.PatchGuestTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestInformationRequestDto;
+import com.roomly.roomly.dto.request.guest.GuestPwFindRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestMyPageResponseDto;
 import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
@@ -29,17 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class GuestController {
     
     private final GuestService guestService;
-    
-    // 해당 Id에 관한 게스트 정보 보기
-    // @GetMapping("/view-information/{guestId}")
-    // public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(
-    //     @PathVariable("guestId") String guestId
-    // ){
-    //     ResponseEntity<? super GetGuestMyPageResponseDto> response = guestService.getGuestMyPage(guestId);
-    //     return response;
-    // }
 
-    // 해당 Id에 관한 게스트 정보보기2
+    // 해당 Id에 관한 게스트 정보보기
     @PostMapping("/guest-information/{guestId}")
     public ResponseEntity<? super GetGuestMyPageResponseDto> getGuestMyPage(
         @PathVariable("guestId") String guestId,
@@ -49,7 +40,7 @@ public class GuestController {
         return response;
     }
 
-    // 게스트 비밀번호 수정
+    // 게스트 비밀번호 수정(로그인상태)
     @PatchMapping("/pw/{guestId}")
     public ResponseEntity<ResponseDto> patchGuestPw(
         @RequestBody @Valid PatchGuestPwRequestDto requestBody,
@@ -61,11 +52,11 @@ public class GuestController {
 
     // 게스트 전화번호 중복확인 및 인증번호 발송
     @PatchMapping("/guest-tel-number/{guestId}")
-    public ResponseEntity<ResponseDto> patchGuestTelNumber(
+    public ResponseEntity<ResponseDto> guestPatchTelNumber(
         @RequestBody @Valid PatchGuestTelNumberRequestDto requestBody,
         @PathVariable("guestId") String guestId
     ) {
-        ResponseEntity<ResponseDto> response = guestService.patchGuestTelNumber(requestBody, guestId);
+        ResponseEntity<ResponseDto> response = guestService.guestPatchTelNumber(requestBody, guestId);
         return response;
     }
 
@@ -82,7 +73,8 @@ public class GuestController {
     // 게스트 아이디 찾기
     @PostMapping("/id-find")
     public ResponseEntity<ResponseDto> guestIdFind(
-        @RequestBody @Valid GuestIdFindRequestDto requestBody){
+        @RequestBody @Valid GuestIdFindRequestDto requestBody
+    ) {
             ResponseEntity<ResponseDto> responseBody = guestService.guestIdFind(requestBody);
             return responseBody;
     }
@@ -91,8 +83,17 @@ public class GuestController {
     @PostMapping("/tel-auth-check")
         public ResponseEntity<? super GuestIdFindSuccessResponseDto> guestTelAuthCheck(
             @RequestBody @Valid TelAuthCheckRequestDto requestBody
-        ){
+    ) {
             ResponseEntity<? super GuestIdFindSuccessResponseDto> responseBody = guestService.guestTelAuthCheck(requestBody);
             return responseBody;
         }
+    
+    // 게스트 비밀번호 변경(로그아웃상태)
+    @PatchMapping("/pw-find")
+    public ResponseEntity<ResponseDto> guestPwFind(
+        @RequestBody @Valid GuestPwFindRequestDto requestBody
+    ) {
+        ResponseEntity<ResponseDto> responseBody = guestService.guestPwFind(requestBody);
+        return responseBody;
+    }
 }

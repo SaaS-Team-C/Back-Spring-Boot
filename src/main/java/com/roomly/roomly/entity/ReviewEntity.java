@@ -20,14 +20,12 @@ public class ReviewEntity {
     
     @Id
     private Long reservationId;
-    private String guestId;
     private String reviewContent;
     private Integer reviewGrade;
     private String reviewDate;
 
     public ReviewEntity(GuestReviewListRequestDto dto){
         this.reservationId = dto.getReservationId();
-        this.guestId = dto.getGuestId();
         this.reviewContent = dto.getReviewContent();
         this.reviewGrade = dto.getReviewGrade();
         this.reviewDate = dto.getReviewDate();

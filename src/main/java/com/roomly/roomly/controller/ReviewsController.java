@@ -18,15 +18,14 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/roomly/payment")
+@RequestMapping("/api/roomly/reviews")
 @RequiredArgsConstructor
 public class ReviewsController {
     
     private final ReviewService ReviewService;
 
-    
     // 리뷰작성하기
-    @PostMapping("/review/{reservationId}/{guestId}")
+    @PostMapping("/add/{reservationId}/{guestId}")
     public ResponseEntity<ResponseDto> addReview(
         @RequestBody @Valid GuestReviewListRequestDto requestBody,
         @PathVariable("reservationId") Long reservationId,
@@ -38,7 +37,7 @@ public class ReviewsController {
     }
 
     // 게스트아이디에 관한 리뷰리스트 보기
-    @GetMapping("review/guestId/{guestId}")
+    @GetMapping("guest-list/{guestId}")
     public ResponseEntity<? super GetGuestReviewResponseDto> guestReviewList(
         @PathVariable("guestId") String guestId
     ){
@@ -47,7 +46,7 @@ public class ReviewsController {
     }
     
     // 숙소명에 관한 리뷰리스트 보기
-    @GetMapping("review/accommodationName/{accommodationName}")
+    @GetMapping("acc-list/{accommodationName}")
     public ResponseEntity<? super GetAccommodationReviewResponseDto> accommodationReviewList(
         @PathVariable("accommodationName") String accommodationName
     ){

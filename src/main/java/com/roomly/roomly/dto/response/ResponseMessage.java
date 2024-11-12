@@ -20,18 +20,19 @@ public interface ResponseMessage {
     String NO_EXIST_ACCOMMODATION = "No exist accommodation. ";
     String NO_EXIST_IMAGE = "NO exist image. ";
     String VALIDATION_FALIL = "Validation fail. ";
-    String NO_EXIST_RESERVATION = "No exist reservation. ";
+    String DUPLICATED_RESERVATION = "Duplicated Reservation. ";
     String NO_EXIST_GUEST = "No exist guest Id. ";
     String NO_EXIST_HOST = "No exist host. ";
     String NO_EXIST_USE_INFORMATION = "No exist use informdation. ";
     String ENTRY_FAIL = "Entry fail. ";
     String NO_EXIST_RESERVATION_ID = "No exist reservation id";
     String NOT_MATCH_VALUE = "Not match value.";
-    String NO_EXIST_REVIEW_ID = "No exist review id.";
-    String NO_EXIST_BOOKMARK = "No exist BookMark id And accommodation name";
+    String NO_EXIST_REVIEW_GUEST_ID = "No exist review GuestId .";
+    String NO_EXIST_BOOKMARK = "No exist Guest id And accommodation name";
     String NO_EXIST_PAYMENT_ID ="No exist Payment Id";
     String NO_EXIST_TELNUMBER ="No exist Telnumber";
-    String NOT_MATCH_PASSWORD = "Not match password.";
+    String NO_EXIST_RESERVATION = "No exist Reservation. ";
+    String NO_EXIST_REVIEW_ACCOMMODATION_NAME = "No exist Review Accommodation name. ";
 
     // Http Status 401(UNAUTHORIZED)
     String NO_PERMISSION = "No permission";

@@ -21,7 +21,7 @@ public interface ResponseCode {
     String NO_EXIST_ACCOMMODATION = "NA";
     String NO_EXIST_IMAGE = "NM";
     String VALIDATION_FALIL = "VF";
-    String NO_EXIST_RESERVATION = "NR";
+    String DUPLICATED_RESERVATION = "DR";
     String NO_EXIST_GUEST = "NG";
     String NO_EXIST_HOST = "NH";
     String NO_EXIST_USE_INFORMATION = "NU";
@@ -29,9 +29,11 @@ public interface ResponseCode {
     String NO_EXIST_BOOKMARK = "NEB";
     String NO_EXIST_PAYMENT_ID = "NEPI";
     String NOT_MATCH_VALUE = "NMV";
-    String NO_EXIST_REVIEW_ID = "NRI";
+    String NO_EXIST_REVIEW_GUEST_ID = "NERGI";
     String NO_EXIST_RESERVATION_ID = "NI";
     String NOT_MATCH_PASSWORD = "NMP";    
+    String NO_EXIST_RESERVATION = "NER";
+    String NO_EXIST_REVIEW_ACCOMMODATION_NAME = "NERAN";
 
     // ERROR_CODE 401
     String TEL_AUTH_FAILE = "TAF"; 

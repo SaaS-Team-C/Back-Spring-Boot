@@ -8,5 +8,5 @@ import com.roomly.roomly.entity.ReviewEntity;
 @Repository
 public interface ReviewRepository extends JpaRepository<ReviewEntity, Long>{
 
-    boolean existsByGuestId(String guestId);
+    boolean existsByReservationId(Integer guestId);
 } 

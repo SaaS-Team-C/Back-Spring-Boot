@@ -1,6 +1,8 @@
 package com.roomly.roomly.entity;
 
+import com.roomly.roomly.dto.request.guest.PatchGuestPwRequestDto;
 import com.roomly.roomly.dto.request.host.HostIdFindRequestDto;
+import com.roomly.roomly.dto.request.host.PatchHostPasswordRequestDto;
 import com.roomly.roomly.dto.request.hostauth.HostSignUpRequestDto;
 
 import jakarta.persistence.Entity;
@@ -46,6 +48,10 @@ public class HostEntity {
     public HostEntity(HostIdFindRequestDto dto){
         this.hostName = dto.getHostName();
         this.hostTelNumber = dto.getHostTelNumber();
+    }
+
+    public void patchPw(PatchHostPasswordRequestDto dto) {
+        this.hostPw = dto.getChangeHostPw();
     }
     
 

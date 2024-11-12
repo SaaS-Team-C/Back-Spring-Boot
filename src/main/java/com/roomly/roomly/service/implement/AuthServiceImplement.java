@@ -215,7 +215,7 @@ public class AuthServiceImplement implements AuthService {
     }
 
 
-    // ------------------------------------ guest ------------------------------------
+    // ------------------------------------ guest --------------------------------------------------
 
     @Override
     // 아이디 중복확인 메서드
@@ -345,6 +345,5 @@ public class AuthServiceImplement implements AuthService {
         }
         return GuestSignInResponseDto.success(accessToken);
     }
-
     
 }

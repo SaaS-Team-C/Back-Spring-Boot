@@ -32,16 +32,15 @@ public interface GuestRepository extends JpaRepository<GuestEntity, String> {
 
     @Query(value = 
     "SELECT" +
-    "    V.reservation_id as reservationId, " +
-    "    R.accommodation_name as accommodationName, " +
-    "    V.review_date as reviewDate, " +
-    "    V.review_content as reviewContent," +
-    "    V.review_grade as reviewGrade " +
-    "FROM review as V JOIN reservation as RS " +
-    "ON V.reservation_id = RS.reservation_id " +
-    "JOIN room as R ON RS.room_id = R.room_id "+
-    "WHERE RS.guest_id = V.guest_id " +
-    "AND RS.guest_id = :guestId ",
+    "    R.reservation_id as reservationId, " +
+    "    OM.accommodation_name as accommodationName, " +
+    "    R.review_date as reviewDate, " +
+    "    R.review_content as reviewContent, " +
+    "    R.review_grade as reviewGrade " +
+    "FROM review as R join reservation as RE " +
+    "ON R.reservation_id = RE.reservation_id " +
+    "JOIN room as OM ON RE.room_id = OM.room_id " +
+    "WHERE RE.guest_id = :guestId ",
     nativeQuery = true)
     List<GuestReviewListResultSet> getReviewList(@Param("guestId") String guestId);
 }

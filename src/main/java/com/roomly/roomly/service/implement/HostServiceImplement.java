@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.roomly.roomly.common.object.Reservation;
 import com.roomly.roomly.common.util.AuthNumberCreater;
 import com.roomly.roomly.dto.request.host.HostIdFindRequestDto;
+import com.roomly.roomly.dto.request.host.HostPwFindRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostPasswordRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
@@ -64,27 +65,22 @@ public class HostServiceImplement implements HostService {
     @Override
     public ResponseEntity<ResponseDto> patchHostPassword(PatchHostPasswordRequestDto dto, String hostId) {
 
-        String changePassword = dto.getHostPw();
+        String currentHostPw = dto. getCurrentHostPw();
+        String changePassword = dto.getChangeHostPw();
 
         try {
             HostEntity hostEntity = hostRepository.findByHostId(hostId);
             if (hostEntity == null)
                 return ResponseDto.noExistUserId();
 
-            String host = hostEntity.getHostId();
-            boolean isHost = host.equals(hostId);
-            if (!isHost)
-                return ResponseDto.noPermission();
-
-            String encodedPassword = passwordEncoder.encode(changePassword);
-            String basicPw = hostEntity.getHostPw();
-            boolean isMatched = passwordEncoder.matches(changePassword, basicPw);
-
-            if (isMatched)
-                return ResponseDto.duplicatedPassword();
-
-            hostEntity.setHostPw(encodedPassword);
-            hostRepository.save(hostEntity);
+                String basicPw = hostEntity.getHostPw();
+                boolean isMatched = passwordEncoder.matches(currentHostPw, basicPw);
+                if (!isMatched) return ResponseDto.notMatchValue();
+                
+                String encodedPassword = passwordEncoder.encode(changePassword);
+                dto.setChangeHostPw(encodedPassword);
+                hostEntity.patchPw(dto);
+                hostRepository.save(hostEntity);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -216,6 +212,31 @@ public class HostServiceImplement implements HostService {
             return ResponseDto.databaseError();
         }
         return HostIdFindSuccessResponseDto.success(hostEntity);
+    }
+
+    // 비밀번호 변경(로그아웃)
+    @Override
+    public ResponseEntity<ResponseDto> hostPwFind(HostPwFindRequestDto dto) {
+        
+        String hostId = dto.getHostId();
+        String hostPw = dto.getHostPw();
+
+        try {
+            
+            HostEntity hostEntity = hostRepository.findByHostId(hostId);
+            if(hostEntity == null) return ResponseDto.noExistUserId();
+
+            String encodedPassword = passwordEncoder.encode(hostPw);
+            hostEntity.setHostPw(encodedPassword);
+            hostRepository.save(hostEntity);
+
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return ResponseDto.success();
     }
 
 }
