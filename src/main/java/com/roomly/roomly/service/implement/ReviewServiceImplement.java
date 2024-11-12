@@ -10,6 +10,7 @@ import com.roomly.roomly.dto.request.guest.GuestReviewListRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetAccommodationReviewResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestReviewResponseDto;
+import com.roomly.roomly.entity.ReservationEntity;
 import com.roomly.roomly.entity.ReviewEntity;
 import com.roomly.roomly.repository.AccommodationRepository;
 import com.roomly.roomly.repository.GuestRepository;
@@ -33,25 +34,18 @@ public class ReviewServiceImplement implements ReviewService{
 
     @Override
     // 리뷰작성
-    public ResponseEntity<ResponseDto> addReview(GuestReviewListRequestDto dto, Long reservationId ,String guestId) {
+    public ResponseEntity<ResponseDto> addReview(GuestReviewListRequestDto dto,String guestId) {
 
-        ReviewEntity reviewEntity = null;
+        Integer reservationId = dto.getReservationId();
 
         try {
-            boolean existsByreservationId = reservationRepository.existsByreservationId(reservationId);
-            if(!existsByreservationId) return ResponseDto.noExistReservationId();
-            
-            boolean existsByGuestId = guestRepository.existsByGuestId(guestId);
-            if(!existsByGuestId) return ResponseDto.noExistUserId();
-            
-            Long reservationIdTest = dto.getReservationId();
-            boolean isReservationdId = reservationIdTest.equals(reservationId);
-            if(!isReservationdId) return ResponseDto.notMatchValue(); 
+            ReservationEntity reservationEntity = reservationRepository.findByReservationId(reservationId);
+            if(reservationEntity == null) return ResponseDto.noExistReservationId();
 
-            boolean iseixst = reservationRepository.existsByReservationIdAndGuestId(reservationId, guestId);
-            if (!iseixst) return ResponseDto.notMatchValue();
-
-            reviewEntity = new ReviewEntity(dto);
+            String reservationGuestId = reservationEntity.getGuestId();
+            if (!reservationGuestId.equals(guestId)) return ResponseDto.noExistGuest();
+            
+            ReviewEntity reviewEntity = new ReviewEntity(dto);
             reviewRepository.save(reviewEntity);
 
         } catch (Exception e) {
@@ -66,7 +60,6 @@ public class ReviewServiceImplement implements ReviewService{
     public ResponseEntity<? super GetGuestReviewResponseDto> guestReviewList(String guestId) {
         
         List<GuestReviewListResultSet> resultSet = new ArrayList<>();
-
 
         try {
             // 아이디 유효성 검사

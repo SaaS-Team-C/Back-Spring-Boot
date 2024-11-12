@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.roomly.roomly.dto.request.hostauth.test;
 import com.roomly.roomly.entity.ReservationEntity;
 import com.roomly.roomly.repository.resultSet.GetReservationResultSet;
 import com.roomly.roomly.repository.resultSet.GetReservationStatusResultSet;
@@ -69,9 +68,9 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
         @Param("guestId")String guestId
     );
 
-    boolean existsByreservationId(Long reservationId);
+    boolean existsByreservationId(Integer reservationId);
 
-    boolean existsByReservationIdAndGuestId(Long reservationId, String guestId);
+    boolean existsByReservationIdAndGuestId(Integer reservationId, String guestId);
 
     boolean existsByRoomIdAndCheckInDayAndCheckOutDay(Integer roomId, String checkInDay, String checkOutDay);
 
@@ -87,4 +86,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
         @Param("checkIn") LocalDate checkIn,
         @Param("checkOut") LocalDate checkOut
     );
+
+    ReservationEntity findByReservationId(Integer reservationId);
 }

@@ -25,14 +25,13 @@ public class ReviewsController {
     private final ReviewService ReviewService;
 
     // 리뷰작성하기
-    @PostMapping("/add/{reservationId}/{guestId}")
+    @PostMapping("/add/{guestId}")
     public ResponseEntity<ResponseDto> addReview(
         @RequestBody @Valid GuestReviewListRequestDto requestBody,
-        @PathVariable("reservationId") Long reservationId,
         @PathVariable("guestId") String guestId
     ) {
         
-        ResponseEntity<ResponseDto> response = ReviewService.addReview(requestBody,reservationId, guestId);
+        ResponseEntity<ResponseDto> response = ReviewService.addReview(requestBody,guestId);
         return response;
     }
 
