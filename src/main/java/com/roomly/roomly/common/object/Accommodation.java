@@ -7,14 +7,14 @@ import com.roomly.roomly.entity.AccommodationEntity;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 
 @Getter
 public class Accommodation {
 
     private String hostId;
     private String accommodationName;
-    private Date entryTime;
+    private String entryTime;
     private Boolean applyStatus;
 
     public Accommodation(AccommodationEntity accommodationEntity){

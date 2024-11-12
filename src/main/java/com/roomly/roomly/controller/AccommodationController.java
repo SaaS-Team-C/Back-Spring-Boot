@@ -21,6 +21,7 @@ import com.roomly.roomly.service.UseInfomationService;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationResponseDto;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationListResponseDto;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationImagesResponseDto;
+import com.roomly.roomly.dto.response.accommodation.GetReservedAccommodationResponseDto;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -95,6 +96,7 @@ public class AccommodationController {
         ResponseEntity<? super GetAccommodationListResponseDto> responseBody = accommodationService.getAccommodationList();
         return responseBody;
     }
+    
     // 숙소 삭제
     @DeleteMapping("/delete/{accommodationName}")
     public ResponseEntity<ResponseDto> deleteAccommodation(
@@ -112,6 +114,16 @@ public class AccommodationController {
         @AuthenticationPrincipal String hostId
     ){
         ResponseEntity<ResponseDto> responseBody = useInfomationService.deleteUseInformation(autoKey);
+        return responseBody;
+    }
+
+    @GetMapping("/{accommodationName}/{checkInDay}/{checkOutDay}")
+    public ResponseEntity<? super GetReservedAccommodationResponseDto> getReservedAccommodation(
+        @PathVariable("accommodationName") String accommodationName,
+        @PathVariable("checkInDay") String checkInday,
+        @PathVariable("checkOutDay") String checkOutDay
+    ){
+        ResponseEntity<? super GetReservedAccommodationResponseDto> responseBody = accommodationService.getReservedAccommodation(accommodationName, checkInday, checkOutDay);
         return responseBody;
     }
 }

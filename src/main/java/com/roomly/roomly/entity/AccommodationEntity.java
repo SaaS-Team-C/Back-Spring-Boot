@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -40,10 +41,13 @@ public class AccommodationEntity {
     private Integer accommodationGradeSum;
     private String hostId;
     private Boolean applyStatus;
-    private Date entryTime;
+    private String entryTime;
 
     public AccommodationEntity(PostAccommodationReqeustDto dto) {
         Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String entryTime = dateFormat.format(now);
+        
         this.accommodationName = dto.getAccommodationName();
         this.accommodationMainImage = dto.getAccommodationMainImage();
         this.accommodationAddress = dto.getAccommodationAddress();
@@ -59,7 +63,7 @@ public class AccommodationEntity {
         this.categoryPool = dto.isCategoryPool();
         this.hostId = dto.getHostId();
         this.applyStatus = dto.getApplyStatus() == null || dto.getApplyStatus() == 0 ? false : true;
-        this.entryTime = now;
+        this.entryTime = entryTime;
 
     }
 

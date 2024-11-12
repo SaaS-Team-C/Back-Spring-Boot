@@ -15,6 +15,7 @@ import java.util.List;
 public interface AccommodationRepository extends JpaRepository<AccommodationEntity, String> {
 
     AccommodationEntity findByAccommodationName(String accommodationName);
+    List<AccommodationEntity> findByHostId(String hostId);
     boolean existsByAccommodationName(String accommodationName);
     boolean existsByHostId(String hostId);
     boolean existsByAccommodationNameAndAccommodationMainImage(String accommodationName, String accommodationMainImage);

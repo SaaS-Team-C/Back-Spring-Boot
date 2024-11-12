@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UseInformationServiceImplement implements UseInfomationService {
-    
+
     private final UseInformationRepository useInformationRepository;
 
     // 숙소 이용정보 수정 메서드
@@ -39,14 +39,14 @@ public class UseInformationServiceImplement implements UseInfomationService {
         return ResponseDto.success();
     }
 
-
     // 숙소 이용정보 삭제 메서드
     @Override
     public ResponseEntity<ResponseDto> deleteUseInformation(Integer autoKey) {
-        
+
         try {
             UseInformationEntity useInformationEntity = useInformationRepository.findByAutoKey(autoKey);
-            if (useInformationEntity == null) return ResponseDto.noExistUseInformation();
+            if (useInformationEntity == null)
+                return ResponseDto.noExistUseInformation();
 
             useInformationRepository.delete(useInformationEntity);
 
@@ -57,9 +57,4 @@ public class UseInformationServiceImplement implements UseInfomationService {
         return ResponseDto.success();
     }
 
-
-
-
-    
-    
 }

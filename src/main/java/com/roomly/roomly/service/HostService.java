@@ -12,11 +12,14 @@ import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.host.GetHostResponseDto;
 import com.roomly.roomly.dto.response.reservation.GetReservationResponseDto;
 import com.roomly.roomly.dto.response.host.HostIdFindSuccessResponseDto;
+import com.roomly.roomly.dto.response.host.GetHostAccommodationListResponseDto;
 
 public interface HostService {
 
     // 마이페이지 호스트 정보 가져오기
     ResponseEntity<? super GetHostResponseDto> getHost(HostMyPageRequestDto dto,String hostId);
+    // 마이페이지 계정별 호스트 리스트 가져오기
+    ResponseEntity<? super GetHostAccommodationListResponseDto> getList(String hostId);
     // 호스트 비밀번호 변경(로그인)
     ResponseEntity<ResponseDto> patchHostPassword(PatchHostPasswordRequestDto dto, String hostId);
     // 호스트 전화번호 변경 및 전화번호 재인증

@@ -2,7 +2,6 @@ package com.roomly.roomly.service.implement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,7 @@ import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationImagesResponseDto;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationListResponseDto;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationResponseDto;
+import com.roomly.roomly.dto.response.accommodation.GetReservedAccommodationResponseDto;
 import com.roomly.roomly.entity.AccImageEntity;
 import com.roomly.roomly.entity.AccommodationEntity;
 import com.roomly.roomly.entity.HostEntity;
@@ -167,7 +167,7 @@ public class AccommodationServiceImplement implements AccommodationService {
         }
         return GetAccommodationResponseDto.success(accommodationEntity, accommodationName, roomList, useInformationEntities,accImageEntities);
     }
-// 숙소 정보 수정 메서드
+    // 숙소 정보 수정 메서드
     @Override
     public ResponseEntity<ResponseDto> patchAccommodation(PatchAccommodationRequestDto dto, String accommodationName, String hostId) {
         
@@ -288,6 +288,49 @@ public class AccommodationServiceImplement implements AccommodationService {
             return ResponseDto.databaseError();
         }
         return ResponseDto.success();
+    }
+
+    // 예약된 객실이 출력이 안되는 숙소 상세보기
+    @Override
+    public ResponseEntity<? super GetReservedAccommodationResponseDto> getReservedAccommodation(
+            String accommodationName, String checkInDay, String checkOutDay) {
+
+        List<GetRoomResultSet> resultSets = new ArrayList<>();
+        List<Room> roomList = new ArrayList<>();
+        List<UseInformationEntity> useInformationEntities = new ArrayList<>();
+        List<AccImageEntity> accImageEntities = new ArrayList<>();
+
+        AccommodationEntity accommodationEntity;
+
+        try {
+
+            accommodationEntity = accommodationRepository.findByAccommodationName(accommodationName);
+            if (accommodationEntity == null)
+                return ResponseDto.noExistAccommodation();
+
+            boolean isMatcedRoomId = roomRepository.existsByAccommodationName(accommodationName);
+            if (!isMatcedRoomId)
+                return ResponseDto.noExistRoom();
+
+            accImageEntities = accImageRepository.findByAccommodationName(accommodationName);
+
+            resultSets = roomRepository.getList(accommodationName, checkInDay, checkOutDay);
+            if (resultSets == null)
+                return ResponseDto.noExistRoom();
+
+            for (GetRoomResultSet resultSet : resultSets) {
+                List<RoomImageEntity> roomImageEntities = roomImageRepository.findByRoomId(resultSet.getRoomId());
+                Room room = new Room(resultSet, roomImageEntities);
+                roomList.add(room);
+            }
+            useInformationEntities = useInformationRepository.findByAccommodationName(accommodationName);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetReservedAccommodationResponseDto.success(accommodationEntity, accommodationName, roomList,
+                useInformationEntities, accImageEntities);
     }
 
 }

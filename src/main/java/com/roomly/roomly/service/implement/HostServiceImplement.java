@@ -16,9 +16,11 @@ import com.roomly.roomly.dto.request.host.PatchHostPasswordRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
+import com.roomly.roomly.dto.response.host.GetHostAccommodationListResponseDto;
 import com.roomly.roomly.dto.response.host.GetHostResponseDto;
 import com.roomly.roomly.dto.response.host.HostIdFindSuccessResponseDto;
 import com.roomly.roomly.dto.response.reservation.GetReservationResponseDto;
+import com.roomly.roomly.entity.AccommodationEntity;
 import com.roomly.roomly.entity.HostEntity;
 import com.roomly.roomly.entity.TelAuthNumberEntity;
 import com.roomly.roomly.provider.SmsProvider;
@@ -241,6 +243,20 @@ public class HostServiceImplement implements HostService {
         }
 
         return ResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super GetHostAccommodationListResponseDto> getList(String hostId) {
+        List<AccommodationEntity> accommodationEntities = new ArrayList<>();
+        try {
+
+            accommodationEntities = accommodationRepository.findByHostId(hostId);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetHostAccommodationListResponseDto.success(accommodationEntities);
     }
 
 }

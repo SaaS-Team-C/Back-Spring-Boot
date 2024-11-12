@@ -51,14 +51,14 @@ public class AdminController {
     }
 
     // 숙소 리스트(숙소 승인 상태에 따라)조회 api
-    @GetMapping(value={"/admin/accommodation-list"})
+    @GetMapping(value={"/accommodation-list"})
     public ResponseEntity<? super GetAccommodationListResponseDto> getAccommodationList(){
         ResponseEntity<? super GetAccommodationListResponseDto> responseBody = adminService.getAccommodationList();
         return responseBody;
     }
 
     // 숙소 승인 상태 변경 api
-    @PatchMapping(value = {"/admin/accommodation-apply/{accommodationName}"})
+    @PatchMapping(value = {"/accommodation-apply/{accommodationName}"})
     public ResponseEntity<ResponseDto> patchApplyStatus(
         @RequestBody PatchEntryStatusRequestDto requestBody,
         @PathVariable("accommodationName") String accommodationName

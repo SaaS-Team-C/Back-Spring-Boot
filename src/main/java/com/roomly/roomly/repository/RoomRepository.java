@@ -74,4 +74,27 @@ public interface RoomRepository extends JpaRepository<RoomEntity, Integer> {
         @Param("guestId")String guestId,
         @Param("roomId")Integer roomId);
     
+
+    // 예약된 객실을 제외한 객실들을 가져오기
+    @Query(value=
+    "SELECT "+
+        "R.room_id as room_id,"+
+        "R.room_name as room_name," +
+        "R.room_main_image as room_main_image,"+
+        "R.room_price as room_price," +
+        "R.room_check_in as room_check_in," +
+        "R.room_check_out as room_check_out," +
+        "R.room_total_guest as room_total_guest," +
+        "R.room_info as room_info, "+
+        "A.accommodation_name as accommodation_name "+
+    "FROM accommodation A LEFT JOIN room R "+
+    "ON R.accommodation_name = A.accommodation_name "+
+    "WHERE A.accommodation_name = :accommodationName "+
+    "AND R.room_id NOT IN ( SELECT RV.room_id FROM reservation as RV " +
+    "WHERE check_out_day > :CheckInDay AND check_in_day < :checkOutDay )",
+    nativeQuery = true
+    )
+    List<GetRoomResultSet> getList(@Param("accommodationName") String accommodationName,@Param("CheckInDay") String checkInDay, @Param("checkOutDay") String checkOutDay);
 }
+
+

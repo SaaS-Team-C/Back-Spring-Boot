@@ -18,5 +18,6 @@ public interface GetAccommodationListResultSet {
     Integer getApplyStatus();
     Integer getMinRoomPrice();
     Integer getCountReview();
+
 }
 

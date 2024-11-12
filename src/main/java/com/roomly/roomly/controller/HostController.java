@@ -20,6 +20,7 @@ import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.host.GetHostResponseDto;
 import com.roomly.roomly.dto.response.host.HostIdFindSuccessResponseDto;
+import com.roomly.roomly.dto.response.host.GetHostAccommodationListResponseDto;
 
 import com.roomly.roomly.service.HostService;
 
@@ -61,6 +62,15 @@ public class HostController {
         ResponseEntity<ResponseDto> repsonseBody = hostService.patchHostTelNumber(requestBody, hostId);
         return repsonseBody;
     }
+
+    // 호스트 아이디별 숙소 리스트
+    @GetMapping("/list/{hostId}")
+    public ResponseEntity<? super GetHostAccommodationListResponseDto> getHostAccommodationList(
+        @PathVariable("hostId") String hostId
+    ){
+        ResponseEntity<? super GetHostAccommodationListResponseDto> responseBody = hostService.getList(hostId);
+        return responseBody;
+    } 
 
     // 호스트 숙소별 예약 리스트 가져오기 api
     @GetMapping("/reservation/{hostId}")
