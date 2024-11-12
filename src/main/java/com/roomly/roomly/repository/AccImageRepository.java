@@ -18,6 +18,8 @@ public interface AccImageRepository extends JpaRepository<AccImageEntity, AccIma
     List<AccImageEntity> findByAccommodationName(String accommodationName);
     AccImageEntity findByAccommodationNameAndAccommodationImage(String accommodationName, String accommodationImage);
     boolean existsByAccommodationImage(String accommodationImage);
+    AccImageEntity findByAccommodationImage(String accommodationImage);
+
 
     @Modifying //-> ddl dml curd
     @Transactional// -> update/delete 

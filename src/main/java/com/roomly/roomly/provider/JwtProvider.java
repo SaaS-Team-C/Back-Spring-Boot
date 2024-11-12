@@ -49,7 +49,7 @@ public class JwtProvider {
         return jwt;
     }
 
-    // Host JWT 생성 메서드
+    // Guest JWT 생성 메서드
     public String createGuestToken(String guestId){
 
         // 만료 시간 = 현재시간 + 10시간

@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.roomly.roomly.dto.request.accommodation.PatchAccommodationRequestDto;
-import com.roomly.roomly.dto.request.accommodation.PostAccommodationReqeustDto;
+import com.roomly.roomly.dto.request.accommodation.ResgistAccomodation;
 import com.roomly.roomly.dto.request.subImages.PatchAccommodationImageRequsetDto;
-import com.roomly.roomly.dto.request.subImages.PostAccommodationImageRequestDto;
 import com.roomly.roomly.dto.request.useInformations.PatchUseInformationRequestDto;
-import com.roomly.roomly.dto.request.useInformations.PostUseInformationRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.service.AccommodationService;
 import com.roomly.roomly.service.UseInfomationService;
@@ -38,25 +36,10 @@ public class AccommodationController {
     // 숙소 등록
     @PostMapping("/register")
     public ResponseEntity<ResponseDto> postAccommodation(
-        @RequestBody @Valid PostAccommodationReqeustDto reqeustBody){
+        @RequestBody @Valid ResgistAccomodation reqeustBody){
             ResponseEntity<ResponseDto> responseBody = accommodationService.postAccommodation(reqeustBody);
             return responseBody;
     }
-    // 숙소 서브 이미지 등록
-    @PostMapping("/image")
-    public ResponseEntity<ResponseDto> postAccommodationImage(
-        @RequestBody @Valid PostAccommodationImageRequestDto requestBody
-    ){
-        ResponseEntity<ResponseDto> responseBody = accommodationService.postAccommodationImage(requestBody);
-        return responseBody;
-    }
-    // 숙소 이용정보 등록
-    @PostMapping("/information")
-    public ResponseEntity<ResponseDto> postUseInformation(
-        @RequestBody @Valid PostUseInformationRequestDto requestBody){
-            ResponseEntity<ResponseDto> responseBody = useInfomationService.postUseInformation(requestBody);
-            return responseBody;
-        }
     // 숙소 상세보기(숙소에 해당하는 객실 및 이용정보)
     @GetMapping("/{accommodationName}")
     public ResponseEntity<? super GetAccommodationResponseDto> getAccommodation(

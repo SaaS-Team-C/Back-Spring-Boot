@@ -31,7 +31,6 @@ public interface ResponseMessage {
     String NO_EXIST_BOOKMARK = "No exist BookMark id And accommodation name";
     String NO_EXIST_PAYMENT_ID ="No exist Payment Id";
     String NO_EXIST_TELNUMBER ="No exist Telnumber";
-    String NOT_MATCH_PASSWORD = "Not match password.";
 
     // Http Status 401(UNAUTHORIZED)
     String NO_PERMISSION = "No permission";

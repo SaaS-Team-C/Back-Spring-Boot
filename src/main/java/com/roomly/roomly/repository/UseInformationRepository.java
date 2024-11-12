@@ -15,4 +15,5 @@ public interface UseInformationRepository extends JpaRepository<UseInformationEn
     UseInformationEntity findByAccommodationNameAndAutoKey(String accommodationName, Integer autoKey);
     UseInformationEntity findByAutoKey(Integer autoKey);
     
+    
 }

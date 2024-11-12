@@ -2,15 +2,18 @@ package com.roomly.roomly.service.implement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.roomly.roomly.common.object.Room;
 import com.roomly.roomly.dto.request.accommodation.PatchAccommodationRequestDto;
-import com.roomly.roomly.dto.request.accommodation.PostAccommodationReqeustDto;
+import com.roomly.roomly.dto.request.accommodation.ResgistAccomodation;
+import com.roomly.roomly.dto.request.room.PostRoomRequestDto;
 import com.roomly.roomly.dto.request.subImages.PatchAccommodationImageRequsetDto;
-import com.roomly.roomly.dto.request.subImages.PostAccommodationImageRequestDto;
+
+import com.roomly.roomly.dto.request.useInformations.PostUseInformationRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationImagesResponseDto;
 import com.roomly.roomly.dto.response.accommodation.GetAccommodationListResponseDto;
@@ -18,6 +21,7 @@ import com.roomly.roomly.dto.response.accommodation.GetAccommodationResponseDto;
 import com.roomly.roomly.entity.AccImageEntity;
 import com.roomly.roomly.entity.AccommodationEntity;
 import com.roomly.roomly.entity.HostEntity;
+import com.roomly.roomly.entity.RoomEntity;
 import com.roomly.roomly.entity.RoomImageEntity;
 import com.roomly.roomly.entity.UseInformationEntity;
 import com.roomly.roomly.repository.AccImageRepository;
@@ -30,7 +34,6 @@ import com.roomly.roomly.repository.resultSet.GetAccommodationListResultSet;
 import com.roomly.roomly.repository.resultSet.GetRoomResultSet;
 import com.roomly.roomly.service.AccommodationService;
 
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -46,54 +49,85 @@ public class AccommodationServiceImplement implements AccommodationService {
     
     // 숙소 등록 메서드
     @Override
-    public ResponseEntity<ResponseDto> postAccommodation(PostAccommodationReqeustDto dto) {
-        try {
-            String hostId = dto.getHostId();
-            HostEntity hostEntity = hostRepository.findByHostId(hostId);
-            boolean entry = hostEntity.getEntryStatus();
-            if (!entry) return ResponseDto.noPermission();
+    public ResponseEntity<ResponseDto> postAccommodation(ResgistAccomodation resgistAccomodation) {
         
-            String accommodationName = dto.getAccommodationName();
-            boolean isExisted = accommodationRepository.existsByAccommodationName(accommodationName);
-            if (isExisted) return ResponseDto.duplicatedAccommodationName();
+        String accommodationName = resgistAccomodation.getAccommodationReqeustDto().getAccommodationName();
 
-            AccommodationEntity accommodationEntity = new AccommodationEntity(dto);
-            LocalDateTime now = LocalDateTime.now();
-            accommodationEntity.setEntryTime(now);
+        try {
+
+            // 승인받은 계정여부확인
+            String host = resgistAccomodation.getAccommodationReqeustDto().getHostId();
+            HostEntity hostEntity = hostRepository.findByHostId(host);
+            if (hostEntity == null) return ResponseDto.noExistUserId();
+            boolean hostStatus = hostEntity.getEntryStatus();
+            if (!hostStatus) return ResponseDto.noPermission();
+
+            // 숙소 등록
+            boolean isExistedAccommodation = accommodationRepository.existsByAccommodationName(accommodationName);
+            if (isExistedAccommodation) return ResponseDto.duplicatedAccommodationName();
+            String accommdationMainImage = resgistAccomodation.getAccommodationReqeustDto().getAccommodationMainImage();
+            boolean isExistedAccommodationMainImage = accommodationRepository.existsByAccommodationMainImage(accommdationMainImage);
+            if (isExistedAccommodationMainImage) return ResponseDto.duplicatedImage();
+            AccommodationEntity accommodationEntity = new AccommodationEntity(resgistAccomodation.getAccommodationReqeustDto());
             accommodationRepository.save(accommodationEntity);
 
-            
-        } catch (Exception e) {
+            // 숙소 서브 이미지 등록
+            List<AccImageEntity> accImageEntities = new ArrayList<>();
+            for (String image : resgistAccomodation.getAccommodationImages()) {
+                AccImageEntity accImageEntity = new AccImageEntity(accommodationName, image);
+                accImageEntities.add(accImageEntity);
+            }
+            accImageRepository.saveAll(accImageEntities);
+
+            // 숙소이용정보 등록
+            List<PostUseInformationRequestDto> useInformationRequestDtos = resgistAccomodation.getUseInformations();
+            for (PostUseInformationRequestDto useInformationRequestDto : useInformationRequestDtos){
+                String accommodation = useInformationRequestDto.getAccommodationName();
+                boolean isExistedUseInformation = accommodationRepository.existsByAccommodationName(accommodation);
+                if(!isExistedUseInformation) return ResponseDto.noExistAccommodation();
+
+                UseInformationEntity useInformationEntity = new UseInformationEntity(useInformationRequestDto);
+                useInformationRepository.save(useInformationEntity);
+            }
+
+            // 객실 등록
+            List<PostRoomRequestDto> roomRequestDtos = resgistAccomodation.getRoomRequestDtoList(); 
+                                                                                                    
+            for (PostRoomRequestDto roomRequestDto : roomRequestDtos) {
+                String roomName = roomRequestDto.getRoomName();
+                boolean isExistedRoomName = roomRepository.existsByRoomName(roomName);
+                if (isExistedRoomName) return ResponseDto.duplicatedRoom();
+
+                String roomMainImage = roomRequestDto.getRoomMainImage();
+                boolean isExistedRoomMainImage = roomRepository.existsByRoomMainImage(roomMainImage);
+                if (isExistedRoomMainImage) return ResponseDto.duplicatedImage();
+
+                RoomEntity roomEntity = new RoomEntity(roomRequestDto, accommodationName);
+                roomRepository.save(roomEntity);
+
+                // 객실 서브이미지 등록
+                Integer roomId = roomEntity.getRoomId();
+
+                List<String> roomImages = roomRequestDto.getRoomImages(); // 객실 서브 이미지 리스트
+                List<RoomImageEntity> roomImageEntities = new ArrayList<>();
+                for (String roomImage : roomImages) {
+                    boolean isExistedRoomImage = roomImageRepository.existsByRoomIdAndRoomImage(roomId,
+                            roomImage);
+                    if (isExistedRoomImage)
+                        return ResponseDto.duplicatedImage();
+
+                    RoomImageEntity roomImageEntity = new RoomImageEntity(roomId, roomImage);
+                    roomImageEntities.add(roomImageEntity);
+                }
+                roomImageRepository.saveAll(roomImageEntities);
+
+            }
+        }catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();
         }
         return ResponseDto.success();
     }
-
-    // 숙소 서브 이미지 등록 메서드
-    @Override
-    public ResponseEntity<ResponseDto> postAccommodationImage(PostAccommodationImageRequestDto dto) {
-        
-            AccommodationEntity accommodationEntity = null;
-        try {
-            
-            String accommodationName = dto.getAccommodationName();
-            accommodationEntity = accommodationRepository.findByAccommodationName(accommodationName);
-            if (accommodationEntity == null) return ResponseDto.noExistAccommodation();
-            
-            String imageUrl = dto.getAccommodationImage();
-            AccImageEntity accImageEntity = accImageRepository.findByAccommodationNameAndAccommodationImage(accommodationName,imageUrl);
-            if (accImageEntity != null) return ResponseDto.duplicatedImage();
-
-            accImageEntity = new AccImageEntity(dto);
-            accImageRepository.save(accImageEntity);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return ResponseDto.success();
-    } 
 
     // 숙소 정보(숙소, 숙소 서브이미지, 숙소 이용정보, 객실, 객실서브 이미지) 가져오기 메서드
     @Override
@@ -133,8 +167,7 @@ public class AccommodationServiceImplement implements AccommodationService {
         }
         return GetAccommodationResponseDto.success(accommodationEntity, accommodationName, roomList, useInformationEntities,accImageEntities);
     }
-
-    // 숙소 정보 수정 메서드
+// 숙소 정보 수정 메서드
     @Override
     public ResponseEntity<ResponseDto> patchAccommodation(PatchAccommodationRequestDto dto, String accommodationName, String hostId) {
         
@@ -169,25 +202,29 @@ public class AccommodationServiceImplement implements AccommodationService {
     // 숙소 서브 이미지 수정 메서드
     @Override
     public ResponseEntity<ResponseDto> patchAccommodationImage(
-        PatchAccommodationImageRequsetDto dto,
+            PatchAccommodationImageRequsetDto dto,
             String accommodationName,
             String accommodationImage) {
-            
+
         try {
-            
+
             boolean isExisted = accommodationRepository.existsByAccommodationName(accommodationName);
-            if (!isExisted) return ResponseDto.noExistAccommodation();
+            if (!isExisted)
+                return ResponseDto.noExistAccommodation();
 
             String accommodationChangeImage = dto.getAccommodationImage();
             boolean isMatched = accImageRepository.existsByAccommodationImage(accommodationChangeImage);
-            if (isMatched) return ResponseDto.duplicatedImage();
+            if (isMatched)
+                return ResponseDto.duplicatedImage();
 
-            AccImageEntity accImageEntity = accImageRepository.findByAccommodationNameAndAccommodationImage(accommodationName,accommodationImage);
-            if (accImageEntity==null) return ResponseDto.noExistImage();
+            AccImageEntity accImageEntity = accImageRepository
+                    .findByAccommodationNameAndAccommodationImage(accommodationName, accommodationImage);
+            if (accImageEntity == null)
+                return ResponseDto.noExistImage();
 
             accImageRepository.patchAccommodationImage(accommodationChangeImage, accommodationImage, accommodationName);
             accImageRepository.save(accImageEntity);
-    
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();

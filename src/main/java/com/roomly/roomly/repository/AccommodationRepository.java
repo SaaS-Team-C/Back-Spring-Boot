@@ -18,8 +18,8 @@ public interface AccommodationRepository extends JpaRepository<AccommodationEnti
     boolean existsByAccommodationName(String accommodationName);
     boolean existsByHostId(String hostId);
     boolean existsByAccommodationNameAndAccommodationMainImage(String accommodationName, String accommodationMainImage);
-    boolean existsByAccommodationNameAndAccommodationIntroduce(String accommodationName, String accomodationIntroduce);
-
+    boolean existsByAccommodationMainImage(String accommodationMainImage);
+    boolean existsByAccommodationNameAndAccommodationIntroduce(String accommodationName, String accommodationIntroduce);
     @Query(value=
     "SELECT * FROM accommodation",
     nativeQuery = true

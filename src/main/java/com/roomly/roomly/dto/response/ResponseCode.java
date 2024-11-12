@@ -30,8 +30,7 @@ public interface ResponseCode {
     String NO_EXIST_PAYMENT_ID = "NEPI";
     String NOT_MATCH_VALUE = "NMV";
     String NO_EXIST_REVIEW_ID = "NRI";
-    String NO_EXIST_RESERVATION_ID = "NI";
-    String NOT_MATCH_PASSWORD = "NMP";    
+    String NO_EXIST_RESERVATION_ID = "NI";  
 
     // ERROR_CODE 401
     String TEL_AUTH_FAILE = "TAF"; 

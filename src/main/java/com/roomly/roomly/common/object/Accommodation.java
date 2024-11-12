@@ -1,6 +1,5 @@
 package com.roomly.roomly.common.object;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.roomly.roomly.entity.AccommodationEntity;
@@ -8,13 +7,14 @@ import com.roomly.roomly.entity.AccommodationEntity;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @Getter
 public class Accommodation {
 
     private String hostId;
     private String accommodationName;
-    private LocalDateTime entryTime;
+    private Date entryTime;
     private Boolean applyStatus;
 
     public Accommodation(AccommodationEntity accommodationEntity){
