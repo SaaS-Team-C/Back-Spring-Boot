@@ -56,7 +56,6 @@ public class WebSecurityConfig {
             // URL 패턴 및 HTTP 메서드에 따라 인증 및 인가 여부 지정
             .authorizeHttpRequests(request -> request
                 .requestMatchers(
-                    "/api/**", 
                 "/api/validate-business",
                 "/api.odcloud.kr/api/**",
                 "/api/roomly/auth/guest/**", 

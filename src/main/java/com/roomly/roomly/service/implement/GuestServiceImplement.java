@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.roomly.roomly.common.util.AuthNumberCreater;
 import com.roomly.roomly.dto.request.guest.PatchGuestAuthRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestPwRequestDto;
-import com.roomly.roomly.dto.request.guest.PatchGuestTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestInformationRequestDto;
@@ -91,45 +90,6 @@ public class GuestServiceImplement implements GuestService {
         return ResponseDto.success();
     }
 
-    // 전화번호 중복확인 및 인증번호 발송
-    @Override
-    public ResponseEntity<ResponseDto> guestPatchTelNumber(
-            PatchGuestTelNumberRequestDto dto, String guestId) {
-
-        String guestTelNumber = dto.getGuestTelNumber();
-        
-        try {
-
-            boolean id = guestRepository.existsByGuestId(guestId);
-            if(!id) return ResponseDto.noExistUserId();
-
-            boolean isExistedTelNumber = guestRepository.existsByGuestTelNumber(guestTelNumber);
-            if (isExistedTelNumber)
-                return ResponseDto.duplicatedTelNumber();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-
-        String authNumber = AuthNumberCreater.number4();
-
-        boolean isSendSuccess = smsProvider.sendMessage(guestTelNumber, authNumber);
-        if (!isSendSuccess)
-            return ResponseDto.messageSendFail();
-
-        try {
-
-            TelAuthNumberEntity telAuthNumberEntity = new TelAuthNumberEntity(guestTelNumber, authNumber);
-            telAuthNumberRepository.save(telAuthNumberEntity);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-
-        return ResponseDto.success();
-    }
 
     // 전화번호 수정 및 기존번호 삭제 메서드
     @Override

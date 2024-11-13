@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.roomly.roomly.dto.request.guest.PatchGuestAuthRequestDto;
 import com.roomly.roomly.dto.request.guest.PatchGuestPwRequestDto;
-import com.roomly.roomly.dto.request.guest.PatchGuestTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestInformationRequestDto;
@@ -47,16 +46,6 @@ public class GuestController {
         @PathVariable("guestId") String guestId
     ) {
         ResponseEntity<ResponseDto> response = guestService.patchGuestPw(requestBody, guestId);
-        return response;
-    }
-
-    // 게스트 전화번호 중복확인 및 인증번호 발송
-    @PatchMapping("/guest-tel-number/{guestId}")
-    public ResponseEntity<ResponseDto> guestPatchTelNumber(
-        @RequestBody @Valid PatchGuestTelNumberRequestDto requestBody,
-        @PathVariable("guestId") String guestId
-    ) {
-        ResponseEntity<ResponseDto> response = guestService.guestPatchTelNumber(requestBody, guestId);
         return response;
     }
 
