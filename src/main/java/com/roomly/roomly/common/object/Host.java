@@ -12,11 +12,13 @@ public class Host {
 
     private String hostId;
     private String hostName;
+    private String hostTelNumber;
     private Boolean entryStatus;
 
     public Host(HostEntity hostEntity) {
         this.hostId = hostEntity.getHostId();
         this.hostName = hostEntity.getHostName();
+        this.hostTelNumber = hostEntity.getHostTelNumber();
         this.entryStatus = hostEntity.getEntryStatus();
     }
 
