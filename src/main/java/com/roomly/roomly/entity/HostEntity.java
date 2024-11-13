@@ -1,6 +1,5 @@
 package com.roomly.roomly.entity;
 
-import com.roomly.roomly.dto.request.guest.PatchGuestPwRequestDto;
 import com.roomly.roomly.dto.request.host.HostIdFindRequestDto;
 import com.roomly.roomly.dto.request.host.PatchHostPasswordRequestDto;
 import com.roomly.roomly.dto.request.hostauth.HostSignUpRequestDto;

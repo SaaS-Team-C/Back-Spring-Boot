@@ -23,6 +23,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roomly.roomly.dto.request.business.BusinessNumberCheckRequestDto;
+import com.roomly.roomly.dto.response.ResponseDto;
 
 @RestController
 @RequestMapping("/api")
@@ -38,7 +39,7 @@ public class BusinessNumberCheckController {
         }
 
     @PostMapping("/validate-business")
-    public ResponseEntity<String> getBusinessInfo(
+    public ResponseEntity<ResponseDto> getBusinessInfo(
         @RequestBody BusinessNumberCheckRequestDto requestDto
     ){
 
@@ -72,10 +73,15 @@ public class BusinessNumberCheckController {
             
             
             ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, String.class);
-
-
             
-            return response;
+            boolean isSuccessed = response.getBody().contains("계속사업자");
+            if (!isSuccessed) return null;
+            
+            return ResponseDto.success();
+
+            // System.out.println(response.getBody());
+            // // return response;
+            // return ResponseDto.success();
             
         } catch (Exception e) {
             e.printStackTrace();
