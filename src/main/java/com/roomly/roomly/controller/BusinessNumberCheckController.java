@@ -73,12 +73,15 @@ public class BusinessNumberCheckController {
             
             
             ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, String.class);
-
-            boolean isSuccessed = response.getBody().contains("01");
+            
+            boolean isSuccessed = response.getBody().contains("계속사업자");
             if (!isSuccessed) return null;
             
             return ResponseDto.success();
-            
+
+            // System.out.println(response.getBody());
+            // // return response;
+            // return ResponseDto.success();
             
         } catch (Exception e) {
             e.printStackTrace();
