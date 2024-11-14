@@ -18,6 +18,7 @@ import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.host.GetHostAccommodationListResponseDto;
 import com.roomly.roomly.dto.response.host.GetHostResponseDto;
+import com.roomly.roomly.dto.response.host.GetHostSignInResponseDto;
 import com.roomly.roomly.dto.response.host.HostIdFindSuccessResponseDto;
 import com.roomly.roomly.dto.response.reservation.GetReservationResponseDto;
 import com.roomly.roomly.entity.AccommodationEntity;
@@ -257,6 +258,25 @@ public class HostServiceImplement implements HostService {
             return ResponseDto.databaseError();
         }
         return GetHostAccommodationListResponseDto.success(accommodationEntities);
+    }
+
+    @Override
+    // 호스트 정보 불러오기
+    public ResponseEntity<? super GetHostSignInResponseDto> getHostSignIn(String hostId) {
+        
+        HostEntity HostEntity = null;
+
+        try {
+            
+            HostEntity = hostRepository.findByHostId(hostId);
+            if(HostEntity == null) return ResponseDto.noExistUserId();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetHostSignInResponseDto.success(HostEntity);
     }
 
 }
