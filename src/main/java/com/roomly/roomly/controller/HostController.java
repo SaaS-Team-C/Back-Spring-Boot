@@ -19,6 +19,7 @@ import com.roomly.roomly.dto.request.host.PatchHostTelNumberRequestDto;
 import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.host.GetHostResponseDto;
+import com.roomly.roomly.dto.response.host.GetHostSignInResponseDto;
 import com.roomly.roomly.dto.response.host.HostIdFindSuccessResponseDto;
 import com.roomly.roomly.dto.response.host.GetHostAccommodationListResponseDto;
 
@@ -105,5 +106,14 @@ public class HostController {
     ) {
         ResponseEntity<ResponseDto> responseBody = hostService.hostPwFind(requestBody);
         return responseBody;
+    }
+    
+    // 호스트 정보 보내기
+    @GetMapping("/sign-in")
+    public ResponseEntity<? super GetHostSignInResponseDto> getHostSignIn(
+        @AuthenticationPrincipal String hostId
+    ) {
+        ResponseEntity<? super GetHostSignInResponseDto> response = hostService.getHostSignIn(hostId);
+        return response;
     }
 }

@@ -1,6 +1,8 @@
 package com.roomly.roomly.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,7 @@ import com.roomly.roomly.dto.request.guest.GuestInformationRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestPwFindRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestMyPageResponseDto;
+import com.roomly.roomly.dto.response.guest.GetGuestSignInResponseDto;
 import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
 import com.roomly.roomly.service.GuestService;
 
@@ -23,7 +26,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/roomly/guest-my-page")
+@RequestMapping("/api/roomly/guest")
 @RequiredArgsConstructor
 public class GuestController {
     
@@ -84,6 +87,14 @@ public class GuestController {
     ) {
         ResponseEntity<ResponseDto> responseBody = guestService.guestPwFind(requestBody);
         return responseBody;
-        // d
+    }
+
+    // 게스트 정보 보내기
+    @GetMapping("/sign-in")
+    public ResponseEntity<? super GetGuestSignInResponseDto> getGuestSignIn(
+        @AuthenticationPrincipal String guestId
+    ) {
+        ResponseEntity<? super GetGuestSignInResponseDto> response = guestService.getGuestSignIn(guestId);
+        return response;
     }
 }
