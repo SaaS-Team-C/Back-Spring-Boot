@@ -12,13 +12,13 @@ import lombok.Getter;
 @Getter
 public class GuestSignInResponseDto extends ResponseDto{
     
-    private String GuestAccessToken;
+    private String accessToken;
     private Integer expiration;
 
     private GuestSignInResponseDto(String accessToken) {
         
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-        this.GuestAccessToken = accessToken;
+        this.accessToken = accessToken;
         this.expiration = 10*60*60; // 10시간 인증
     }
 

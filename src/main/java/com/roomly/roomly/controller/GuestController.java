@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/roomly/guest-my-page")
+@RequestMapping("/api/roomly/guest")
 @RequiredArgsConstructor
 public class GuestController {
     
@@ -84,6 +84,5 @@ public class GuestController {
     ) {
         ResponseEntity<ResponseDto> responseBody = guestService.guestPwFind(requestBody);
         return responseBody;
-        // d
     }
 }
