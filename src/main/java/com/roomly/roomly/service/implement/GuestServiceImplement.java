@@ -15,6 +15,7 @@ import com.roomly.roomly.dto.request.guest.GuestInformationRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestPwFindRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestMyPageResponseDto;
+import com.roomly.roomly.dto.response.guest.GetGuestSignInResponseDto;
 import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
 import com.roomly.roomly.entity.GuestEntity;
 import com.roomly.roomly.entity.TelAuthNumberEntity;
@@ -210,6 +211,25 @@ public class GuestServiceImplement implements GuestService {
 
         return ResponseDto.success();
 
+    }
+
+    @Override
+    // 게스트 정보 불러오기
+    public ResponseEntity<? super GetGuestSignInResponseDto> getGuestSignIn(String userId) {
+        
+        GuestEntity guestEntity = null;
+
+        try {
+            
+            guestEntity = guestRepository.findByGuestId(userId);
+            if(guestEntity == null) return ResponseDto.noExistUserId();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetGuestSignInResponseDto.success(guestEntity);
     }
 
 }

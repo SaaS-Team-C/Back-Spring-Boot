@@ -10,6 +10,7 @@ import com.roomly.roomly.dto.request.guest.GuestInformationRequestDto;
 import com.roomly.roomly.dto.request.guest.GuestPwFindRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
 import com.roomly.roomly.dto.response.guest.GetGuestMyPageResponseDto;
+import com.roomly.roomly.dto.response.guest.GetGuestSignInResponseDto;
 import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
 
 public interface GuestService {
@@ -26,4 +27,7 @@ public interface GuestService {
     ResponseEntity<? super GuestIdFindSuccessResponseDto> guestTelAuthCheck(TelAuthCheckRequestDto dto);
     // guest 비밀번호 변경(로그아웃)
     ResponseEntity<ResponseDto> guestPwFind(GuestPwFindRequestDto dto);
+
+    // 게스트 정보 불러오기
+    ResponseEntity<? super GetGuestSignInResponseDto> getGuestSignIn(String userId);
 }
