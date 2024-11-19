@@ -7,7 +7,7 @@ public class Reservation{
 
     private String accommodationName;
     private Integer reservationId;
-    private String reservationDay;
+    private Integer totalNight;
     private Integer reservationTotalPeople;
     private String roomName;
     private String accommodationMainImage;
@@ -17,7 +17,7 @@ public class Reservation{
     public Reservation(GetReservationResultSet resultSets){
         this.accommodationName = resultSets.getAccommodationName();
         this.reservationId = resultSets.getReservationId();
-        this.reservationDay = resultSets.getReservationDay();
+        this.totalNight = resultSets.getTotalNight();
         this.reservationTotalPeople = resultSets.getReservationTotalPeople();
         this.roomName = resultSets.getRoomName();
         this.accommodationMainImage = resultSets.getAccommodationMainImage();

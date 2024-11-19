@@ -61,5 +61,14 @@ public class FileController {
         String url = fileService.businessFileUpload(file);
         return url;
     }
+
+    // 이미지 가져오기 api
+    @GetMapping(value = "/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE,
+            MediaType.IMAGE_JPEG_VALUE })
+    public Resource getAccommodationMainImage(
+            @PathVariable("fileName") String fileName) {
+        Resource resource = fileService.getAccommodationMainFile(fileName);
+        return resource;
+    }
+
 }
-    
