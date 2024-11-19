@@ -35,7 +35,7 @@ public class BookmarkServiceImplement implements BookmarkService {
 
         try {
             
-            boolean existsByGuestId = bookMarkRepository.existsByGuestId(guestId);
+            boolean existsByGuestId = guestRepository.existsByGuestId(guestId);
             if (!existsByGuestId) return ResponseDto.noExistUserId();
 
             bookMarkResultSets = bookMarkRepository.getBookmarkList(guestId);

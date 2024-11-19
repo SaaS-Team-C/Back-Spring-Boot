@@ -37,3 +37,4 @@ public class PostAccommodationReqeustDto {
     private Integer applyStatus;
     private LocalDateTime entryTime;
 }
+    
