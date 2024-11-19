@@ -6,7 +6,7 @@ import lombok.Getter;
 public class Reservation{
 
     private String accommodationName;
-    private Integer reservationNumber;
+    private Integer reservationId;
     private String reservationDay;
     private Integer reservationTotalPeople;
     private String roomName;
@@ -16,7 +16,7 @@ public class Reservation{
 
     public Reservation(GetReservationResultSet resultSets){
         this.accommodationName = resultSets.getAccommodationName();
-        this.reservationNumber = resultSets.getReservationNumber();
+        this.reservationId = resultSets.getReservationId();
         this.reservationDay = resultSets.getReservationDay();
         this.reservationTotalPeople = resultSets.getReservationTotalPeople();
         this.roomName = resultSets.getRoomName();
