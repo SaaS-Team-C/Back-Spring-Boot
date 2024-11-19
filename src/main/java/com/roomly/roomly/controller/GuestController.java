@@ -51,7 +51,6 @@ public class GuestController {
         ResponseEntity<ResponseDto> response = guestService.patchGuestPw(requestBody, guestId);
         return response;
     }
-
     // 게스트 인증번호 확인 및 전화번호 수정,삭제
     @PatchMapping("/auth-number/{guestId}")
     public ResponseEntity<ResponseDto> patchGuestAuth(
