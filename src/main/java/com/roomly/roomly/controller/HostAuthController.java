@@ -106,7 +106,7 @@ public class HostAuthController {
     }
 
     // 호스트 아이디 찾기에 사용된 전화번호 인증번호 확인 api
-    @PostMapping("/tel-auth-check")
+    @PostMapping("/id-find-tel-auth-check")
         public ResponseEntity<? super HostIdFindSuccessResponseDto> telAuthCheck(
         @RequestBody @Valid TelAuthCheckRequestDto requestBody
     ){
