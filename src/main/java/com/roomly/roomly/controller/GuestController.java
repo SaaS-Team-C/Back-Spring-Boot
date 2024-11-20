@@ -60,15 +60,6 @@ public class GuestController {
         ResponseEntity<ResponseDto> response = guestService.patchGuestAuth(requestBody, guestId);
         return response;
     }
-    
-    // 게스트 비밀번호 변경(로그아웃상태)
-    @PatchMapping("/pw-find")
-    public ResponseEntity<ResponseDto> guestPwFind(
-        @RequestBody @Valid GuestPwFindRequestDto requestBody
-    ) {
-        ResponseEntity<ResponseDto> responseBody = guestService.guestPwFind(requestBody);
-        return responseBody;
-    }
 
     // 게스트 정보 보내기
     @GetMapping("/sign-in")

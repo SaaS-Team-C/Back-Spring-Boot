@@ -1,12 +1,14 @@
 package com.roomly.roomly.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
+import com.roomly.roomly.dto.request.guest.GuestPwFindRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestIdCheckRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestSignInRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestSignUpRequestDto;
@@ -90,6 +92,14 @@ public class GuestAuthController {
             @RequestBody @Valid TelAuthCheckRequestDto requestBody
     ) {
         ResponseEntity<? super GuestIdFindSuccessResponseDto> responseBody = guestService.guestTelAuthCheck(requestBody);
+        return responseBody;
+    }
+        // 게스트 비밀번호 변경(로그아웃상태)
+    @PatchMapping("/pw-find")
+    public ResponseEntity<ResponseDto> guestPwFind(
+        @RequestBody @Valid GuestPwFindRequestDto requestBody
+    ) {
+        ResponseEntity<ResponseDto> responseBody = guestService.guestPwFind(requestBody);
         return responseBody;
     }
 }

@@ -81,17 +81,7 @@ public class HostController {
         ResponseEntity<? super GetReservationResponseDto> responseBody = hostService.getRerservaitonList(hostId);
         return responseBody;
     }
-    
-    // 호스트 비밀번호 변경(로그아웃)
-    @PatchMapping("/pw-find")
-    public ResponseEntity<ResponseDto> hostPwFind(
-        @RequestBody @Valid HostPwFindRequestDto requestBody
-    ) {
-        ResponseEntity<ResponseDto> responseBody = hostService.hostPwFind(requestBody);
-        return responseBody;
-    }
-    
-    // 호스트 정보 보내기
+        // 호스트 정보 보내기
     @GetMapping("/sign-in")
     public ResponseEntity<? super GetHostSignInResponseDto> getHostSignIn(
         @AuthenticationPrincipal String hostId
