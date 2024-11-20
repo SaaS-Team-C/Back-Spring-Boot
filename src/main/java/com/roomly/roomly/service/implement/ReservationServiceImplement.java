@@ -60,7 +60,7 @@ public class ReservationServiceImplement implements ReservationService {
 
         try {
 
-            boolean noExistsGuestId = reservationRepository.existsByGuestId(guestId);
+            boolean noExistsGuestId = guestRepository.existsByGuestId(guestId);
             if(!noExistsGuestId) return ResponseDto.noExistUserId();
 
             resultSet = reservationRepository.getReservationStatus(guestId);
