@@ -7,6 +7,7 @@ import com.roomly.roomly.dto.request.guestauth.GuestSignInRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestSignUpRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestTelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestTelAuthRequestDto;
+import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.hostauth.HostBusinessImageRequestDto;
 import com.roomly.roomly.dto.request.hostauth.HostBusinessNumberRequestDto;
 import com.roomly.roomly.dto.request.hostauth.HostIdCheckRequestDto;
@@ -43,7 +44,7 @@ public interface AuthService {
     // 게스트 전화번호 중복확인 및 인증번호 전송
     ResponseEntity<ResponseDto> guestTelAuth(GuestTelAuthRequestDto dto);
     // 게스트 전화번호 인증번호 확인
-    ResponseEntity<ResponseDto> guestTelAuthCheck(GuestTelAuthCheckRequestDto dto);
+    ResponseEntity<ResponseDto> guestTelAuthCheck(TelAuthCheckRequestDto dto);
     // 게스트 회원가입
     ResponseEntity<ResponseDto> guestSignUp(GuestSignUpRequestDto dto);
     // 게스트 로그인

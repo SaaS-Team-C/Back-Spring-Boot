@@ -11,7 +11,7 @@ import lombok.Setter;
 public class GuestTelAuthCheckRequestDto {
     
     @NotBlank
-    private String guestTelNumber;
+    private String telNumber;
     @NotBlank
-    private String guestAuthNumber;
+    private String authNumber;
 }

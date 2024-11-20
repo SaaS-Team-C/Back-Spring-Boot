@@ -6,14 +6,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.roomly.roomly.dto.request.guest.GuestIdFindRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestIdCheckRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestSignInRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestSignUpRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestTelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestTelAuthRequestDto;
+import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.response.ResponseDto;
+import com.roomly.roomly.dto.response.guest.GuestIdFindSuccessResponseDto;
 import com.roomly.roomly.dto.response.guestauth.GuestSignInResponseDto;
 import com.roomly.roomly.service.AuthService;
+import com.roomly.roomly.service.GuestService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class GuestAuthController {
     
     private final AuthService guestAuthService;
+    private final GuestService guestService;
 
     // 아이디 중복확인
     @PostMapping("/id-check")
@@ -46,7 +51,7 @@ public class GuestAuthController {
     // 인증번호 확인
     @PostMapping("/tel-auth-check")
     public ResponseEntity<ResponseDto> telAuthCheck(
-        @RequestBody @Valid GuestTelAuthCheckRequestDto requestBody
+        @RequestBody @Valid TelAuthCheckRequestDto requestBody
     ){
         ResponseEntity<ResponseDto> response = guestAuthService.guestTelAuthCheck(requestBody);
         return response;
@@ -68,5 +73,23 @@ public class GuestAuthController {
     ){
         ResponseEntity<? super GuestSignInResponseDto> response = guestAuthService.guestSignIn(requestBody);
         return response;
+    }
+
+    // 게스트 아이디 찾기
+    @PostMapping("/id-find")
+    public ResponseEntity<ResponseDto> guestIdFind(
+        @RequestBody @Valid GuestIdFindRequestDto requestBody
+    ) {
+        ResponseEntity<ResponseDto> responseBody = guestService.guestIdFind(requestBody);
+        return responseBody;
+    }
+
+    // 아이디 찾기에 대한 전화번호 인증확인  
+    @PostMapping("/id-find-tel-auth-check")
+        public ResponseEntity<? super GuestIdFindSuccessResponseDto> guestTelAuthCheck(
+            @RequestBody @Valid TelAuthCheckRequestDto requestBody
+    ) {
+        ResponseEntity<? super GuestIdFindSuccessResponseDto> responseBody = guestService.guestTelAuthCheck(requestBody);
+        return responseBody;
     }
 }

@@ -60,24 +60,6 @@ public class GuestController {
         ResponseEntity<ResponseDto> response = guestService.patchGuestAuth(requestBody, guestId);
         return response;
     }
-
-    // 게스트 아이디 찾기
-    @PostMapping("/id-find")
-    public ResponseEntity<ResponseDto> guestIdFind(
-        @RequestBody @Valid GuestIdFindRequestDto requestBody
-    ) {
-            ResponseEntity<ResponseDto> responseBody = guestService.guestIdFind(requestBody);
-            return responseBody;
-    }
-    
-    // 아이디 찾기에 대한 전화번호 인증확인  
-    @PostMapping("/tel-auth-check")
-        public ResponseEntity<? super GuestIdFindSuccessResponseDto> guestTelAuthCheck(
-            @RequestBody @Valid TelAuthCheckRequestDto requestBody
-    ) {
-            ResponseEntity<? super GuestIdFindSuccessResponseDto> responseBody = guestService.guestTelAuthCheck(requestBody);
-            return responseBody;
-        }
     
     // 게스트 비밀번호 변경(로그아웃상태)
     @PatchMapping("/pw-find")
