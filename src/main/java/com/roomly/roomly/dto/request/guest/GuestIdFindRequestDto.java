@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Setter
 @NoArgsConstructor
 public class GuestIdFindRequestDto {
-
+    
     private String guestName;
     private String guestTelNumber;
 

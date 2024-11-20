@@ -11,6 +11,7 @@ import com.roomly.roomly.dto.request.guestauth.GuestSignInRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestSignUpRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestTelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.guestauth.GuestTelAuthRequestDto;
+import com.roomly.roomly.dto.request.host.TelAuthCheckRequestDto;
 import com.roomly.roomly.dto.request.hostauth.HostBusinessImageRequestDto;
 import com.roomly.roomly.dto.request.hostauth.HostBusinessNumberRequestDto;
 import com.roomly.roomly.dto.request.hostauth.HostIdCheckRequestDto;
@@ -269,10 +270,10 @@ public class AuthServiceImplement implements AuthService {
 
     @Override
     // 인증번호 확인 메서드
-    public ResponseEntity<ResponseDto> guestTelAuthCheck(GuestTelAuthCheckRequestDto dto) {
+    public ResponseEntity<ResponseDto> guestTelAuthCheck(TelAuthCheckRequestDto dto) {
         
-        String telNumber = dto.getGuestTelNumber();
-        String authNumber = dto.getGuestAuthNumber();
+        String telNumber = dto.getTelNumber();
+        String authNumber = dto.getAuthNumber();
 
         try {
             boolean isMatched = telAuthNumberRepository.existsByTelNumberAndAuthNumber(telNumber, authNumber);
