@@ -60,7 +60,7 @@ public class FileServiceImplement implements FileService {
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String uuid = UUID.randomUUID().toString();
         String saveFileName = uuid + extension;
-        String savePath = accommodationSubFilePath + saveFileName;
+        String savePath = accommodationMainFilePath + saveFileName;
 
         try {
             file.transferTo(new File(savePath));

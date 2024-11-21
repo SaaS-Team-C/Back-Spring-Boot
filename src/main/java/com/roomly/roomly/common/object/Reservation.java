@@ -6,8 +6,8 @@ import lombok.Getter;
 public class Reservation{
 
     private String accommodationName;
-    private Integer reservationNumber;
-    private String reservationDay;
+    private Integer reservationId;
+    private Integer totalNight;
     private Integer reservationTotalPeople;
     private String roomName;
     private String accommodationMainImage;
@@ -16,8 +16,8 @@ public class Reservation{
 
     public Reservation(GetReservationResultSet resultSets){
         this.accommodationName = resultSets.getAccommodationName();
-        this.reservationNumber = resultSets.getReservationNumber();
-        this.reservationDay = resultSets.getReservationDay();
+        this.reservationId = resultSets.getReservationId();
+        this.totalNight = resultSets.getTotalNight();
         this.reservationTotalPeople = resultSets.getReservationTotalPeople();
         this.roomName = resultSets.getRoomName();
         this.accommodationMainImage = resultSets.getAccommodationMainImage();

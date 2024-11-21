@@ -62,8 +62,8 @@ public class FileController {
         return url;
     }
 
-    // 숙소 메인 이미지 가져오기 api
-    @GetMapping(value = "/accommodationMain/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE,
+    // 이미지 가져오기 api
+    @GetMapping(value = "/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE,
             MediaType.IMAGE_JPEG_VALUE })
     public Resource getAccommodationMainImage(
             @PathVariable("fileName") String fileName) {
@@ -71,37 +71,6 @@ public class FileController {
         return resource;
     }
 
-    // 숙소 서브 이미지 가져오기 api 
-    @GetMapping(value = "/accommodationSub/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE,
-            MediaType.IMAGE_JPEG_VALUE })
-    public Resource getAccommodationSubImage(
-            @PathVariable("fileName") String fileName) {
-        Resource resource = fileService.getAccommodationSubFile(fileName);
-        return resource;
-    }
-
-    // 객실 메인 이미지 가져오기 api
-    @GetMapping(value = "/roomMain/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE })
-    public Resource getRoomMainImage(
-            @PathVariable("fileName") String fileName) {
-        Resource resource = fileService.getRoomMainFile(fileName);
-        return resource;
-    }
-
-    // 객실 메인 이미지 가져오기 api
-    @GetMapping(value = "/roomSub/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE })
-    public Resource getRoomSubImage(
-            @PathVariable("fileName") String fileName) {
-        Resource resource = fileService.getRoomSubFile(fileName);
-        return resource;
-    }
-
-    // 사업자 정보 파일 가져오기 api
-    @GetMapping(value = "/business/{fileName}", produces = { MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE })
-    public Resource getBusinessImage(
-            @PathVariable("fileName") String fileName) {
-        Resource resource = fileService.getBusinessFile(fileName);
-        return resource;
-    }
+    
 
 }
