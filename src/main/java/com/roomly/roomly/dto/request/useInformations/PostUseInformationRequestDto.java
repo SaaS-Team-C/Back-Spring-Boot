@@ -12,12 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PostUseInformationRequestDto {
     
-    @NotBlank
     private String accommodationName;
     private String title;
     private String context;
-
-    @NotBlank
-    private List<String> useInformation;
 
 }
